@@ -20,6 +20,57 @@ let activeVoiceAudio = null;
 let activeVoiceBtn = null;
 let activeVoiceOriginalHTML = "";
 
+const FEMALE_VOICE_HINTS = [
+  "female",
+  "zira",
+  "susan",
+  "samantha",
+  "victoria",
+  "kate",
+  "serena",
+  "hazel",
+  "moira",
+  "tessa",
+  "fiona",
+  "karen",
+  "anna",
+  "google uk english female",
+  "google us english",
+  "libby",
+  "sonia",
+  "aria",
+];
+
+function getVoicesAsync() {
+  return new Promise((resolve) => {
+    const existing = window.speechSynthesis.getVoices();
+    if (existing.length) {
+      resolve(existing);
+      return;
+    }
+    const onVoices = () => {
+      window.speechSynthesis.removeEventListener("voiceschanged", onVoices);
+      resolve(window.speechSynthesis.getVoices());
+    };
+    window.speechSynthesis.addEventListener("voiceschanged", onVoices);
+    // подстраховка на случай, если событие voiceschanged не сработает
+    setTimeout(() => resolve(window.speechSynthesis.getVoices()), 400);
+  });
+}
+
+function pickFemaleVoice(voices, langCode) {
+  const langPrefix = langCode.split("-")[0].toLowerCase();
+  const sameLang = voices.filter((v) => v.lang.toLowerCase() === langCode.toLowerCase());
+  const samePrefix = voices.filter((v) => v.lang.toLowerCase().startsWith(langPrefix));
+  const pool = sameLang.length ? sameLang : samePrefix.length ? samePrefix : voices;
+
+  const female = pool.find((v) =>
+    FEMALE_VOICE_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+  );
+
+  return female || pool[0] || voices[0] || null;
+}
+
 function resetVoiceButton() {
   if (activeVoiceBtn) {
     activeVoiceBtn.innerHTML = activeVoiceOriginalHTML;
@@ -58,12 +109,23 @@ function speakExample(text, langCode, btn) {
 
   audio.onended = () => resetVoiceButton();
 
-  audio.onerror = () => {
+  audio.onerror = async () => {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
+      const voices = await getVoicesAsync();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 0.9;
       utterance.lang = langCode;
+      utterance.pitch = 1.05;
+
+      const voice = pickFemaleVoice(voices, langCode);
+      if (voice) utterance.voice = voice;
+
+      utterance.onstart = () => {
+        btn.classList.remove("is-loading");
+        btn.classList.add("is-playing");
+        btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
+      };
       utterance.onend = () => resetVoiceButton();
       utterance.onerror = () => resetVoiceButton();
       window.speechSynthesis.speak(utterance);
