@@ -7,7 +7,26 @@ document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initScrollReveal();
   initBackToTop();
+  initSubgroupToggles();
 });
+
+/* ---------- кликабельные плитки подпунктов (bento, разворачивают примеры) ---------- */
+
+function initSubgroupToggles() {
+  document.querySelectorAll(".subgroup-tile").forEach((tile) => {
+    tile.addEventListener("click", () => {
+      const isOpen = tile.classList.toggle("is-open");
+      const body = tile.nextElementSibling;
+      if (body && body.classList.contains("subgroup-body")) {
+        body.classList.toggle("is-open", isOpen);
+      }
+      const parentGroup = tile.closest(".level-subgroup");
+      if (parentGroup) {
+        parentGroup.classList.toggle("is-expanded", isOpen);
+      }
+    });
+  });
+}
 
 /* ---------- мобильное меню ---------- */
 
@@ -96,7 +115,7 @@ function initScrollReveal() {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0, rootMargin: "0px 0px -10% 0px" }
   );
 
   items.forEach((el) => observer.observe(el));

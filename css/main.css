@@ -1,38 +1,47 @@
 /* =========================================================
    Общие стили сайта: токены, шапка, футер, кнопки, вкладки,
    карточки тем на главной, анимации появления.
+   Тёмная bento-тема (glass-card, neon-glow).
    ========================================================= */
 
 :root {
   --white: #ffffff;
-  --bg: #ffffff;
-  --bg-alt: #f7f7fb;
-  --bg-dark: #14161c;
+  --bg: #08090d;
+  --bg-alt: #0c0e15;
+  --bg-dark: #050609;
 
-  --ink: #14161c;
-  --ink-2: #565b66;
-  --ink-3: #9498a2;
+  --surface: rgba(17, 19, 26, 0.72);
+  --surface-solid: #12141c;
+  --surface-soft: rgba(255, 255, 255, 0.04);
 
-  --line: #e8e9f0;
-  --line-soft: #f0f1f6;
+  --ink: #f3f4f6;
+  --ink-2: #9aa1b1;
+  --ink-3: #6b7280;
 
-  --accent: #ff6b4a;
-  --accent-dark: #e4502f;
-  --accent-soft: #ffe7de;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.05);
 
-  --teal: #009e94;
-  --teal-dark: #00786f;
-  --teal-soft: #dcf5f2;
+  --accent: #6366f1;
+  --accent-dark: #a5b4fc;
+  --accent-soft: rgba(99, 102, 241, 0.15);
 
-  --yellow: #ffc94d;
-  --error: #e5484d;
+  --teal: #06b6d4;
+  --teal-dark: #67e8f9;
+  --teal-soft: rgba(6, 182, 212, 0.15);
+
+  --pink: #ec4899;
+  --pink-soft: rgba(236, 72, 153, 0.15);
+
+  --yellow: #f59e0b;
+  --error: #ec4899;
 
   --radius-lg: 26px;
   --radius-md: 18px;
   --radius-sm: 12px;
 
-  --shadow-soft: 0 20px 45px -25px rgba(20, 22, 28, 0.25);
-  --shadow-card: 0 10px 30px -18px rgba(20, 22, 28, 0.18);
+  --shadow-soft: 0 20px 45px -25px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 10px 30px -14px rgba(0, 0, 0, 0.55);
+  --shadow-neon: 0 0 24px rgba(99, 102, 241, 0.25);
 
   --container: 1280px;
 }
@@ -80,21 +89,21 @@ svg {
 
 ::selection {
   background: var(--accent-soft);
-  color: var(--accent-dark);
+  color: var(--ink);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-alt);
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--line);
+  background: #24262f;
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ink-3);
+  background: var(--accent);
 }
 
 .container {
@@ -121,6 +130,14 @@ svg {
   stroke-linejoin: round;
 }
 
+/* переиспользуемая "стеклянная" карточка */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -129,15 +146,17 @@ svg {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent-dark);
+  color: var(--accent);
   background: var(--accent-soft);
+  border: 1px solid rgba(99, 102, 241, 0.25);
   padding: 7px 14px;
   border-radius: 99px;
 }
 
 .eyebrow.teal {
-  color: var(--teal-dark);
+  color: var(--teal);
   background: var(--teal-soft);
+  border-color: rgba(6, 182, 212, 0.25);
 }
 
 .eyebrow svg {
@@ -156,6 +175,7 @@ svg {
   letter-spacing: -0.01em;
   margin-top: 14px;
   line-height: 1.15;
+  color: var(--ink);
 }
 
 .section-head p {
@@ -183,7 +203,7 @@ svg {
   font-weight: 800;
   font-size: 15px;
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
 .btn svg {
@@ -192,24 +212,24 @@ svg {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--white);
-  box-shadow: 0 14px 30px -12px rgba(255, 107, 74, 0.55);
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  color: #fff;
+  box-shadow: var(--shadow-neon);
 }
 
 .btn-primary:hover {
-  background: var(--accent-dark);
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
 .btn-ghost {
-  background: var(--white);
+  background: var(--surface-soft);
   color: var(--ink);
-  border: 2px solid var(--line);
+  border: 1px solid var(--line);
 }
 
 .btn-ghost:hover {
-  border-color: var(--ink);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -219,7 +239,7 @@ svg {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(8, 9, 13, 0.85);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
 }
@@ -247,12 +267,13 @@ svg {
   width: 38px;
   height: 38px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), var(--yellow));
+  background: linear-gradient(135deg, var(--accent), var(--pink));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
+  color: #fff;
   flex-shrink: 0;
+  box-shadow: var(--shadow-neon);
 }
 
 .brand-mark svg {
@@ -328,8 +349,8 @@ svg {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  border: 2px solid var(--line);
-  background: var(--white);
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
   align-items: center;
   justify-content: center;
 }
@@ -369,7 +390,9 @@ svg {
 /* ---------- вкладки (переиспользуемый компонент) ---------- */
 
 .tabs-panel {
-  background: var(--white);
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
@@ -380,13 +403,15 @@ svg {
   border: none;
   box-shadow: none;
   border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
 }
 
 .tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  background: var(--bg-alt);
+  background: rgba(255, 255, 255, 0.03);
   padding: 10px;
   border-bottom: 1px solid var(--line);
 }
@@ -421,21 +446,22 @@ svg {
 
 .tab-btn:hover {
   color: var(--ink);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .tab-btn.is-active {
-  background: var(--ink);
-  color: var(--white);
-  box-shadow: 0 8px 18px -8px rgba(20, 22, 28, 0.5);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-neon);
 }
 
 .tabs-nested .tab-btn {
-  background: var(--bg-alt);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .tabs-nested .tab-btn.is-active {
   background: var(--accent);
-  box-shadow: 0 8px 18px -10px rgba(255, 107, 74, 0.6);
+  box-shadow: var(--shadow-neon);
 }
 
 .tab-panels {
@@ -461,6 +487,7 @@ svg {
   background: var(--bg-dark);
   color: rgba(255, 255, 255, 0.7);
   padding: 56px 0 32px;
+  border-top: 1px solid var(--line);
 }
 
 .footer-top {
@@ -470,7 +497,7 @@ svg {
   flex-wrap: wrap;
   gap: 24px;
   padding-bottom: 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-top .brand {
@@ -500,7 +527,7 @@ svg {
 .footer-bottom {
   padding-top: 24px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.4);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -512,6 +539,20 @@ svg {
 .home-hero {
   padding: 84px 0 60px;
   text-align: center;
+  position: relative;
+}
+
+.home-hero::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.18), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .home-hero h1 {
@@ -520,10 +561,14 @@ svg {
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin-top: 18px;
+  color: var(--ink);
 }
 
 .home-hero h1 span {
-  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .home-hero p {
@@ -549,7 +594,7 @@ svg {
   font-size: 13.5px;
   font-weight: 700;
   color: var(--ink-2);
-  background: var(--bg-alt);
+  background: var(--surface-soft);
   border: 1px solid var(--line);
   padding: 9px 14px;
   border-radius: 99px;
@@ -558,7 +603,7 @@ svg {
 .stat-chip svg {
   width: 15px;
   height: 15px;
-  color: var(--accent-dark);
+  color: var(--accent);
 }
 
 .topics-grid {
@@ -568,7 +613,9 @@ svg {
 }
 
 .topic-card {
-  background: var(--white);
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: 26px 24px;
@@ -581,8 +628,8 @@ svg {
 
 .topic-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-card);
-  border-color: transparent;
+  box-shadow: var(--shadow-neon);
+  border-color: rgba(99, 102, 241, 0.35);
 }
 
 .topic-icon {
@@ -590,7 +637,7 @@ svg {
   height: 52px;
   border-radius: 14px;
   background: var(--accent-soft);
-  color: var(--accent-dark);
+  color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -606,6 +653,7 @@ svg {
   font-size: 18px;
   font-weight: 800;
   margin-bottom: 8px;
+  color: var(--ink);
 }
 
 .topic-card p {
@@ -628,7 +676,7 @@ svg {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--ink-3);
-  background: var(--bg-alt);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
   padding: 5px 10px;
   border-radius: 99px;
@@ -638,7 +686,7 @@ svg {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--bg-alt);
+  background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -653,12 +701,12 @@ svg {
 
 .topic-card:hover .topic-arrow {
   background: var(--accent);
-  color: var(--white);
+  color: #fff;
   transform: translateX(3px);
 }
 
 .topic-card.is-soon {
-  opacity: 0.55;
+  opacity: 0.45;
   pointer-events: none;
 }
 
@@ -675,13 +723,13 @@ svg {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  border: none;
+  background: var(--surface-solid);
+  border: 1px solid var(--line);
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card);
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
@@ -697,6 +745,8 @@ svg {
 
 .to-top:hover {
   background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-neon);
 }
 
 .to-top svg {
@@ -742,7 +792,7 @@ svg {
     top: 76px;
     left: 0;
     right: 0;
-    background: var(--white);
+    background: var(--surface-solid);
     border-bottom: 1px solid var(--line);
     padding: 18px 24px 26px;
     transform: translateY(-12px);
