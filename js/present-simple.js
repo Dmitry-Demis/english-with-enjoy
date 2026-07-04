@@ -63,12 +63,17 @@ function pickFemaleVoice(voices, langCode) {
   const sameLang = voices.filter((v) => v.lang.toLowerCase() === langCode.toLowerCase());
   const samePrefix = voices.filter((v) => v.lang.toLowerCase().startsWith(langPrefix));
   const pool = sameLang.length ? sameLang : samePrefix.length ? samePrefix : voices;
+  if (!pool.length) return null;
 
-  const female = pool.find((v) =>
-    FEMALE_VOICE_HINTS.some((hint) => v.name.toLowerCase().includes(hint))
+  const isFemale = (v) => FEMALE_VOICE_HINTS.some((hint) => v.name.toLowerCase().includes(hint));
+  const isHighQuality = (v) => /natural|online|neural/i.test(v.name);
+
+  return (
+    pool.find((v) => isFemale(v) && isHighQuality(v)) ||
+    pool.find(isFemale) ||
+    pool.find(isHighQuality) ||
+    pool[0]
   );
-
-  return female || pool[0] || voices[0] || null;
 }
 
 function resetVoiceButton() {
@@ -81,20 +86,28 @@ function resetVoiceButton() {
   activeVoiceOriginalHTML = "";
 }
 
-function speakExample(text, langCode, btn) {
-  if (activeVoiceAudio && activeVoiceBtn === btn) {
-    activeVoiceAudio.pause();
-    resetVoiceButton();
-    return;
-  }
-  if (activeVoiceBtn) resetVoiceButton();
+function speakWithBrowserVoice(text, langCode, btn, voices) {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.95;
+  utterance.lang = langCode;
+  utterance.pitch = 1.0;
 
-  activeVoiceBtn = btn;
-  activeVoiceOriginalHTML = btn.innerHTML;
+  const voice = pickFemaleVoice(voices, langCode);
+  if (voice) utterance.voice = voice;
 
-  btn.classList.add("is-loading");
-  btn.innerHTML = '<span class="voice-spinner"></span><span>...</span>';
+  utterance.onstart = () => {
+    btn.classList.remove("is-loading");
+    btn.classList.add("is-playing");
+    btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
+  };
+  utterance.onend = () => resetVoiceButton();
+  utterance.onerror = () => resetVoiceButton();
 
+  window.speechSynthesis.speak(utterance);
+}
+
+function speakWithGoogleTts(text, langCode, btn) {
   const cleanText = encodeURIComponent(text);
   const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${cleanText}`;
 
@@ -106,35 +119,39 @@ function speakExample(text, langCode, btn) {
     btn.classList.add("is-playing");
     btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
   };
-
   audio.onended = () => resetVoiceButton();
-
-  audio.onerror = async () => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const voices = await getVoicesAsync();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.9;
-      utterance.lang = langCode;
-      utterance.pitch = 1.05;
-
-      const voice = pickFemaleVoice(voices, langCode);
-      if (voice) utterance.voice = voice;
-
-      utterance.onstart = () => {
-        btn.classList.remove("is-loading");
-        btn.classList.add("is-playing");
-        btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
-      };
-      utterance.onend = () => resetVoiceButton();
-      utterance.onerror = () => resetVoiceButton();
-      window.speechSynthesis.speak(utterance);
-    } else {
-      resetVoiceButton();
-    }
-  };
+  audio.onerror = () => resetVoiceButton();
 
   audio.play().catch(() => audio.onerror());
+}
+
+async function speakExample(text, langCode, btn) {
+  if ((activeVoiceAudio || window.speechSynthesis.speaking) && activeVoiceBtn === btn) {
+    if (activeVoiceAudio) activeVoiceAudio.pause();
+    window.speechSynthesis.cancel();
+    resetVoiceButton();
+    return;
+  }
+  if (activeVoiceBtn) resetVoiceButton();
+
+  activeVoiceBtn = btn;
+  activeVoiceOriginalHTML = btn.innerHTML;
+
+  btn.classList.add("is-loading");
+  btn.innerHTML = '<span class="voice-spinner"></span><span>...</span>';
+
+  // приоритет — качественный голос самого браузера/ОС (обычно звучит живее,
+  // чем неофициальный Google Translate TTS); Google используем только
+  // как резерв, если в браузере вообще нет доступных голосов
+  if ("speechSynthesis" in window) {
+    const voices = await getVoicesAsync();
+    if (voices.length) {
+      speakWithBrowserVoice(text, langCode, btn, voices);
+      return;
+    }
+  }
+
+  speakWithGoogleTts(text, langCode, btn);
 }
 
 function createVoiceButton(text, langCode, flagSvg, label) {
