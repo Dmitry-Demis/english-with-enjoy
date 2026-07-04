@@ -165,6 +165,101 @@
   100% { transform: translate(380px, 100px); opacity: 0; }
 }
 
+/* ---------- L-образный layout: сайдбар + контент ---------- */
+
+.lesson-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.sidebar-nav {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: sticky;
+  top: 96px;
+}
+
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  padding: 8px 14px 14px;
+}
+
+.sidebar-nav .tab-btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 13px 14px;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--ink-2);
+  box-shadow: none;
+}
+
+.sidebar-nav .tab-btn svg {
+  color: var(--ink-3);
+}
+
+.sidebar-nav .tab-btn:hover {
+  background: var(--bg-alt);
+  color: var(--ink);
+}
+
+.sidebar-nav .tab-btn.is-active {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  box-shadow: none;
+}
+
+.sidebar-nav .tab-btn.is-active svg {
+  color: var(--accent-dark);
+}
+
+.lesson-content {
+  min-width: 0;
+}
+
+.lesson-content .tab-panels {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px;
+}
+
+@media (max-width: 900px) {
+  .lesson-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-nav {
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+  }
+  .sidebar-label {
+    display: none;
+  }
+  .sidebar-nav .tab-btn {
+    width: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .lesson-content .tab-panels {
+    padding: 22px 18px;
+  }
+}
+
 /* ---------- формулы ---------- */
 
 .formula-row {
@@ -207,6 +302,49 @@
 .formula-box .formula em.teal {
   color: var(--teal-dark);
   background: var(--teal-soft);
+}
+
+/* ---------- текстовое объяснение формулы (S + V1 и т.д.) ---------- */
+
+.formula-explain {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 24px;
+}
+
+.formula-inline {
+  font-family: "Courier New", monospace;
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.sub-rule {
+  margin-bottom: 40px;
+}
+
+.sub-rule:last-child {
+  margin-bottom: 0;
+}
+
+.sub-rule-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-rule-title .tag {
+  font-size: 11px;
 }
 
 /* ---------- карточки примеров (блочно, с картинкой) ---------- */

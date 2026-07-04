@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Отключаем реферер для стабильного доступа к глобальным TTS-серверам без CORS блокировок -->
+    <meta name="referrer" content="no-referrer">
+    <title>GrammarLab: Present Simple</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        lab: {
+                            orange: '#FF6B4A',
+                            orangeLight: '#FFEAE5',
+                            darkBg: '#0F172A',
+                            darkCard: '#1E293B',
+                            teal: '#14B8A6',
+                            tealLight: '#CCFBF1'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&family=Inter:wght=400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+        /* Стили для плавного отображения тултипа */
+        #word-tooltip {
+            transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Header navigation -->
+    <header class="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-lab-orange flex items-center justify-center text-white shadow-md shadow-lab-orange/20">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold tracking-tight leading-none text-slate-900">GrammarLab</h1>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Английская грамматика</span>
+                </div>
+            </div>
+
+            <!-- Breadcrumbs -->
+            <nav class="hidden md:flex items-center gap-2 text-xs font-semibold text-gray-400">
+                <a href="#" class="hover:text-lab-orange transition">Главная</a>
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+                <a href="#" class="hover:text-lab-orange transition">Грамматика</a>
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+                <span class="text-slate-800 font-bold">Present Simple</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area: L-Shaped Layout (Sidebar + Main Content) -->
+    <main class="max-w-7xl w-full mx-auto px-4 py-8 flex-grow flex flex-col lg:flex-row gap-8">
+        
+        <!-- SIDEBAR: Уровень 1 (Главные разделы) -->
+        <aside class="w-full lg:w-64 flex-shrink-0">
+            <div class="bg-white border border-gray-100 p-4 rounded-3xl shadow-sm sticky top-24 space-y-2">
+                <div class="px-3 py-2 mb-2">
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Разделы темы</span>
+                </div>
+                <!-- Меню разделов -->
+                <button onclick="switchSidebarSection('education')" id="side-education" class="w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 bg-lab-orangeLight text-lab-orange">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    Образование
+                </button>
+                <button onclick="switchSidebarSection('usage')" id="side-usage" class="w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 text-gray-500 hover:text-slate-800 hover:bg-gray-50">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    Употребление
+                </button>
+                <button onclick="switchSidebarSection('spelling')" id="side-spelling" class="w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 text-gray-500 hover:text-slate-800 hover:bg-gray-50">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    Орфография
+                </button>
+                <button onclick="switchSidebarSection('markers')" id="side-markers" class="w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 text-gray-500 hover:text-slate-800 hover:bg-gray-50">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Слова-маркеры
+                </button>
+                <button onclick="switchSidebarSection('test')" id="side-test" class="w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 text-gray-500 hover:text-slate-800 hover:bg-gray-50">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Интерактивный тест
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN AREA: Контент выбранного раздела -->
+        <div class="flex-grow space-y-6">
+            
+            <!-- Voice Control Center (Bento-стиль) -->
+            <div class="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-lab-orangeLight text-lab-orange flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-800 leading-none">Voice Control Center</h3>
+                        <p class="text-xs text-gray-400 mt-1">Озвучка: используются только женские голоса</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-4 justify-start md:justify-end">
+                    <!-- Выбор скорости -->
+                    <div class="bg-gray-100 p-1 rounded-xl flex gap-1">
+                        <button onclick="setVoiceRate(1.0)" id="rate-1" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-white text-slate-800 shadow-sm">
+                            1.0x (Нормально)
+                        </button>
+                        <button onclick="setVoiceRate(0.8)" id="rate-08" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-gray-500 hover:text-slate-800">
+                            0.8x (Медленно)
+                        </button>
+                        <button onclick="setVoiceRate(0.6)" id="rate-06" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-gray-500 hover:text-slate-800">
+                            0.6x (Очень медленно)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION CONTAINER: Образование -->
+            <div id="section-education" class="space-y-6">
+                <!-- Tab selector: Уровень 2 (Вкладки внутри Образования) -->
+                <div>
+                    <div class="bg-gray-100 p-1.5 rounded-2xl flex flex-wrap md:flex-nowrap gap-1 max-w-2xl">
+                        <button onclick="switchTab('affirmative')" id="btn-affirmative" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-lab-orange text-white shadow-sm">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Утверждение
+                        </button>
+                        <button onclick="switchTab('negative')" id="btn-negative" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold text-gray-500 hover:text-slate-800 transition-all duration-300 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Отрицание
+                        </button>
+                        <button onclick="switchTab('question')" id="btn-question" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold text-gray-500 hover:text-slate-800 transition-all duration-300 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Вопрос
+                        </button>
+                        <button onclick="switchTab('tobe')" id="btn-tobe" class="tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold text-gray-500 hover:text-slate-800 transition-all duration-300 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            To be
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bento Grid: Formulas / Patterns -->
+                <div>
+                    <h3 class="text-xs uppercase tracking-widest font-extrabold text-gray-400 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-lab-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        Формула образования структуры
+                    </h3>
+                    <div id="formula-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Dynamically loaded formula cards -->
+                    </div>
+                </div>
+
+                <!-- Bento Grid: Real-life visual examples with Speech synthesis -->
+                <div>
+                    <h3 class="text-xs uppercase tracking-widest font-extrabold text-gray-400 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-lab-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Интерактивные примеры с произношением и транскрипцией по клику
+                    </h3>
+                    <div id="examples-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Dynamically loaded cards -->
+                    </div>
+                </div>
+
+                <!-- Dynamic tip banner -->
+                <div id="info-callout" class="bg-teal-50 border border-teal-100 p-5 rounded-2xl flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex-shrink-0 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1">Важная подсказка:</h4>
+                        <p id="info-callout-text" class="text-sm text-slate-600 leading-relaxed">
+                            Загрузка...
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEMO SECTION CONTAINER: Употребление -->
+            <div id="section-usage" class="space-y-6 hidden">
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                    <h2 class="text-xl font-extrabold text-slate-900 mb-4">Когда употребляется Present Simple?</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">Мы используем настоящее простое время для выражения постоянных фактов, регулярных привычек или законов природы.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-lab-orange font-bold uppercase tracking-wider">Привычки и рутина</span>
+                            <h4 class="font-extrabold text-slate-800 mt-1 mb-2">I drink coffee every morning.</h4>
+                            <p class="text-sm text-gray-500">Я пью кофе каждое утро (регулярное действие).</p>
+                        </div>
+                        <div class="p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-teal-600 font-bold uppercase tracking-wider">Общие факты и законы природы</span>
+                            <h4 class="font-extrabold text-slate-800 mt-1 mb-2">The sun rises in the east.</h4>
+                            <p class="text-sm text-gray-500">Солнце встаёт на востоке (научный факт).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEMO SECTION CONTAINER: Остальные разделы (заглушки) -->
+            <div id="section-fallback" class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hidden text-center py-16">
+                <div class="w-16 h-16 bg-gray-100 text-gray-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-extrabold text-slate-800">Раздел находится в разработке</h3>
+                <p class="text-sm text-gray-500 mt-2 max-w-sm mx-auto">Мы активно наполняем эту часть учебника GrammarLab. Скоро здесь появятся интерактивные тренажёры!</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Global Floating Word Tooltip -->
+    <div id="word-tooltip" class="absolute z-50 pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-100 p-3.5 rounded-2xl shadow-xl hidden flex-col gap-2 min-w-[180px] max-w-[240px] text-xs">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-1.5 mb-1">
+            <span id="tooltip-word-title" class="font-extrabold text-slate-900 tracking-tight text-sm">Word</span>
+            <span class="text-[9px] uppercase tracking-widest font-bold text-gray-400">Oxford dict</span>
+        </div>
+        <!-- BrE Pronunciation Row -->
+        <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+                <span class="px-1 py-0.5 rounded text-[8px] font-extrabold bg-teal-100 text-teal-700">BrE</span>
+                <span id="tooltip-ipa-uk" class="font-mono text-slate-600 font-bold">/ipa/</span>
+            </div>
+            <button id="tooltip-btn-uk" class="p-1 rounded bg-gray-100 hover:bg-teal-600 hover:text-white transition-all active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072M12 5v14l-4.707-4.707H4a1 1 0 01-1-1v-4a1 1 0 011-1h3.293L12 5z" />
+                </svg>
+            </button>
+        </div>
+        <!-- AmE Pronunciation Row -->
+        <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+                <span class="px-1 py-0.5 rounded text-[8px] font-extrabold bg-lab-orangeLight text-lab-orange">AmE</span>
+                <span id="tooltip-ipa-us" class="font-mono text-slate-600 font-bold">/ipa/</span>
+            </div>
+            <button id="tooltip-btn-us" class="p-1 rounded bg-gray-100 hover:bg-lab-orange hover:text-white transition-all active:scale-90">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072M12 5v14l-4.707-4.707H4a1 1 0 01-1-1v-4a1 1 0 011-1h3.293L12 5z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs font-semibold text-gray-400">
+            &copy; 2026 GrammarLab. Тренд Bento Grid & Smart Voice Engine.
+        </div>
+    </footer>
+
+    <!-- Grammar Data and Core Engine -->
+    <script>
+        // Oxford Dictionary транскрипции для всех слов, используемых в наших предложениях
+        const oxfordDictionary = {
+            "i": { uk: "/aɪ/", us: "/aɪ/" },
+            "play": { uk: "/pleɪ/", us: "/pleɪ/" },
+            "plays": { uk: "/pleɪz/", us: "/pleɪz/" },
+            "tennis": { uk: "/ˈtenɪs/", us: "/ˈtenɪs/" },
+            "well": { uk: "/wel/", us: "/wel/" },
+            "you": { uk: "/juː/", us: "/juː/" },
+            "read": { uk: "/riːd/", us: "/riːd/" },
+            "a": { uk: "/ə/", us: "/ə/" },
+            "lot": { uk: "/lɒt/", us: "/lɑːt/" },
+            "every": { uk: "/ˈevri/", us: "/ˈevri/" },
+            "day": { uk: "/deɪ/", us: "/deɪ/" },
+            "he": { uk: "/hiː/", us: "/hiː/" },
+            "she": { uk: "/ʃiː/", us: "/ʃiː/" },
+            "works": { uk: "/wɜːks/", us: "/wɜːrks/" },
+            "at": { uk: "/æt/", us: "/æt/" },
+            "home": { uk: "/həʊm/", us: "/hoʊm/" },
+            "it": { uk: "/ɪt/", us: "/ɪt/" },
+            "rains": { uk: "/reɪnz/", us: "/reɪnz/" },
+            "often": { uk: "/ˈɒfn/", us: "/ˈɔːfn/" },
+            "here": { uk: "/hɪə(r)/", us: "/hɪr/" },
+            "we": { uk: "/wiː/", us: "/wiː/" },
+            "live": { uk: "/lɪv/", us: "/lɪv/" },
+            "in": { uk: "/ɪn/", us: "/ɪn/" },
+            "moscow": { uk: "/ˈmɒskəʊ/", us: "/ˈmɑːskaʊ/" },
+            "busy": { uk: "/ˈbɪzi/", us: "/ˈbɪzi/" },
+            "today": { uk: "/təˈdeɪ/", us: "/təˈdeɪ/" },
+            "now": { uk: "/naʊ/", us: "/naʊ/" },
+            "don't": { uk: "/dəʊnt/", us: "/doʊnt/" },
+            "doesn't": { uk: "/ˈdʌznt/", us: "/ˈdʌznt/" },
+            "much": { uk: "/mʌtʃ/", us: "/mʌtʃ/" },
+            "do": { uk: "/duː/", us: "/duː/" },
+            "does": { uk: "/dʌz/", us: "/dʌz/" },
+            "am": { uk: "/æm/", us: "/æm/" },
+            "is": { uk: "/ɪz/", us: "/ɪz/" },
+            "are": { uk: "/ɑː(r)/", us: "/ɑːr/" },
+            "player": { uk: "/ˈpleɪə(r)/", us: "/ˈpleɪər/" },
+            "great": { uk: "/ɡreɪt/", us: "/ɡreɪt/" },
+            "reader": { uk: "/ˈriːdə(r)/", us: "/ˈriːdər/" },
+            "on": { uk: "/ɒn/", us: "/ɑːn/" },
+            "the": { uk: "/ðə/", us: "/ðə/" },
+            "court": { uk: "/kɔːt/", us: "/kɔːrt/" },
+            "rainy": { uk: "/ˈreɪni/", us: "/ˈreɪni/" },
+            "they": { uk: "/ðeɪ/", us: "/ðeɪ/" }
+        };
+
+        const grammarData = {
+            affirmative: {
+                formulas: [
+                    { prns: "I / YOU / WE / THEY", rule: "подлежащее + V (базовый глагол)" },
+                    { prns: "HE / SHE / IT", rule: "подлежащее + V-s / V-es (окончание)" }
+                ],
+                cards: [
+                    {
+                        prn: "I",
+                        words: [
+                            { text: "I", highlight: false },
+                            { text: "play", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "tennis.", highlight: false }
+                        ],
+                        plainEng: "I play tennis.",
+                        rus: "Я играю в теннис.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmJ6dnJvdmwwOG41NTRoM3hxeHRwNzM5MGlndnE0amcxN2dzYTZ4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "YOU",
+                        words: [
+                            { text: "You", highlight: false },
+                            { text: "read", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "a", highlight: false },
+                            { text: "lot.", highlight: false }
+                        ],
+                        plainEng: "You read a lot.",
+                        rus: "Ты много читаешь.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVqNW1pZHptbXFxb28xdXk0Y201cGg3YnAwbW81ejZqOXF3dG93ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE0g9dQnCH2Z20M/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "HE",
+                        words: [
+                            { text: "He", highlight: false },
+                            { text: "plays", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "tennis.", highlight: false }
+                        ],
+                        plainEng: "He plays tennis.",
+                        rus: "Он играет в теннис.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NjcXNmdnd2dzRmdWswNG9kdzFidW02OHFsczZsc2RndTR5NmE2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26xBI73gYquGHF2IA/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "SHE",
+                        words: [
+                            { text: "She", highlight: false },
+                            { text: "works", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "at", highlight: false },
+                            { text: "home.", highlight: false }
+                        ],
+                        plainEng: "She works at home.",
+                        rus: "Она работает дома.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hveHR3dnI4MXdzanBmd3pmeGFyMWNidHBtMmU4NXJhZGk1ZmExOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HteV6h0MD0vXS/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "IT",
+                        words: [
+                            { text: "It", highlight: false },
+                            { text: "rains", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "a", highlight: false },
+                            { text: "lot", highlight: false },
+                            { text: "here.", highlight: false }
+                        ],
+                        plainEng: "It rains a lot here.",
+                        rus: "Здесь часто идёт дождь.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDV4d3RxbXU0MG54OHI3a3drNDR3aG0yZzVpeGVidmY0OTQ5NWV1MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t7Qb86qco1U31z4GB5/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "WE / THEY",
+                        words: [
+                            { text: "We", highlight: false },
+                            { text: "live", highlight: true, style: "bg-teal-100 text-teal-700" },
+                            { text: "in", highlight: false },
+                            { text: "Moscow.", highlight: false }
+                        ],
+                        plainEng: "We live in Moscow.",
+                        rus: "Мы живём в Москве.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3JpOTIyd296Y2U1c3M0a3gyZTV2OXF5d2ptdzN3NDBrNDUxcXhpeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d1E2EclUeIOhPz20/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                info: "Окончание <b>-s/-es</b> добавляется только в утверждении и только с he/she/it. В отрицании и вопросе эту роль берёт на себя вспомогательный глагол does — смотрите правила на соседних вкладках."
+            },
+            negative: {
+                formulas: [
+                    { prns: "I / YOU / WE / THEY", rule: "подлежащее + don't + V (база)" },
+                    { prns: "HE / SHE / IT", rule: "подлежащее + doesn't + V (база)" }
+                ],
+                cards: [
+                    {
+                        prn: "I",
+                        words: [
+                            { text: "I", highlight: false },
+                            { text: "don't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "play", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "tennis.", highlight: false }
+                        ],
+                        plainEng: "I don't play tennis.",
+                        rus: "Я не играю в теннис.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmJ6dnJvdmwwOG41NTRoM3hxeHRwNzM5MGlndnE0amcxN2dzYTZ4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "YOU",
+                        words: [
+                            { text: "You", highlight: false },
+                            { text: "don't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "read", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "much.", highlight: false }
+                        ],
+                        plainEng: "You don't read much.",
+                        rus: "Ты не особо много читаешь.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVqNW1pZHptbXFxb28xdXk0Y201cGg3YnAwbW81ejZqOXF3dG93ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE0g9dQnCH2Z20M/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "HE",
+                        words: [
+                            { text: "He", highlight: false },
+                            { text: "doesn't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "play", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "tennis.", highlight: false }
+                        ],
+                        plainEng: "He doesn't play tennis.",
+                        rus: "Он не играет в теннис.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NjcXNmdnd2dzRmdWswNG9kdzFidW02OHFsczZsc2RndTR5NmE2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26xBI73gYquGHF2IA/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "SHE",
+                        words: [
+                            { text: "She", highlight: false },
+                            { text: "doesn't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "work", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "at", highlight: false },
+                            { text: "home.", highlight: false }
+                        ],
+                        plainEng: "She doesn't work at home.",
+                        rus: "Она не работает дома.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hveHR3dnI4MXdzanBmd3pmeGFyMWNidHBtMmU4NXJhZGk1ZmExOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HteV6h0MD0vXS/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "IT",
+                        words: [
+                            { text: "It", highlight: false },
+                            { text: "doesn't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "rain", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "here.", highlight: false }
+                        ],
+                        plainEng: "It doesn't rain here.",
+                        rus: "Здесь не идёт дождь.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDV4d3RxbXU0MG54OHI3a3drNDR3aG0yZzVpeGVidmY0OTQ5NWV1MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t7Qb86qco1U31z4GB5/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "WE / THEY",
+                        words: [
+                            { text: "We", highlight: false },
+                            { text: "don't", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "live", highlight: true, style: "bg-red-100 text-red-600" },
+                            { text: "in", highlight: false },
+                            { text: "Moscow.", highlight: false }
+                        ],
+                        plainEng: "We don't live in Moscow.",
+                        rus: "Мы не живём в Москве.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3JpOTIyd296Y2U1c3M0a3gyZTV2OXF5d2ptdzN3NDBrNDUxcXhpeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d1E2EclUeIOhPz20/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                info: "Обратите внимание: как только появляется вспомогательный глагол <b>doesn't</b>, у основного смыслового глагола исчезает окончание -s/-es!"
+            },
+            question: {
+                formulas: [
+                    { prns: "I / YOU / WE / THEY", rule: "Do + подлежащее + V (база)?" },
+                    { prns: "HE / SHE / IT", rule: "Does + подлежащее + V (база)?" }
+                ],
+                cards: [
+                    {
+                        prn: "I",
+                        words: [
+                            { text: "Do", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "I", highlight: false },
+                            { text: "play", highlight: false },
+                            { text: "tennis", highlight: false },
+                            { text: "well?", highlight: false }
+                        ],
+                        plainEng: "Do I play tennis well?",
+                        rus: "Я хорошо играю в теннис?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmJ6dnJvdmwwOG41NTRoM3hxeHRwNzM5MGlndnE0amcxN2dzYTZ4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "YOU",
+                        words: [
+                            { text: "Do", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "you", highlight: false },
+                            { text: "read", highlight: false },
+                            { text: "every", highlight: false },
+                            { text: "day?", highlight: false }
+                        ],
+                        plainEng: "Do you read every day?",
+                        rus: "Ты читаешь каждый день?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVqNW1pZHptbXFxb28xdXk0Y201cGg3YnAwbW81ejZqOXF3dG93ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE0g9dQnCH2Z20M/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "HE",
+                        words: [
+                            { text: "Does", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "he", highlight: false },
+                            { text: "play", highlight: false },
+                            { text: "tennis?", highlight: false }
+                        ],
+                        plainEng: "Does he play tennis?",
+                        rus: "Он играет в теннис?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NjcXNmdnd2dzRmdWswNG9kdzFidW02OHFsczZsc2RndTR5NmE2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26xBI73gYquGHF2IA/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "SHE",
+                        words: [
+                            { text: "Does", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "she", highlight: false },
+                            { text: "work", highlight: false },
+                            { text: "at", highlight: false },
+                            { text: "home?", highlight: false }
+                        ],
+                        plainEng: "Does she work at home?",
+                        rus: "Она работает дома?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hveHR3dnI4MXdzanBmd3pmeGFyMWNidHBtMmU4NXJhZGk1ZmExOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HteV6h0MD0vXS/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "IT",
+                        words: [
+                            { text: "Does", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "it", highlight: false },
+                            { text: "rain", highlight: false },
+                            { text: "often", highlight: false },
+                            { text: "here?", highlight: false }
+                        ],
+                        plainEng: "Does it rain often here?",
+                        rus: "Здесь часто идёт дождь?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDV4d3RxbXU0MG54OHI3a3drNDR3aG0yZzVpeGVidmY0OTQ5NWV1MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t7Qb86qco1U31z4GB5/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "WE / THEY",
+                        words: [
+                            { text: "Do", highlight: true, style: "bg-blue-100 text-blue-600" },
+                            { text: "they", highlight: false },
+                            { text: "live", highlight: false },
+                            { text: "in", highlight: false },
+                            { text: "Moscow?", highlight: false }
+                        ],
+                        plainEng: "Do they live in Moscow?",
+                        rus: "Они живут в Москве?",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3JpOTIyd296Y2U1c3M0a3gyZTV2OXF5d2ptdzN3NDBrNDUxcXhpeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d1E2EclUeIOhPz20/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                info: "При построении вопроса вспомогательный глагол <b>Do</b> или <b>Does</b> выносится на самое первое место перед подлежащим."
+            },
+            tobe: {
+                formulas: [
+                    { prns: "I", rule: "подлежащее + am / am not" },
+                    { prns: "HE / SHE / IT | WE / YOU / THEY", rule: "is / isn't  |  are / aren't" }
+                ],
+                cards: [
+                    {
+                        prn: "I",
+                        words: [
+                            { text: "I", highlight: false },
+                            { text: "am", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "a", highlight: false },
+                            { text: "tennis", highlight: false },
+                            { text: "player.", highlight: false }
+                        ],
+                        plainEng: "I am a tennis player.",
+                        rus: "Я теннисист.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmJ6dnJvdmwwOG41NTRoM3hxeHRwNzM5MGlndnE0amcxN2dzYTZ4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "YOU",
+                        words: [
+                            { text: "You", highlight: false },
+                            { text: "are", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "a", highlight: false },
+                            { text: "great", highlight: false },
+                            { text: "reader.", highlight: false }
+                        ],
+                        plainEng: "You are a great reader.",
+                        rus: "Ты потрясающий читатель.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDVqNW1pZHptbXFxb28xdXk0Y201cGg3YnAwbW81ejZqOXF3dG93ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE0g9dQnCH2Z20M/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "HE",
+                        words: [
+                            { text: "He", highlight: false },
+                            { text: "is", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "on", highlight: false },
+                            { text: "the", highlight: false },
+                            { text: "tennis", highlight: false },
+                            { text: "court.", highlight: false }
+                        ],
+                        plainEng: "He is on the tennis court.",
+                        rus: "Он на теннисном корте.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NjcXNmdnd2dzRmdWswNG9kdzFidW02OHFsczZsc2RndTR5NmE2dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26xBI73gYquGHF2IA/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "SHE",
+                        words: [
+                            { text: "She", highlight: false },
+                            { text: "is", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "busy", highlight: false },
+                            { text: "at", highlight: false },
+                            { text: "home.", highlight: false }
+                        ],
+                        plainEng: "She is busy at home.",
+                        rus: "Она занята дома.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3hveHR3dnI4MXdzanBmd3pmeGFyMWNidHBtMmU4NXJhZGk1ZmExOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HteV6h0MD0vXS/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "IT",
+                        words: [
+                            { text: "It", highlight: false },
+                            { text: "is", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "very", highlight: false },
+                            { text: "rainy", highlight: false },
+                            { text: "today.", highlight: false }
+                        ],
+                        plainEng: "It is very rainy today.",
+                        rus: "Сегодня очень дождливо.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDV4d3RxbXU0MG54OHI3a3drNDR3aG0yZzVpeGVidmY0OTQ5NWV1MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t7Qb86qco1U31z4GB5/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=600&q=80"
+                    },
+                    {
+                        prn: "WE / THEY",
+                        words: [
+                            { text: "We", highlight: false },
+                            { text: "are", highlight: true, style: "bg-purple-100 text-purple-700 font-bold" },
+                            { text: "in", highlight: false },
+                            { text: "Moscow", highlight: false },
+                            { text: "now.", highlight: false }
+                        ],
+                        plainEng: "We are in Moscow now.",
+                        rus: "Мы сейчас в Москве.",
+                        img: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3JpOTIyd296Y2U1c3M0a3gyZTV2OXF5d2ptdzN3NDBrNDUxcXhpeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/d1E2EclUeIOhPz20/giphy.webp",
+                        fallbackImg: "https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80"
+                    }
+                ],
+                info: "Глагол <b>to be (am/is/are)</b> является полностью самостоятельным. Ему <b>НЕ</b> нужны вспомогательные глаголы do/does для построения отрицаний и вопросов!"
+            }
+        };
+
+        let currentRate = 1.0;
+        let activeWordElement = null;
+
+        // Изменение скорости речи
+        window.setVoiceRate = function(rate) {
+            currentRate = rate;
+            document.querySelectorAll('#rate-1, #rate-08, #rate-06').forEach(btn => {
+                btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-gray-500 hover:text-slate-800";
+            });
+            const rateId = rate === 1.0 ? 'rate-1' : rate === 0.8 ? 'rate-08' : 'rate-06';
+            const activeBtn = document.getElementById(rateId);
+            if (activeBtn) {
+                activeBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-white text-slate-800 shadow-sm";
+            }
+        };
+
+        function getCleanWord(wordStr) {
+            return wordStr.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").toLowerCase().trim();
+        }
+
+        // Интеллектуальный синтез речи с жестким ограничением на женские голоса
+        window.speakText = function(text, accent, event) {
+            if (event) event.stopPropagation();
+            
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = currentRate;
+
+                const voices = window.speechSynthesis.getVoices();
+                let matchedVoice = null;
+
+                if (accent === 'AmE') {
+                    utterance.lang = 'en-US';
+                    matchedVoice = voices.find(v => v.lang.startsWith('en-US') && (v.name.includes('Zira') || v.name.includes('Samantha') || v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Microsoft Zira')));
+                } else if (accent === 'BrE') {
+                    utterance.lang = 'en-GB';
+                    matchedVoice = voices.find(v => v.lang.startsWith('en-GB') && (v.name.includes('Hazel') || v.name.includes('Susan') || v.name.includes('Serena') || v.name.includes('Female') || v.name.includes('Google UK English Female') || v.name.includes('Microsoft Hazel')));
+                }
+
+                if (matchedVoice) {
+                    utterance.voice = matchedVoice;
+                } else {
+                    utterance.lang = accent === 'AmE' ? 'en-US' : 'en-GB';
+                }
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Синтез речи не поддерживается вашим браузером.");
+            }
+        };
+
+        // Открытие / закрытие тултипа по клику
+        window.toggleWordTooltip = function(elem, rawWord, event) {
+            if (event) event.stopPropagation();
+            
+            const tooltip = document.getElementById('word-tooltip');
+            
+            if (activeWordElement === elem && !tooltip.classList.contains('hidden')) {
+                tooltip.classList.add('hidden');
+                activeWordElement = null;
+                return;
+            }
+
+            activeWordElement = elem;
+            const cleaned = getCleanWord(rawWord);
+            const dictData = oxfordDictionary[cleaned] || { uk: "/n/a/", us: "/n/a/" };
+            
+            const title = document.getElementById('tooltip-word-title');
+            const ipaUk = document.getElementById('tooltip-ipa-uk');
+            const ipaUs = document.getElementById('tooltip-ipa-us');
+
+            title.innerText = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+            ipaUk.innerText = dictData.uk;
+            ipaUs.innerText = dictData.us;
+
+            document.getElementById('tooltip-btn-uk').onclick = (e) => {
+                e.stopPropagation();
+                window.speakText(cleaned, 'BrE');
+            };
+            document.getElementById('tooltip-btn-us').onclick = (e) => {
+                e.stopPropagation();
+                window.speakText(cleaned, 'AmE');
+            };
+
+            const rect = elem.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX + (rect.width / 2) - 100}px`;
+            tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 12}px`;
+            
+            tooltip.classList.remove('hidden');
+
+            const currentGlobalAccent = document.querySelector('.bg-lab-orange') ? 'AmE' : 'BrE';
+            window.speakText(cleaned, currentGlobalAccent);
+        };
+
+        document.addEventListener('click', (e) => {
+            const tooltip = document.getElementById('word-tooltip');
+            if (tooltip && !tooltip.contains(e.target) && !e.target.classList.contains('grammar-word')) {
+                tooltip.classList.add('hidden');
+                activeWordElement = null;
+            }
+        });
+
+        // Сайдбар навигация: Уровень 1
+        window.switchSidebarSection = function(sectionId) {
+            // Сбрасываем стили кнопок сайдбара
+            document.querySelectorAll('#side-education, #side-usage, #side-spelling, #side-markers, #side-test').forEach(btn => {
+                btn.className = "w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 text-gray-500 hover:text-slate-800 hover:bg-gray-50";
+            });
+
+            // Активируем нужную кнопку
+            const activeBtn = document.getElementById(`side-${sectionId}`);
+            if (activeBtn) {
+                activeBtn.className = "w-full text-left px-4 py-3 rounded-2xl text-sm font-bold flex items-center gap-3 transition-all duration-300 bg-lab-orangeLight text-lab-orange";
+            }
+
+            // Скрываем все разделы
+            document.getElementById('section-education').classList.add('hidden');
+            document.getElementById('section-usage').classList.add('hidden');
+            document.getElementById('section-fallback').classList.add('hidden');
+
+            // Показываем целевой раздел
+            if (sectionId === 'education') {
+                document.getElementById('section-education').classList.remove('hidden');
+                renderTab('affirmative');
+            } else if (sectionId === 'usage') {
+                document.getElementById('section-usage').classList.remove('hidden');
+            } else {
+                document.getElementById('section-fallback').classList.remove('hidden');
+            }
+        };
+
+        // Рендеринг содержимого вкладок Уровня 2 (Образование)
+        function renderTab(tabId) {
+            const data = grammarData[tabId];
+            if (!data) return;
+
+            document.getElementById('word-tooltip').classList.add('hidden');
+            activeWordElement = null;
+
+            // 1. Формулы
+            const formulaContainer = document.getElementById('formula-container');
+            formulaContainer.innerHTML = '';
+            
+            data.formulas.forEach(f => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-200/80 shadow-sm flex flex-col justify-center min-h-[90px] hover:border-gray-300 transition-all duration-300";
+                card.innerHTML = `
+                    <span class="text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">${f.prns}</span>
+                    <h4 class="text-base md:text-lg font-bold text-slate-800">${f.rule}</h4>
+                `;
+                formulaContainer.appendChild(card);
+            });
+
+            // 2. Карточки-примеры
+            const examplesContainer = document.getElementById('examples-grid-container');
+            examplesContainer.innerHTML = '';
+
+            data.cards.forEach((cardData, idx) => {
+                const card = document.createElement('div');
+                card.className = "group bg-white rounded-3xl overflow-hidden border border-gray-200/70 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between";
+                
+                let wordsHTML = '';
+                cardData.words.forEach(w => {
+                    if (w.highlight) {
+                        wordsHTML += `<span onclick="window.toggleWordTooltip(this, '${w.text}', event)" class="grammar-word inline-block cursor-pointer px-1.5 py-0.5 rounded-md font-bold transition-all duration-200 hover:scale-105 ${w.style}">${w.text}</span> `;
+                    } else {
+                        wordsHTML += `<span onclick="window.toggleWordTooltip(this, '${w.text}', event)" class="grammar-word inline-block cursor-pointer text-slate-800 border-b border-dashed border-transparent hover:border-gray-400 hover:text-lab-orange transition-all duration-150">${w.text}</span> `;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="relative h-44 overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                             src="${cardData.img}" 
+                             alt="${cardData.prn}" 
+                             onerror="this.onerror=null; this.src='${cardData.fallbackImg}';">
+                        
+                        <!-- Кнопки озвучки предложений с флагами Великобритании и США (только женские голоса) -->
+                        <div class="absolute top-3 right-3 flex gap-1.5 z-10">
+                            <button onclick="window.speakText('${cardData.plainEng}', 'BrE', event)" 
+                                    class="px-2.5 py-1.5 text-[10px] font-extrabold rounded-lg bg-white/95 text-slate-700 hover:bg-teal-600 hover:text-white shadow-md active:scale-95 transition-all duration-200 flex items-center gap-1.5" 
+                                    title="Британский женский голос (BrE)">
+                                <svg class="w-4 h-3 rounded-sm shadow-sm" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                                    <clipPath id="gb-clip">
+                                        <rect width="60" height="30" rx="1"/>
+                                    </clipPath>
+                                    <g clip-path="url(#gb-clip)">
+                                        <rect width="60" height="30" fill="#012169"/>
+                                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/>
+                                        <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/>
+                                        <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/>
+                                    </g>
+                                </svg>
+                                <span>BrE</span>
+                            </button>
+                            <button onclick="window.speakText('${cardData.plainEng}', 'AmE', event)" 
+                                    class="px-2.5 py-1.5 text-[10px] font-extrabold rounded-lg bg-white/95 text-slate-700 hover:bg-lab-orange hover:text-white shadow-md active:scale-95 transition-all duration-200 flex items-center gap-1.5" 
+                                    title="Американский женский голос (AmE)">
+                                <svg class="w-4 h-3 rounded-sm shadow-sm" viewBox="0 0 74 39" xmlns="http://www.w3.org/2000/svg">
+                                    <clipPath id="us-clip">
+                                        <rect width="74" height="39" rx="1"/>
+                                    </clipPath>
+                                    <g clip-path="url(#us-clip)">
+                                        <rect width="74" height="39" fill="#B22234"/>
+                                        <path d="M0,3 H74 M0,9 H74 M0,15 H74 M0,21 H74 M0,27 H74 M0,33 H74" stroke="#fff" stroke-width="3"/>
+                                        <rect width="30" height="21" fill="#3C3B6E"/>
+                                        <circle cx="5" cy="4" r="1" fill="#fff"/>
+                                        <circle cx="15" cy="4" r="1" fill="#fff"/>
+                                        <circle cx="25" cy="4" r="1" fill="#fff"/>
+                                        <circle cx="10" cy="8" r="1" fill="#fff"/>
+                                        <circle cx="20" cy="8" r="1" fill="#fff"/>
+                                        <circle cx="5" cy="12" r="1" fill="#fff"/>
+                                        <circle cx="15" cy="12" r="1" fill="#fff"/>
+                                        <circle cx="25" cy="12" r="1" fill="#fff"/>
+                                        <circle cx="10" cy="16" r="1" fill="#fff"/>
+                                        <circle cx="20" cy="16" r="1" fill="#fff"/>
+                                    </g>
+                                </svg>
+                                <span>AmE</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <div class="space-y-1.5">
+                            <div>
+                                <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-widest bg-lab-orangeLight text-lab-orange uppercase">${cardData.prn}</span>
+                            </div>
+                            <h4 class="text-base md:text-lg font-bold leading-normal pt-1 flex flex-wrap gap-x-1.5 gap-y-1 items-center">
+                                ${wordsHTML}
+                            </h4>
+                            <p class="text-sm text-gray-500 mt-1">${cardData.rus}</p>
+                        </div>
+                    </div>
+                `;
+                examplesContainer.appendChild(card);
+            });
+
+            document.getElementById('info-callout-text').innerHTML = data.info;
+        }
+
+        // Переключение табов Уровня 2 (Образование)
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold text-gray-500 hover:text-slate-800 transition-all duration-300 flex items-center justify-center gap-2";
+            });
+
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = `tab-btn flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                    tabId === 'affirmative' ? 'bg-lab-orange text-white shadow-sm shadow-lab-orange/10' :
+                    tabId === 'negative' ? 'bg-red-500 text-white shadow-sm shadow-red-500/10' :
+                    tabId === 'question' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/10' :
+                    'bg-purple-600 text-white shadow-sm shadow-purple-600/10'
+                }`;
+            }
+
+            renderTab(tabId);
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+            }
+            renderTab('affirmative');
+        });
+    </script>
+</body>
+</html>
