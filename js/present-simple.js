@@ -86,7 +86,13 @@ function resetVoiceButton() {
   activeVoiceOriginalHTML = "";
 }
 
-function speakWithBrowserVoice(text, langCode, btn, voices) {
+async function speakWithBrowserVoice(text, langCode, btn) {
+  if (!("speechSynthesis" in window)) {
+    resetVoiceButton();
+    return;
+  }
+
+  const voices = await getVoicesAsync();
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.rate = 0.95;
@@ -107,25 +113,7 @@ function speakWithBrowserVoice(text, langCode, btn, voices) {
   window.speechSynthesis.speak(utterance);
 }
 
-function speakWithGoogleTts(text, langCode, btn) {
-  const cleanText = encodeURIComponent(text);
-  const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${cleanText}`;
-
-  const audio = new Audio(ttsUrl);
-  activeVoiceAudio = audio;
-
-  audio.onplay = () => {
-    btn.classList.remove("is-loading");
-    btn.classList.add("is-playing");
-    btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
-  };
-  audio.onended = () => resetVoiceButton();
-  audio.onerror = () => resetVoiceButton();
-
-  audio.play().catch(() => audio.onerror());
-}
-
-async function speakExample(text, langCode, btn) {
+function speakExample(text, langCode, btn) {
   if ((activeVoiceAudio || window.speechSynthesis.speaking) && activeVoiceBtn === btn) {
     if (activeVoiceAudio) activeVoiceAudio.pause();
     window.speechSynthesis.cancel();
@@ -140,18 +128,29 @@ async function speakExample(text, langCode, btn) {
   btn.classList.add("is-loading");
   btn.innerHTML = '<span class="voice-spinner"></span><span>...</span>';
 
-  // приоритет — качественный голос самого браузера/ОС (обычно звучит живее,
-  // чем неофициальный Google Translate TTS); Google используем только
-  // как резерв, если в браузере вообще нет доступных голосов
-  if ("speechSynthesis" in window) {
-    const voices = await getVoicesAsync();
-    if (voices.length) {
-      speakWithBrowserVoice(text, langCode, btn, voices);
-      return;
-    }
-  }
+  // основной голос — Google Translate TTS (естественнее и явно различает
+  // британский/американский акцент); локальный голос браузера — только
+  // резерв, если облачный сервис недоступен
+  const cleanText = encodeURIComponent(text);
+  const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${cleanText}`;
 
-  speakWithGoogleTts(text, langCode, btn);
+  const audio = new Audio(ttsUrl);
+  activeVoiceAudio = audio;
+
+  audio.onplay = () => {
+    btn.classList.remove("is-loading");
+    btn.classList.add("is-playing");
+    btn.innerHTML = '<span class="voice-dot"></span><span>Голос</span>';
+  };
+
+  audio.onended = () => resetVoiceButton();
+
+  audio.onerror = () => {
+    activeVoiceAudio = null;
+    speakWithBrowserVoice(text, langCode, btn);
+  };
+
+  audio.play().catch(() => audio.onerror());
 }
 
 function createVoiceButton(text, langCode, flagSvg, label) {
