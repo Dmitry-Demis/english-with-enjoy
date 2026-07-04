@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple — Грамматика 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --lavender: #B8A9C9;
+            --lavender-deep: #9B8FB8;
+            --mocha: #8B6F47;
+            --mocha-light: #A6896A;
+            --neon-lime: #C5F82A;
+            --neon-lime-soft: #A8E063;
+            --future-dusk: #2A1F3D;
+            --future-dusk-light: #4A3F5C;
+            --coral: #E8927C;
+            --coral-warm: #F4A261;
+            --bg-cream: #F5F0EB;
+            --text-dark: #1A1A2E;
+            --text-light: #6B6B7B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--future-dusk) 0%, var(--future-dusk-light) 50%, var(--lavender-deep) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--neon-lime) 0%, transparent 70%);
+            opacity: 0.15;
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+            opacity: 0.2;
+            bottom: -100px;
+            left: -100px;
+            border-radius: 50%;
+            animation: pulse 5s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.1); opacity: 0.25; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(197, 248, 42, 0.15);
+            border: 1px solid var(--neon-lime);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            color: var(--neon-lime);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--neon-lime);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--neon-lime), var(--neon-lime-soft));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--neon-lime);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            overflow-x: auto;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 180px;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-cream);
+            color: var(--text-dark);
+        }
+
+        .tab-btn.active {
+            background: var(--future-dusk);
+            color: white;
+            box-shadow: 0 4px 15px rgba(42, 31, 61, 0.3);
+        }
+
+        .tab-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--future-dusk);
+        }
+
+        .card-text {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Feature Block */
+        .feature-block {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--lavender), var(--lavender-deep));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--future-dusk);
+        }
+
+        /* Formula Cards */
+        .formula-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .formula-card {
+            background: linear-gradient(135deg, var(--future-dusk), var(--future-dusk-light));
+            border-radius: 24px;
+            padding: 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--neon-lime) 0%, transparent 70%);
+            opacity: 0.2;
+            border-radius: 50%;
+        }
+
+        .formula-type {
+            display: inline-block;
+            background: var(--neon-lime);
+            color: var(--future-dusk);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--neon-lime);
+        }
+
+        .formula-example {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .formula-example strong {
+            color: var(--neon-lime);
+        }
+
+        /* Usage Grid */
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .usage-item {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--coral);
+            transition: all 0.3s ease;
+        }
+
+        .usage-item:hover {
+            transform: translateX(10px);
+        }
+
+        .usage-item:nth-child(2) { border-left-color: var(--neon-lime); }
+        .usage-item:nth-child(3) { border-left-color: var(--lavender-deep); }
+        .usage-item:nth-child(4) { border-left-color: var(--mocha); }
+
+        .usage-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--coral);
+            margin-bottom: 1rem;
+        }
+
+        .usage-item:nth-child(2) .usage-number { color: var(--neon-lime-soft); }
+        .usage-item:nth-child(3) .usage-number { color: var(--lavender-deep); }
+        .usage-item:nth-child(4) .usage-number { color: var(--mocha); }
+
+        .usage-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--future-dusk);
+        }
+
+        .usage-desc {
+            color: var(--text-light);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Markers */
+        .markers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .marker-chip {
+            background: white;
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .marker-chip:hover {
+            background: var(--future-dusk);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .marker-word {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .marker-translation {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* Practice Section */
+        .practice-card {
+            background: linear-gradient(135deg, var(--mocha), var(--mocha-light));
+            border-radius: 24px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .practice-question {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .practice-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .practice-option {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 16px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .practice-option:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: var(--neon-lime);
+        }
+
+        .practice-option.correct {
+            background: var(--neon-lime);
+            color: var(--future-dusk);
+            border-color: var(--neon-lime);
+        }
+
+        .practice-option.wrong {
+            background: var(--coral);
+            border-color: var(--coral);
+        }
+
+        .practice-result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .practice-result.show {
+            display: block;
+        }
+
+        /* Image Showcase */
+        .image-showcase {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 24px;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .tab-btn {
+                min-width: 150px;
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .feature-block {
+                padding: 2rem;
+            }
+
+            .formula-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-cream);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--lavender-deep);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--future-dusk);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Грамматика 2026</div>
+            <h1>Present <span>Simple</span></h1>
+            <p class="hero-subtitle">
+                Освойте базовое время английского языка через интерактивные блоки, 
+                формулы и практику. Современный подход к изучению грамматики.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Формулы</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Случая использования</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12+</span>
+                    <span class="stat-label">Маркеров времени</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">↓ Прокрутите вниз</div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Tabs Navigation -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" data-tab="overview">
+                <span class="tab-icon">📖</span>
+                Обзор
+            </button>
+            <button class="tab-btn" data-tab="formulas">
+                <span class="tab-icon"></span>
+                Формулы
+            </button>
+            <button class="tab-btn" data-tab="usage">
+                <span class="tab-icon">💬</span>
+                Когда используем
+            </button>
+            <button class="tab-btn" data-tab="markers">
+                <span class="tab-icon">🕐</span>
+                Маркеры
+            </button>
+            <button class="tab-btn" data-tab="practice">
+                <span class="tab-icon">🎯</span>
+                Практика
+            </button>
+        </nav>
+
+        <!-- Tab 1: Overview -->
+        <div class="tab-content active" id="overview">
+            <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/116d6b0e7-506c-41e9-a17c-c92e99e21312.png" 
+                 alt="Present Simple" class="image-showcase">
+            
+            <div class="feature-block">
+                <div class="feature-header">
+                    <div class="feature-icon">📚</div>
+                    <h2 class="feature-title">Что такое Present Simple?</h2>
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+                    <strong style="color: var(--future-dusk);">Present Simple</strong> (Настоящее простое время) — 
+                    это одно из базовых времён в английском языке. Оно используется для описания регулярных действий, 
+                    привычек, фактов и расписаний. Это время отвечает на вопрос "Что происходит обычно?"
+                </p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/18ee45b5c-ec8b-4c12-bf6e-0568c2d688f9.png" 
+                         alt="Daily routine" class="card-image">
+                    <h3 class="card-title">Регулярные действия</h3>
+                    <p class="card-text">
+                        Present Simple описывает действия, которые повторяются регулярно: 
+                        каждый день, каждую неделю, по расписанию.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, var(--lavender), var(--coral)); height: 200px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">
+                        🌍
+                    </div>
+                    <h3 class="card-title">Общие факты</h3>
+                    <p class="card-text">
+                        Используется для выражения общеизвестных фактов и истин: 
+                        "The sun rises in the east" (Солнце встаёт на востоке).
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, var(--neon-lime), var(--neon-lime-soft)); height: 200px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">
+                        📅
+                    </div>
+                    <h3 class="card-title">Расписания</h3>
+                    <p class="card-text">
+                        Применяется для описания расписаний транспорта, мероприятий: 
+                        "The train leaves at 9 AM" (Поезд отправляется в 9 утра).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Formulas -->
+        <div class="tab-content" id="formulas">
+            <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/1fbd6cc4b-4789-491b-971a-1f7d99646f2a.png" 
+                 alt="Formulas" class="image-showcase">
+
+            <div class="feature-block">
+                <div class="feature-header">
+                    <div class="feature-icon">🧩</div>
+                    <h2 class="feature-title">Три основные формулы</h2>
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+                    Present Simple имеет три формы: утверждение, отрицание и вопрос. 
+                    Каждая имеет свою структуру построения.
+                </p>
+            </div>
+
+            <div class="formula-cards">
+                <div class="formula-card">
+                    <span class="formula-type">Утверждение</span>
+                    <div class="formula">S + V(s/es)</div>
+                    <p class="formula-example">
+                        <strong>I work</strong> every day.<br>
+                        <strong>She works</strong> at a bank.<br>
+                        <strong>They play</strong> tennis on Sundays.
+                    </p>
+                </div>
+
+                <div class="formula-card">
+                    <span class="formula-type">Отрицание</span>
+                    <div class="formula">S + don't/doesn't + V</div>
+                    <p class="formula-example">
+                        <strong>I don't work</strong> on weekends.<br>
+                        <strong>She doesn't work</strong> here.<br>
+                        <strong>They don't play</strong> football.
+                    </p>
+                </div>
+
+                <div class="formula-card">
+                    <span class="formula-type">Вопрос</span>
+                    <div class="formula">Do/Does + S + V?</div>
+                    <p class="formula-example">
+                        <strong>Do you work</strong> here?<br>
+                        <strong>Does she work</strong> at a bank?<br>
+                        <strong>Do they play</strong> tennis?
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block" style="margin-top: 2rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--future-dusk);">
+                    ⚠️ Важное правило: -s/-es в 3-м лице
+                </h3>
+                <div class="cards-grid" style="margin-bottom: 0;">
+                    <div class="card" style="border-left: 5px solid var(--neon-lime);">
+                        <h4 style="font-weight: 700; margin-bottom: 0.8rem; color: var(--future-dusk);">+s</h4>
+                        <p class="card-text">
+                            Большинство глаголов: <br>
+                            <strong>work → works</strong><br>
+                            <strong>play → plays</strong><br>
+                            <strong>read → reads</strong>
+                        </p>
+                    </div>
+
+                    <div class="card" style="border-left: 5px solid var(--coral);">
+                        <h4 style="font-weight: 700; margin-bottom: 0.8rem; color: var(--future-dusk);">+es</h4>
+                        <p class="card-text">
+                            После -s, -x, -ch, -sh, -o:<br>
+                            <strong>watch → watches</strong><br>
+                            <strong>go → goes</strong><br>
+                            <strong>fix → fixes</strong>
+                        </p>
+                    </div>
+
+                    <div class="card" style="border-left: 5px solid var(--lavender-deep);">
+                        <h4 style="font-weight: 700; margin-bottom: 0.8rem; color: var(--future-dusk);">-y → -ies</h4>
+                        <p class="card-text">
+                            Если перед -y согласная:<br>
+                            <strong>study → studies</strong><br>
+                            <strong>fly → flies</strong><br>
+                            <strong>try → tries</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Usage -->
+        <div class="tab-content" id="usage">
+            <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/18ee45b5c-ec8b-4c12-bf6e-0568c2d688f9.png" 
+                 alt="Usage" class="image-showcase">
+
+            <div class="feature-block">
+                <div class="feature-header">
+                    <div class="feature-icon"></div>
+                    <h2 class="feature-title">Когда используем Present Simple?</h2>
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+                    Present Simple применяется в четырёх основных случаях. 
+                    Разберём каждый с примерами.
+                </p>
+            </div>
+
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <div class="usage-number">01</div>
+                    <h3 class="usage-title">Регулярные действия</h3>
+                    <p class="usage-desc">
+                        Действия, которые повторяются с определённой периодичностью: каждый день, 
+                        каждую неделю, по понедельникам.<br><br>
+                        <strong>Example:</strong> I drink coffee every morning.
+                    </p>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-number">02</div>
+                    <h3 class="usage-title">Привычки</h3>
+                    <p class="usage-desc">
+                        Действия, которые стали привычкой, частью рутины.<br><br>
+                        <strong>Example:</strong> She always brushes her teeth before bed.
+                    </p>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-number">03</div>
+                    <h3 class="usage-title">Общие факты и истины</h3>
+                    <p class="usage-desc">
+                        Общеизвестные факты, научные истины, законы природы.<br><br>
+                        <strong>Example:</strong> Water boils at 100°C.
+                    </p>
+                </div>
+
+                <div class="usage-item">
+                    <div class="usage-number">04</div>
+                    <h3 class="usage-title">Расписания</h3>
+                    <p class="usage-desc">
+                        Расписание транспорта, мероприятий, уроков.<br><br>
+                        <strong>Example:</strong> The train leaves at 8:30 AM.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block" style="margin-top: 2rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--future-dusk);">
+                     Примеры в контексте
+                </h3>
+                <div class="cards-grid" style="margin-bottom: 0;">
+                    <div class="card">
+                        <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--future-dusk);">🌅 Утро</h4>
+                        <p class="card-text" style="font-style: italic;">
+                            "I wake up at 7 AM. I take a shower and have breakfast. 
+                            Then I go to work by bus."
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--future-dusk);"> Работа</h4>
+                        <p class="card-text" style="font-style: italic;">
+                            "She works as a designer. She creates logos and websites. 
+                            Her office opens at 9 AM."
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--future-dusk);"> Хобби</h4>
+                        <p class="card-text" style="font-style: italic;">
+                            "They play football every Saturday. They practice at the stadium. 
+                            The game starts at 3 PM."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Markers -->
+        <div class="tab-content" id="markers">
+            <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/1b8cc9c2f-0ed9-4811-803e-10b073c94b6c.png" 
+                 alt="Markers" class="image-showcase">
+
+            <div class="feature-block">
+                <div class="feature-header">
+                    <div class="feature-icon">🕐</div>
+                    <h2 class="feature-title">Маркеры времени</h2>
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+                    Маркеры времени — это слова-подсказки, которые помогают определить, 
+                    что нужно использовать Present Simple.
+                </p>
+            </div>
+
+            <div class="feature-block">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--future-dusk);">
+                    Наречия частоты
+                </h3>
+                <div class="markers-container">
+                    <div class="marker-chip">
+                        <div class="marker-word">always</div>
+                        <div class="marker-translation">всегда</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">usually</div>
+                        <div class="marker-translation">обычно</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">often</div>
+                        <div class="marker-translation">часто</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">sometimes</div>
+                        <div class="marker-translation">иногда</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">rarely</div>
+                        <div class="marker-translation">редко</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">never</div>
+                        <div class="marker-translation">никогда</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-block">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--future-dusk);">
+                    Временные выражения
+                </h3>
+                <div class="markers-container">
+                    <div class="marker-chip">
+                        <div class="marker-word">every day</div>
+                        <div class="marker-translation">каждый день</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">every week</div>
+                        <div class="marker-translation">каждую неделю</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">every month</div>
+                        <div class="marker-translation">каждый месяц</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">every year</div>
+                        <div class="marker-translation">каждый год</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">on Mondays</div>
+                        <div class="marker-translation">по понедельникам</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">in the morning</div>
+                        <div class="marker-translation">утром</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">at night</div>
+                        <div class="marker-translation">ночью</div>
+                    </div>
+                    <div class="marker-chip">
+                        <div class="marker-word">once a week</div>
+                        <div class="marker-translation">раз в неделю</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-block" style="background: linear-gradient(135deg, var(--future-dusk), var(--future-dusk-light)); color: white;">
+                <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--neon-lime);">
+                    💡 Запомните
+                </h3>
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Наречия частоты (always, usually, often, sometimes, rarely, never) 
+                    обычно ставятся <strong style="color: var(--neon-lime);">перед основным глаголом</strong>, 
+                    но после глагола to be.
+                </p>
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 12px; font-family: monospace; font-size: 1.1rem;">
+                    I <strong style="color: var(--neon-lime);">always</strong> drink coffee.<br>
+                    She <strong style="color: var(--neon-lime);">is always</strong> happy.
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Practice -->
+        <div class="tab-content" id="practice">
+            <img src="https://image.qwenlm.ai/public_source/877e5c11-f762-4321-b0a2-1267aeec3556/18c0d4cd3-297f-49b8-bda3-07dfd7b7a33c.png" 
+                 alt="Practice" class="image-showcase">
+
+            <div class="feature-block">
+                <div class="feature-header">
+                    <div class="feature-icon">🎯</div>
+                    <h2 class="feature-title">Практика</h2>
+                </div>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-light);">
+                    Проверьте свои знания! Выберите правильный вариант ответа.
+                </p>
+            </div>
+
+            <div class="practice-card">
+                <div class="practice-question">
+                    1. She _______ to the gym every morning.
+                </div>
+                <div class="practice-options">
+                    <div class="practice-option" onclick="checkAnswer(this, false)">go</div>
+                    <div class="practice-option" onclick="checkAnswer(this, true)">goes</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">going</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">gone</div>
+                </div>
+                <div class="practice-result"></div>
+            </div>
+
+            <div class="practice-card" style="background: linear-gradient(135deg, var(--lavender-deep), var(--lavender));">
+                <div class="practice-question">
+                    2. _______ you like pizza?
+                </div>
+                <div class="practice-options">
+                    <div class="practice-option" onclick="checkAnswer(this, false)">Does</div>
+                    <div class="practice-option" onclick="checkAnswer(this, true)">Do</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">Is</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">Are</div>
+                </div>
+                <div class="practice-result"></div>
+            </div>
+
+            <div class="practice-card" style="background: linear-gradient(135deg, var(--coral), var(--coral-warm));">
+                <div class="practice-question">
+                    3. They _______ watch TV in the evening.
+                </div>
+                <div class="practice-options">
+                    <div class="practice-option" onclick="checkAnswer(this, false)">doesn't</div>
+                    <div class="practice-option" onclick="checkAnswer(this, true)">don't</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">isn't</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">aren't</div>
+                </div>
+                <div class="practice-result"></div>
+            </div>
+
+            <div class="practice-card" style="background: linear-gradient(135deg, var(--neon-lime-soft), var(--neon-lime)); color: var(--future-dusk);">
+                <div class="practice-question">
+                    4. The sun _______ in the east.
+                </div>
+                <div class="practice-options">
+                    <div class="practice-option" onclick="checkAnswer(this, false)">rise</div>
+                    <div class="practice-option" onclick="checkAnswer(this, true)">rises</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">rising</div>
+                    <div class="practice-option" onclick="checkAnswer(this, false)">risen</div>
+                </div>
+                <div class="practice-result"></div>
+            </div>
+
+            <div class="feature-block" style="text-align: center; background: linear-gradient(135deg, var(--future-dusk), var(--future-dusk-light)); color: white;">
+                <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: var(--neon-lime);">
+                    🎉 Отличная работа!
+                </h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
+                    Вы изучили основы Present Simple. Теперь вы можете:<br>
+                    ✓ Строить утверждения, отрицания и вопросы<br>
+                    ✓ Использовать правильные маркеры времени<br>
+                    ✓ Применять -s/-es в 3-м лице единственного числа
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // Remove active class from all
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+
+                // Scroll to content
+                document.querySelector('.tabs-nav').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            });
+        });
+
+        // Practice answer checking
+        function checkAnswer(element, isCorrect) {
+            const parent = element.parentElement;
+            const result = parent.nextElementSibling;
+            const options = parent.querySelectorAll('.practice-option');
+
+            // Disable all options
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                result.textContent = '✓ Правильно! Отличная работа!';
+                result.style.background = 'rgba(197, 248, 42, 0.3)';
+                result.style.color = '#C5F82A';
+            } else {
+                element.classList.add('wrong');
+                result.textContent = '✗ Неправильно. Попробуйте ещё раз!';
+                result.style.background = 'rgba(232, 146, 124, 0.3)';
+                result.style.color = '#E8927C';
+
+                // Highlight correct answer
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        setTimeout(() => {
+                            opt.classList.add('correct');
+                        }, 500);
+                    }
+                });
+            }
+
+            result.classList.add('show');
+        }
+
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            document.querySelector('.main-content').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .feature-block, .usage-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+

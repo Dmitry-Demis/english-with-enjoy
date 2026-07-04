@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Simple - Bento Interactive Space</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#08090d',
+                            card: 'rgba(17, 19, 26, 0.75)',
+                            accent: '#6366f1',
+                            accentGlow: 'rgba(99, 102, 241, 0.15)',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 20px rgba(99, 102, 241, 0.25)',
+                        'neon-pink': '0 0 20px rgba(236, 72, 153, 0.25)',
+                        'neon-cyan': '0 0 20px rgba(6, 114, 212, 0.25)',
+                        'bento-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08090d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+        /* Custom Glassmorphism styles */
+        .glass-card {
+            background: rgba(17, 19, 26, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+        /* Active Tab indicator animation */
+        .tab-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .text-glow {
+            text-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-gray-100 min-h-screen antialiased flex flex-col justify-between overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+    <!-- Gradient background decoration -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-brand-accentGlow via-transparent to-transparent blur-3xl pointer-events-none -z-10"></div>
+
+    <header class="border-b border-gray-800/60 sticky top-0 z-50 backdrop-blur-md bg-brand-bg/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center shadow-neon-blue">
+                    <!-- SVG Logo -->
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">PRESENT <span class="text-brand-accent">SIMPLE</span></span>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Interactive Learn Hub 2026</p>
+                </div>
+            </div>
+            
+            <!-- Quick badge info -->
+            <div class="hidden md:flex items-center gap-4 text-xs font-medium text-gray-400">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800">
+                    <span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+                    <span>Адаптивный Интенсив</span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800">
+                    <span>Уровень: A1 - B1</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+        <!-- Hero Title Block -->
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+                Простое настоящее <span class="bg-gradient-to-r from-brand-accent via-brand-pink to-brand-cyan bg-clip-text text-transparent">время глагола</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl text-base md:text-lg">
+                Интерактивный Bento-дашборд для изучения Present Simple. Переключайте вкладки, изучайте интерактивные карточки-примеры и закрепите знания на практике.
+            </p>
+        </div>
+
+        <!-- Custom Tab Navigation Switcher -->
+        <div class="glass-card p-1.5 rounded-2xl mb-10 flex flex-wrap gap-1 max-w-4xl mx-auto md:mx-0 shadow-bento-glow">
+            <button onclick="switchTab('education')" id="tab-btn-education" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span>Образование</span>
+            </button>
+            <button onclick="switchTab('usage')" id="tab-btn-usage" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span>Употребление</span>
+            </button>
+            <button onclick="switchTab('markers')" id="tab-btn-markers" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Маркеры времени</span>
+            </button>
+            <button onclick="switchTab('practice')" id="tab-btn-practice" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Практика</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: EDUCATION -->
+        <div id="tab-education" class="tab-content block space-y-10">
+            <!-- Bento Formula Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Affirmative Rule -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-emerald/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-emerald/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald text-xl font-bold">
+                            +
+                        </div>
+                        <h3 class="text-xl font-bold">Утверждение</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Строится очень просто: мы берем глагол в начальной форме (без частицы <code class="text-brand-emerald bg-brand-emerald/10 px-1 py-0.5 rounded font-mono font-bold">to</code>). Но будьте бдительны с местоимениями третьего лица.</p>
+                    
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
+                            <p class="text-lg font-mono mt-0.5">V <span class="text-gray-500 font-sans text-sm ml-2">(глагол без изменений)</span></p>
+                            <p class="text-sm text-gray-300 italic mt-1">"I <span class="text-brand-emerald underline font-bold">work</span> here."</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
+                            <p class="text-lg font-mono mt-0.5">V + <span class="text-brand-pink font-bold">-s / -es</span></p>
+                            <p class="text-sm text-gray-300 italic mt-1">"She <span class="text-brand-pink underline font-bold">works</span> here."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Negative Rule -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-pink/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-pink/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink text-xl font-bold">
+                            −
+                        </div>
+                        <h3 class="text-xl font-bold">Отрицание</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Появляется сильный вспомогательный глагол <span class="text-brand-pink font-semibold">do / does</span> вместе с отрицательной частицей <span class="text-brand-pink font-semibold">not</span>. Основной глагол теряет окончание <span class="font-bold">-s</span>!</p>
+
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">don't</span> + V</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"They <span class="text-brand-pink font-bold">don't</span> speak French."</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">doesn't</span> + V</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"He <span class="text-brand-pink font-bold">doesn't</span> speak German."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interrogative Rule -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-cyan/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-xl font-bold">
+                            ?
+                        </div>
+                        <h3 class="text-xl font-bold">Вопрос</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Выносим вспомогательный глагол <span class="text-brand-cyan font-semibold">Do / Does</span> на самое первое место в предложении. Наш смысловой глагол также остаётся чистым.</p>
+
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Do</span> ... + V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Do</span> you play tennis?"</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Does</span> ... + V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Does</span> she play tennis?"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules of adding S / ES Bento Card -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                
+                <div class="flex flex-col lg:flex-row gap-8 items-start relative z-10">
+                    <div class="lg:w-1/3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full">Важная деталь</span>
+                        <h3 class="text-2xl font-extrabold mt-4 mb-3">Правила добавления окончаний <span class="text-brand-pink">-s / -es</span></h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Если подлежащее выражено местоимением 3-го лица единственного числа (<span class="text-white font-semibold">He, She, It</span>), к глаголу в утверждении добавляется окончание. Посмотрите, как меняется написание в зависимости от окончания глагола.
+                        </p>
+                    </div>
+
+                    <div class="lg:w-2/3 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на s, ss, sh, ch, x, o</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Прибавляем окончание <span class="text-brand-pink font-mono font-bold">-es</span> для сохранения плавности звучания.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">pass &rarr;</span> <span class="text-brand-pink font-semibold">passes</span></div>
+                                <div><span class="text-gray-500">wash &rarr;</span> <span class="text-brand-pink font-semibold">washes</span></div>
+                                <div><span class="text-gray-500">go &rarr;</span> <span class="text-brand-pink font-semibold">goes</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей согласной</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Буква <span class="text-white font-mono font-bold">y</span> заменяется на <span class="text-brand-pink font-mono font-bold">i</span> и добавляется <span class="text-brand-pink font-mono font-bold">-es</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">try &rarr;</span> <span class="text-brand-pink font-semibold">tries</span></div>
+                                <div><span class="text-gray-500">cry &rarr;</span> <span class="text-brand-pink font-semibold">cries</span></div>
+                                <div><span class="text-gray-500">study &rarr;</span> <span class="text-brand-pink font-semibold">studies</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей гласной</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Если перед <span class="text-white font-mono font-bold">y</span> стоит гласная, то буква <span class="text-white font-mono font-bold">y</span> остается, просто добавляем <span class="text-brand-pink font-mono font-bold">-s</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">play &rarr;</span> <span class="text-brand-pink font-semibold">plays</span></div>
+                                <div><span class="text-gray-500">stay &rarr;</span> <span class="text-brand-pink font-semibold">stays</span></div>
+                                <div><span class="text-gray-500">buy &rarr;</span> <span class="text-brand-pink font-semibold">buys</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Остальные глаголы</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">В любых обычных случаях просто прибавляем стандартную литеру <span class="text-brand-pink font-mono font-bold">-s</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">read &rarr;</span> <span class="text-brand-pink font-semibold">reads</span></div>
+                                <div><span class="text-gray-500">swim &rarr;</span> <span class="text-brand-pink font-semibold">swims</span></div>
+                                <div><span class="text-gray-500">like &rarr;</span> <span class="text-brand-pink font-semibold">likes</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Bento Examples with Unsplash images -->
+            <div>
+                <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">Практическая демонстрация</span>
+                        <h3 class="text-2xl font-extrabold mt-2">Примеры предложений в Bento-плитках</h3>
+                    </div>
+                    <span class="text-xs text-gray-400 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-lg">Кликните по карточке, чтобы перевести</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Example 1: Tennis -->
+                    <div onclick="toggleCardTranslate('card-tennis')" class="group cursor-pointer glass-card rounded-3xl overflow-hidden relative h-[360px] flex flex-col justify-end p-6 border border-gray-800 hover:shadow-neon-blue">
+                        <!-- BG Image with Unsplash, fallback included inside CSS/Alt styles -->
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.95) 20%, rgba(8, 9, 13, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%), url('https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=600&q=80')"></div>
+                        
+                        <div class="relative z-10 space-y-3">
+                            <span class="text-[10px] font-bold tracking-widest text-brand-emerald bg-brand-emerald/10 border border-brand-emerald/30 px-2 py-1 rounded uppercase">Спорт / Хобби</span>
+                            
+                            <div id="card-tennis" class="min-h-[70px]">
+                                <div class="card-eng block transition-all duration-300">
+                                    <h4 class="text-xl font-bold text-white">We play tennis every Saturday.</h4>
+                                </div>
+                                <div class="card-rus hidden transition-all duration-300 text-brand-accent">
+                                    <h4 class="text-lg font-bold">Мы играем в теннис каждую субботу.</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                                <span>Present Simple +</span>
+                                <span class="text-brand-emerald flex items-center gap-1 font-mono">We + Play</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Read -->
+                    <div onclick="toggleCardTranslate('card-read')" class="group cursor-pointer glass-card rounded-3xl overflow-hidden relative h-[360px] flex flex-col justify-end p-6 border border-gray-800 hover:shadow-neon-pink">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.95) 20%, rgba(8, 9, 13, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%), url('https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=600&q=80')"></div>
+                        
+                        <div class="relative z-10 space-y-3">
+                            <span class="text-[10px] font-bold tracking-widest text-brand-pink bg-brand-pink/10 border border-brand-pink/30 px-2 py-1 rounded uppercase">Чтение</span>
+                            
+                            <div id="card-read" class="min-h-[70px]">
+                                <div class="card-eng block transition-all duration-300">
+                                    <h4 class="text-xl font-bold text-white">She reads books in the evening.</h4>
+                                </div>
+                                <div class="card-rus hidden transition-all duration-300 text-brand-pink">
+                                    <h4 class="text-lg font-bold">Она читает книги по вечерам.</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                                <span>Present Simple (He/She/It)</span>
+                                <span class="text-brand-pink flex items-center gap-1 font-mono">Read + s</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Example 3: Coffee -->
+                    <div onclick="toggleCardTranslate('card-coffee')" class="group cursor-pointer glass-card rounded-3xl overflow-hidden relative h-[360px] flex flex-col justify-end p-6 border border-gray-800 hover:shadow-neon-cyan">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.95) 20%, rgba(8, 9, 13, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%), url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80')"></div>
+                        
+                        <div class="relative z-10 space-y-3">
+                            <span class="text-[10px] font-bold tracking-widest text-brand-cyan bg-brand-cyan/10 border border-brand-cyan/30 px-2 py-1 rounded uppercase">Привычка</span>
+                            
+                            <div id="card-coffee" class="min-h-[70px]">
+                                <div class="card-eng block transition-all duration-300">
+                                    <h4 class="text-xl font-bold text-white">He does not drink coffee at night.</h4>
+                                </div>
+                                <div class="card-rus hidden transition-all duration-300 text-brand-cyan">
+                                    <h4 class="text-lg font-bold">Он не пьет кофе на ночь.</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                                <span>Present Simple −</span>
+                                <span class="text-brand-cyan flex items-center gap-1 font-mono">Doesn't + drink</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Example 4: Study -->
+                    <div onclick="toggleCardTranslate('card-study')" class="group cursor-pointer glass-card rounded-3xl overflow-hidden relative h-[360px] flex flex-col justify-end p-6 border border-gray-800 hover:shadow-neon-blue">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.95) 20%, rgba(8, 9, 13, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80')"></div>
+                        
+                        <div class="relative z-10 space-y-3">
+                            <span class="text-[10px] font-bold tracking-widest text-brand-accent bg-brand-accentGlow border border-brand-accent/30 px-2 py-1 rounded uppercase">Образование</span>
+                            
+                            <div id="card-study" class="min-h-[70px]">
+                                <div class="card-eng block transition-all duration-300">
+                                    <h4 class="text-xl font-bold text-white">Do they study English online?</h4>
+                                </div>
+                                <div class="card-rus hidden transition-all duration-300 text-brand-accent">
+                                    <h4 class="text-lg font-bold">Они изучают английский онлайн?</h4>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                                <span>Present Simple ?</span>
+                                <span class="text-brand-accent flex items-center gap-1 font-mono">Do + study</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: USAGE -->
+        <div id="tab-usage" class="tab-content hidden space-y-10 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Use Case 1: Repeated actions -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-accentGlow border border-brand-accent/30 flex items-center justify-center text-brand-accent mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Регулярные, повторяющиеся действия</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Когда мы говорим о привычках, ежедневных ритуалах или хобби, которые повторяются с определенной периодичностью.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-accent font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"I wake up at 7 AM every day."</p>
+                        <p class="text-xs text-gray-400 mt-1">Я просыпаюсь в 7 утра каждый день.</p>
+                    </div>
+                </div>
+
+                <!-- Use Case 2: General Truths -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Общеизвестные факты и законы природы</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Факты, которые бесспорно правдивы, научные законы, истины, а также устоявшиеся на долгое время утверждения.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-emerald font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"Water boils at 100 degrees Celsius."</p>
+                        <p class="text-xs text-gray-400 mt-1">Вода закипает при 100 градусах Цельсия.</p>
+                    </div>
+                </div>
+
+                <!-- Use Case 3: Timetables -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1515165504669-423980d2576c?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Расписания и графики</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Когда мы говорим о транспорте, сеансах кино, уроках в школе или начале конференций. Действие запланировано извне.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-cyan font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"The train leaves at 8:30 PM tonight."</p>
+                        <p class="text-xs text-gray-400 mt-1">Поезд отправляется сегодня в 20:30.</p>
+                    </div>
+                </div>
+
+                <!-- Use Case 4: States / Feelings -->
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Состояния, чувства и предпочтения</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Используется с глаголами состояния (Stative Verbs), которые не могут употребляться в длительном времени (Continuous).
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"I love listening to classical music."</p>
+                        <p class="text-xs text-gray-400 mt-1">Я люблю слушать классическую музыку.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MARKERS -->
+        <div id="tab-markers" class="tab-content hidden space-y-10 animate-fade-in">
+            <!-- Time Markers Bento layout -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                
+                <div class="relative z-10">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Сигнальные слова</span>
+                    <h3 class="text-2xl font-extrabold mt-4 mb-3">Маркеры времени (Adverbs of Frequency)</h3>
+                    <p class="text-gray-400 text-sm max-w-2xl mb-8">
+                        Слова-маркеры помогают понять, что перед вами именно Present Simple. В зависимости от частоты действия, они делятся по процентному соотношению. Нажмите на любой маркер, чтобы увидеть детали его позиции в предложении.
+                    </p>
+
+                    <!-- Interactive frequency slider-blocks -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div onclick="showMarkerDetail('always', '100%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-emerald font-bold">100%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Always</h4>
+                            <p class="text-xs text-gray-400 mt-1">Всегда</p>
+                        </div>
+
+                        <div onclick="showMarkerDetail('usually', '90%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-cyan font-bold">90%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Usually</h4>
+                            <p class="text-xs text-gray-400 mt-1">Обычно</p>
+                        </div>
+
+                        <div onclick="showMarkerDetail('often', '70%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-accent font-bold">70%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Often</h4>
+                            <p class="text-xs text-gray-400 mt-1">Часто</p>
+                        </div>
+
+                        <div onclick="showMarkerDetail('sometimes', '50%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-pink font-bold">50%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-pink"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Sometimes</h4>
+                            <p class="text-xs text-gray-400 mt-1">Иногда</p>
+                        </div>
+
+                        <div onclick="showMarkerDetail('seldom', '10%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-yellow-500 font-bold">10%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Seldom</h4>
+                            <p class="text-xs text-gray-400 mt-1">Редко</p>
+                        </div>
+
+                        <div onclick="showMarkerDetail('never', '0%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-red-500 font-bold">0%</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Never</h4>
+                            <p class="text-xs text-gray-400 mt-1">Никогда</p>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic detail card output -->
+                    <div id="marker-detail-box" class="mt-8 p-6 bg-gray-950/80 rounded-2xl border border-gray-800 transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-mono px-2 py-1 bg-brand-accent/20 text-brand-accent rounded" id="detail-percentage">100%</span>
+                            <h4 class="text-lg font-bold" id="detail-title">Always (Всегда)</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4" id="detail-desc">Указывает на то, что действие происходит постоянно без исключений.</p>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <p class="text-xs text-gray-400 uppercase font-bold mb-1">Положение в предложении:</p>
+                            <p class="text-sm text-white" id="detail-rule">Ставится <strong>перед</strong> смысловым глаголом, но <strong>после</strong> глагола to be.</p>
+                            <p class="text-xs text-brand-accent font-mono italic mt-2" id="detail-example">Пример: "I always study at night."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Everyday & Time phrases Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-3xl p-6">
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Выражения с Every (Каждый)
+                    </h4>
+                    <p class="text-sm text-gray-400 mb-6">В отличие от наречий частоты, фразы с "every" обычно ставятся в самом конце предложения.</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Every day / week</span>
+                                <p class="text-xs text-gray-400">Каждый день / неделю</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-pink">I read every day.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Every month / year</span>
+                                <p class="text-xs text-gray-400">Каждый месяц / год</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-pink">They travel every year.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6">
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brand-emerald" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Периодичность (Once / Twice)
+                    </h4>
+                    <p class="text-sm text-gray-400 mb-6">Слова, указывающие точное количество раз. Обычно стоят в конце предложения.</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Once a week</span>
+                                <p class="text-xs text-gray-400">Раз в неделю</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-emerald">We play tennis once a week.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Twice a day</span>
+                                <p class="text-xs text-gray-400">Дважды в день</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-emerald">I brush my teeth twice a day.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: PRACTICE (Interactive Quiz) -->
+        <div id="tab-practice" class="tab-content hidden space-y-10 animate-fade-in">
+            <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accentGlow px-3 py-1.5 rounded-full">Интерактивный тренажер</span>
+                            <h3 class="text-2xl font-extrabold mt-3">Проверьте свои знания</h3>
+                        </div>
+                        <span id="quiz-progress" class="text-sm font-semibold text-gray-400">Вопрос 1 из 5</span>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden mb-8">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-brand-accent to-brand-pink h-full transition-all duration-300" style="width: 20%;"></div>
+                    </div>
+
+                    <!-- Question Block -->
+                    <div id="quiz-box" class="space-y-6">
+                        <div class="p-5 bg-gray-900/60 rounded-2xl border border-gray-800">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-2" id="quiz-q-category">Вставьте правильную форму</p>
+                            <h4 class="text-lg md:text-xl font-bold" id="quiz-question">My brother ________ playing tennis on weekends.</h4>
+                        </div>
+
+                        <!-- Answer choices -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quiz-options">
+                            <!-- Options rendered dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Score display (Hidden by default) -->
+                    <div id="quiz-score-box" class="hidden text-center py-10 space-y-6">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center mx-auto shadow-neon-blue">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-extrabold">Тест завершен!</h4>
+                            <p class="text-gray-400 mt-2 text-sm max-w-sm mx-auto">Вы отлично справились. Вы можете пройти тест повторно, чтобы закрепить материал.</p>
+                        </div>
+                        <p class="text-2xl font-bold" id="quiz-final-score">Вы набрали: 5 / 5</p>
+                        <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-brand-accent text-white font-semibold shadow-neon-blue hover:opacity-90 transition-all duration-300">
+                            Пройти заново
+                        </button>
+                    </div>
+
+                    <!-- Quiz Feedback Dialog (Hidden by default) -->
+                    <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl border transition-all duration-300">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800/60 py-8 bg-brand-bg/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <span class="font-bold text-sm tracking-tight text-white">Present Simple Bento Hub</span>
+                <p class="text-xs text-gray-500 mt-1">Интерактивный учебный модуль по грамматике английского языка.</p>
+            </div>
+            <p class="text-xs text-gray-500">&copy; 2026 Interactive English. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active classes from all tab buttons
+            const buttons = document.querySelectorAll('button[id^="tab-btn-"]');
+            buttons.forEach(button => {
+                button.className = "flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40";
+            });
+
+            // Show current tab content
+            const activeContent = document.getElementById('tab-' + tabId);
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+            }
+
+            // Highlight active button
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = "flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue";
+            }
+        }
+
+        // Toggle card translations
+        function toggleCardTranslate(cardId) {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+            const eng = card.querySelector('.card-eng');
+            const rus = card.querySelector('.card-rus');
+
+            if (eng.classList.contains('block')) {
+                eng.classList.replace('block', 'hidden');
+                rus.classList.replace('hidden', 'block');
+            } else {
+                eng.classList.replace('hidden', 'block');
+                rus.classList.replace('block', 'hidden');
+            }
+        }
+
+        // Marker frequency items
+        const markerDatabase = {
+            always: {
+                title: 'Always (Всегда)',
+                percentage: '100%',
+                desc: 'Указывает на то, что действие происходит постоянно, без исключений, изо дня в день.',
+                rule: 'Ставится перед смысловым глаголом (I always read), но после вспомогательных или глагола to be (I am always happy).',
+                example: 'Пример: "She always forgets her keys." (Она всегда забывает свои ключи.)'
+            },
+            usually: {
+                title: 'Usually (Обычно)',
+                percentage: '90%',
+                desc: 'Действие происходит в большинстве случаев, типичная регулярность.',
+                rule: 'Ставится перед основным глаголом в утверждении и отрицании.',
+                example: 'Пример: "We usually drink green tea." (Мы обычно пьем зеленый чай.)'
+            },
+            often: {
+                title: 'Often (Часто)',
+                percentage: '70%',
+                desc: 'Указывает на высокую повторяемость действия с короткими интервалами.',
+                rule: 'Обычно занимает место перед смысловым глаголом, но может стоять и в конце предложения.',
+                example: 'Пример: "Do you often travel to Europe?" (Вы часто путешествуете в Европу?)'
+            },
+            sometimes: {
+                title: 'Sometimes (Иногда)',
+                percentage: '50%',
+                desc: 'Действие происходит время от времени. Баланс 50/50 между регулярностью и ее отсутствием.',
+                rule: 'Крайне мобильное слово. Может стоять в начале предложения, в середине перед глаголом или в конце.',
+                example: 'Пример: "Sometimes he goes to bed late." (Иногда он ложится спать поздно.)'
+            },
+            seldom: {
+                title: 'Seldom / Rarely (Редко)',
+                percentage: '10%',
+                desc: 'Редкие случаи проявления действия. Почти никогда не происходит.',
+                rule: 'Ставится перед основным глаголом. Будьте аккуратны: эти слова уже несут в себе полуотрицательный смысл.',
+                example: 'Пример: "They seldom visit their relatives." (Они редко навещают своих родственников.)'
+            },
+            never: {
+                title: 'Never (Никогда)',
+                percentage: '0%',
+                desc: 'Полное отсутствие какого-либо действия. Абсолютный ноль.',
+                rule: 'Внимание! В английском предложении допускается только одно отрицание. Поэтому с "never" глагол ВСЕГДА стоит в утвердительной форме.',
+                example: 'Пример: "I never watch horror movies." (Я никогда не смотрю фильмы ужасов.)'
+            }
+        };
+
+        function showMarkerDetail(markerId, pct) {
+            const data = markerDatabase[markerId];
+            if (!data) return;
+
+            document.getElementById('detail-title').innerText = data.title;
+            document.getElementById('detail-percentage').innerText = data.percentage;
+            document.getElementById('detail-desc').innerText = data.desc;
+            document.getElementById('detail-rule').innerHTML = data.rule;
+            document.getElementById('detail-example').innerText = data.example;
+        }
+
+        // Quiz Database
+        const quizQuestions = [
+            {
+                category: 'Единственное число (He, She, It)',
+                question: 'My brother ________ tennis on weekends.',
+                options: ['plays', 'play', 'playing', 'does plays'],
+                correct: 0,
+                explanation: 'Подлежащее "brother" можно заменить на "He" (3-е лицо ед. ч.), поэтому к глаголу прибавляется окончание -s.'
+            },
+            {
+                category: 'Отрицательное предложение',
+                question: 'They ________ like cold coffee.',
+                options: ['doesn\'t', 'not', 'don\'t', 'does not'],
+                correct: 2,
+                explanation: 'Для местоимения "They" в качестве вспомогательного глагола в отрицании используется "don\'t" (do not).'
+            },
+            {
+                category: 'Вопросительная форма',
+                question: '________ your sister live in Moscow?',
+                options: ['Do', 'Does', 'Is', 'Are'],
+                correct: 1,
+                explanation: 'Так как "sister" - это "She" (3-е лицо ед. ч.), вопросительное предложение должно начинаться со вспомогательного глагола "Does".'
+            },
+            {
+                category: 'Исключение (Слово-маркер Never)',
+                question: 'I never ________ fast food.',
+                options: ['eats', 'eat', 'don\'t eat', 'doesn\'t eat'],
+                correct: 1,
+                explanation: 'Слово "never" уже является отрицанием, поэтому глагол ставится в утвердительную форму. С "I" глагол идет без окончания -s.'
+            },
+            {
+                category: 'Глагол to be (Быть)',
+                question: 'She ________ a very talented designer.',
+                options: ['are', 'be', 'is', 'am'],
+                correct: 2,
+                explanation: 'Глагол "to be" имеет форму "is" для местоимений He, She, It.'
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const qBox = document.getElementById('quiz-box');
+            const scoreBox = document.getElementById('quiz-score-box');
+            const feedback = document.getElementById('quiz-feedback');
+            
+            feedback.classList.add('hidden');
+            
+            if (currentQuestionIndex >= quizQuestions.length) {
+                // Show final score
+                qBox.classList.add('hidden');
+                scoreBox.classList.remove('hidden');
+                document.getElementById('quiz-progress').innerText = 'Завершено';
+                document.getElementById('quiz-final-score').innerText = `Вы набрали: ${score} из ${quizQuestions.length}`;
+                return;
+            }
+
+            // Normal render
+            qBox.classList.remove('hidden');
+            scoreBox.classList.add('hidden');
+
+            const qData = quizQuestions[currentQuestionIndex];
+            document.getElementById('quiz-q-category').innerText = qData.category;
+            document.getElementById('quiz-question').innerText = qData.question;
+            document.getElementById('quiz-progress').innerText = `Вопрос ${currentQuestionIndex + 1} из ${quizQuestions.length}`;
+            
+            // Progress Bar
+            const percent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+
+            // Options
+            const optContainer = document.getElementById('quiz-options');
+            optContainer.innerHTML = '';
+            
+            qData.options.forEach((opt, idx) => {
+                const button = document.createElement('button');
+                button.className = "p-4 bg-gray-900/40 rounded-2xl border border-gray-800 text-left font-medium hover:border-brand-accent hover:bg-gray-800/20 transition-all duration-300 w-full";
+                button.innerHTML = `<span class="text-xs text-gray-500 mr-2 font-mono">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
+                button.onclick = () => selectAnswer(idx);
+                optContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const qData = quizQuestions[currentQuestionIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const optionsButtons = document.getElementById('quiz-options').children;
+
+            // Block multiple clicks
+            for (let btn of optionsButtons) {
+                btn.disabled = true;
+            }
+
+            if (selectedIndex === qData.correct) {
+                score++;
+                feedback.className = "mt-6 p-4 rounded-xl border border-brand-emerald/30 bg-brand-emerald/10 text-brand-emerald block";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold mb-1">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span>Правильно!</span>
+                </div>
+                <p class="text-xs text-gray-300 mt-1">${qData.explanation}</p>`;
+                optionsButtons[selectedIndex].classList.add('border-brand-emerald', 'bg-brand-emerald/10');
+            } else {
+                feedback.className = "mt-6 p-4 rounded-xl border border-brand-pink/30 bg-brand-pink/10 text-brand-pink block";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold mb-1">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    <span>Неправильно</span>
+                </div>
+                <p class="text-xs text-gray-300 mt-1">${qData.explanation}</p>`;
+                optionsButtons[selectedIndex].classList.add('border-brand-pink', 'bg-brand-pink/10');
+                optionsButtons[qData.correct].classList.add('border-brand-emerald', 'bg-brand-emerald/10');
+            }
+
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestionIndex++;
+                renderQuestion();
+            }, 3500);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            renderQuestion();
+        }
+
+        // Initialize App on load
+        window.onload = function() {
+            renderQuestion();
+        }
+    </script>
+</body>
+</html>
