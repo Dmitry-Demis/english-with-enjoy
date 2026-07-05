@@ -488,145 +488,161 @@
         </div>
 
         <!-- TAB 2: USAGE -->
-        <div id="tab-usage" class="tab-content hidden space-y-10 animate-fade-in">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Use Case 1: Repeated actions -->
-                <div
-                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg')">
-                    </div>
-                    <div class="relative z-10">
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-brand-accentGlow border border-brand-accent/30 flex items-center justify-center text-brand-accent mb-6">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18" />
-                            </svg>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-3">Регулярные, повторяющиеся действия</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Когда мы говорим о привычках, ежедневных ритуалах или хобби, которые повторяются с
-                            определенной периодичностью.
-                        </p>
-                    </div>
-                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-accent font-bold uppercase tracking-wider mb-1">Пример предложения
-                        </p>
-                        <p class="text-sm font-semibold text-white">"I wake up at 7 AM every day."</p>
-                        <p class="text-xs text-gray-400 mt-1">Я просыпаюсь в 7 утра каждый день.</p>
-                        <div class="flex items-center gap-1.5 mt-2">
-                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-GB', this, event)"
-                                class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg
-                                    viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0">
-                                    <rect width="60" height="30" fill="#012169" />
-                                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
-                                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" />
-                                    <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10" />
-                                    <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6" />
-                                </svg><span>BrE</span></button>
-                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-US', this, event)"
-                                class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg
-                                    viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0">
-                                    <rect width="60" height="30" fill="#B22234" />
-                                    <g fill="#fff">
-                                        <rect y="2.3" width="60" height="2.3" />
-                                        <rect y="6.9" width="60" height="2.3" />
-                                        <rect y="11.5" width="60" height="2.3" />
-                                        <rect y="16.1" width="60" height="2.3" />
-                                        <rect y="20.7" width="60" height="2.3" />
-                                        <rect y="25.3" width="60" height="2.3" />
-                                    </g>
-                                    <rect width="24" height="16.1" fill="#3C3B6E" />
-                                </svg><span>AmE</span></button>
-                        </div>
-                    </div>
+        <div id="tab-usage" class="tab-content hidden space-y-8 animate-fade-in">
+
+            <!-- Уровни сложности -->
+            <div class="flex flex-wrap gap-2">
+                <button id="usage-level-easy" onclick="selectUsageLevel('easy')"
+                    class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-brand-emerald/15 border-brand-emerald/50 text-brand-emerald">🟢
+                    Лёгкий</button>
+                <button id="usage-level-medium" onclick="selectUsageLevel('medium')"
+                    class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-gray-900 border-gray-800 text-gray-400">🟡
+                    Средний</button>
+                <button id="usage-level-hard" onclick="selectUsageLevel('hard')"
+                    class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-gray-900 border-gray-800 text-gray-400">🔴
+                    Сложный</button>
+            </div>
+
+            <!-- ЛЁГКИЙ уровень: подзаголовки-плитки (картинка + название) -->
+            <div id="usage-level-content-easy">
+                <div class="mb-4">
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider text-brand-emerald bg-brand-emerald/10 px-3 py-1.5 rounded-full">Лёгкий
+                        уровень</span>
+                    <h3 class="text-2xl font-extrabold mt-3">Когда используем Present Simple</h3>
+                    <p class="text-gray-400 text-sm mt-1">Нажмите на карточку, чтобы увидеть примеры</p>
                 </div>
 
-                <!-- Use Case 2: General Truths -->
-                <div
-                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2008-07-05_Water_boiling_in_cooking_pot.jpg/500px-2008-07-05_Water_boiling_in_cooking_pot.jpg')">
-                    </div>
-                    <div class="relative z-10">
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald mb-6">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                            </svg>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div id="usage-tile-states" onclick="selectUsageTopic('states')"
+                        class="formula-card is-active-emerald glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg')">
                         </div>
-                        <h4 class="text-2xl font-bold mb-3">Общеизвестные факты и законы природы</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Факты, которые бесспорно правдивы, научные законы, истины, а также устоявшиеся на долгое
-                            время утверждения.
-                        </p>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Состояния и постоянные факты</h4>
+                        </div>
                     </div>
-                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-emerald font-bold uppercase tracking-wider mb-1">Пример предложения
-                        </p>
-                        <p class="text-sm font-semibold text-white">"Water boils at 100 degrees Celsius."</p>
-                        <p class="text-xs text-gray-400 mt-1">Вода закипает при 100 градусах Цельсия.</p>
-                    </div>
-                </div>
 
-                <!-- Use Case 3: Timetables -->
-                <div
-                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Platform_10_in_Pasila_train_station_in_Helsinki.jpg/500px-Platform_10_in_Pasila_train_station_in_Helsinki.jpg')">
-                    </div>
-                    <div class="relative z-10">
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mb-6">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+                    <div id="usage-tile-habits" onclick="selectUsageTopic('habits')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg')">
                         </div>
-                        <h4 class="text-2xl font-bold mb-3">Расписания и графики</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Когда мы говорим о транспорте, сеансах кино, уроках в школе или начале конференций. Действие
-                            запланировано извне.
-                        </p>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Привычные действия</h4>
+                        </div>
                     </div>
-                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-cyan font-bold uppercase tracking-wider mb-1">Пример предложения
-                        </p>
-                        <p class="text-sm font-semibold text-white">"The train leaves at 8:30 PM tonight."</p>
-                        <p class="text-xs text-gray-400 mt-1">Поезд отправляется сегодня в 20:30.</p>
-                    </div>
-                </div>
 
-                <!-- Use Case 4: States / Feelings -->
-                <div
-                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
-                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg/500px-The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg')">
-                    </div>
-                    <div class="relative z-10">
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink mb-6">
-                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
+                    <div id="usage-tile-repeated" onclick="selectUsageTopic('repeated')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg')">
                         </div>
-                        <h4 class="text-2xl font-bold mb-3">Состояния, чувства и предпочтения</h4>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Используется с глаголами состояния (Stative Verbs), которые не могут употребляться в
-                            длительном времени (Continuous).
-                        </p>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Повторяющиеся действия</h4>
+                        </div>
                     </div>
-                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-1">Пример предложения
-                        </p>
-                        <p class="text-sm font-semibold text-white">"I love listening to classical music."</p>
-                        <p class="text-xs text-gray-400 mt-1">Я люблю слушать классическую музыку.</p>
+
+                    <div id="usage-tile-routine" onclick="selectUsageTopic('routine')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Reichstag_building_Berlin_view_from_west_before_sunset.jpg/500px-Reichstag_building_Berlin_view_from_west_before_sunset.jpg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Ежедневная рутина</h4>
+                        </div>
+                    </div>
+
+                    <div id="usage-tile-truths" onclick="selectUsageTopic('truths')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2008-07-05_Water_boiling_in_cooking_pot.jpg/500px-2008-07-05_Water_boiling_in_cooking_pot.jpg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Общеизвестные факты</h4>
+                        </div>
+                    </div>
+
+                    <div id="usage-tile-instructions" onclick="selectUsageTopic('instructions')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Wasserkessel01.jpeg/500px-Wasserkessel01.jpeg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Рецепты и инструкции</h4>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- СРЕДНИЙ уровень: подзаголовки-плитки (картинка + название) -->
+            <div id="usage-level-content-medium" class="hidden">
+                <div class="mb-4">
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Средний
+                        уровень</span>
+                    <h3 class="text-2xl font-extrabold mt-3">Когда используем Present Simple</h3>
+                    <p class="text-gray-400 text-sm mt-1">Нажмите на карточку, чтобы увидеть примеры</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div id="usage-tile-timetables" onclick="selectUsageTopic('timetables')"
+                        class="formula-card is-active-cyan glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Platform_10_in_Pasila_train_station_in_Helsinki.jpg/500px-Platform_10_in_Pasila_train_station_in_Helsinki.jpg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Расписания и графики</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СЛОЖНЫЙ уровень: подзаголовки-плитки (картинка + название) -->
+            <div id="usage-level-content-hard" class="hidden">
+                <div class="mb-4">
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full">Сложный
+                        уровень</span>
+                    <h3 class="text-2xl font-extrabold mt-3">Когда используем Present Simple</h3>
+                    <p class="text-gray-400 text-sm mt-1">Нажмите на карточку, чтобы увидеть примеры</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div id="usage-tile-stative" onclick="selectUsageTopic('stative')"
+                        class="formula-card is-active-pink glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Thinking_man.jpg/500px-Thinking_man.jpg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Чувства, мысли и оценки</h4>
+                        </div>
+                    </div>
+
+                    <div id="usage-tile-steps" onclick="selectUsageTopic('steps')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Wasserkessel01.jpeg/500px-Wasserkessel01.jpeg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Пошаговые инструкции</h4>
+                        </div>
+                    </div>
+
+                    <div id="usage-tile-news" onclick="selectUsageTopic('news')"
+                        class="formula-card glass-card rounded-2xl overflow-hidden relative h-[140px] cursor-pointer group">
+                        <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                            style="background-image: linear-gradient(to top, rgba(8,9,13,0.9) 25%, rgba(8,9,13,0.25) 75%), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/UT3%2C_the_Moon_and_Hubble_Space_Telescope_%28img_5148-cc%29.jpg/500px-UT3%2C_the_Moon_and_Hubble_Space_Telescope_%28img_5148-cc%29.jpg')">
+                        </div>
+                        <div class="relative z-10 h-full flex items-end p-4">
+                            <h4 class="text-sm font-bold text-white leading-tight">Исторический настоящее</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="usage-examples" class="mt-8"></div>
         </div>
 
         <!-- TAB 3: MARKERS -->
@@ -1215,6 +1231,184 @@
             `;
         }
 
+        // Данные для уровня "Лёгкий" на вкладке "Употребление"
+        const usageTopicsData = {
+            states: {
+                title: 'Примеры: состояния и постоянные факты',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg',
+                pairs: [
+                    { prn: 'I', eng: 'I live in Moscow.', rus: 'Я живу в Москве.', hl: 'live' },
+                    { prn: 'She', eng: 'She has a red car.', rus: 'У неё красная машина.', hl: 'has' },
+                    { prn: 'He', eng: 'He works as a doctor.', rus: 'Он работает врачом.', hl: 'works' },
+                    { prn: 'They', eng: 'They know the answer.', rus: 'Они знают ответ.', hl: 'know' }
+                ]
+            },
+            habits: {
+                title: 'Примеры: привычные действия',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg',
+                pairs: [
+                    { prn: 'He', eng: 'He drinks coffee every morning.', rus: 'Он пьёт кофе каждое утро.', hl: 'drinks' },
+                    { prn: 'They', eng: 'They play football on Saturdays.', rus: 'Они играют в футбол по субботам.', hl: 'play' },
+                    { prn: 'My cat', eng: 'My cat sleeps on the sofa.', rus: 'Мой кот спит на диване.', hl: 'sleeps' },
+                    { prn: 'We', eng: 'We usually watch TV in the evening.', rus: 'Мы обычно смотрим телевизор вечером.', hl: 'watch' }
+                ]
+            },
+            repeated: {
+                title: 'Примеры: повторяющиеся действия',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg',
+                pairs: [
+                    { prn: 'I', eng: 'I visit my grandparents every Sunday.', rus: 'Я навещаю бабушку с дедушкой каждое воскресенье.', hl: 'visit' },
+                    { prn: 'She', eng: 'She calls her friend once a week.', rus: 'Она звонит подруге раз в неделю.', hl: 'calls' },
+                    { prn: 'We', eng: 'We go to the cinema twice a month.', rus: 'Мы ходим в кино два раза в месяц.', hl: 'go' },
+                    { prn: 'He', eng: 'He reads a book every night.', rus: 'Он читает книгу каждый вечер.', hl: 'reads' }
+                ]
+            },
+            routine: {
+                title: 'Примеры: ежедневная рутина',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg',
+                pairs: [
+                    { prn: 'I', eng: 'I wake up at 7 AM.', rus: 'Я просыпаюсь в 7 утра.', hl: 'wake' },
+                    { prn: 'She', eng: 'She brushes her teeth twice a day.', rus: 'Она чистит зубы два раза в день.', hl: 'brushes' },
+                    { prn: 'He', eng: 'He goes to work by bus.', rus: 'Он ездит на работу на автобусе.', hl: 'goes' },
+                    { prn: 'We', eng: 'We have dinner together.', rus: 'Мы ужинаем вместе.', hl: 'have' }
+                ]
+            },
+            truths: {
+                title: 'Примеры: общеизвестные факты',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2008-07-05_Water_boiling_in_cooking_pot.jpg/500px-2008-07-05_Water_boiling_in_cooking_pot.jpg',
+                pairs: [
+                    { prn: 'Закон природы', eng: 'The sun rises in the east.', rus: 'Солнце всходит на востоке.', hl: 'rises' },
+                    { prn: 'Утверждение', eng: "Boys don't cry.", rus: 'Мальчики не плачут.', hl: "don't" },
+                    { prn: 'Факт', eng: 'Water boils at 100 degrees Celsius.', rus: 'Вода закипает при 100 градусах Цельсия.', hl: 'boils' },
+                    { prn: 'Факт', eng: 'Koalas live in Australia.', rus: 'Коалы живут в Австралии.', hl: 'live' }
+                ]
+            },
+            instructions: {
+                title: 'Примеры: рецепты и инструкции',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Wasserkessel01.jpeg/500px-Wasserkessel01.jpeg',
+                pairs: [
+                    { prn: 'Рецепт', eng: 'We mix flour and eggs.', rus: 'Мы смешиваем муку и яйца.', hl: 'mix' },
+                    { prn: 'Рецепт', eng: 'We add a pinch of sugar.', rus: 'Мы добавляем щепотку сахара.', hl: 'add' },
+                    { prn: 'Рецепт', eng: 'We bake a cake at 200 degrees.', rus: 'Мы выпекаем пирог при 200 градусах.', hl: 'bake' },
+                    { prn: 'Инструкция', eng: 'First, you boil the water.', rus: 'Сначала вы кипятите воду.', hl: 'boil' }
+                ]
+            },
+            timetables: {
+                title: 'Примеры: расписания и графики',
+                color: 'text-brand-cyan',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Platform_10_in_Pasila_train_station_in_Helsinki.jpg/500px-Platform_10_in_Pasila_train_station_in_Helsinki.jpg',
+                pairs: [
+                    { prn: 'It', eng: 'The train leaves at 9 pm.', rus: 'Поезд отправляется в 9 вечера.', hl: 'leaves' },
+                    { prn: 'It', eng: 'The museum opens at 10 am.', rus: 'Музей открывается в 10 утра.', hl: 'opens', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Main_entrance_of_the_Naturhistorisches_Museum_%28Vienna%2C_Austria%29.jpg/500px-Main_entrance_of_the_Naturhistorisches_Museum_%28Vienna%2C_Austria%29.jpg' },
+                    { prn: 'It', eng: 'The film starts at 7:30.', rus: 'Фильм начинается в 7:30.', hl: 'starts', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg' },
+                    { prn: 'It', eng: 'The bus arrives at 6 pm.', rus: 'Автобус прибывает в 6 вечера.', hl: 'arrives' }
+                ]
+            },
+            stative: {
+                title: 'Примеры: чувства, мысли и оценки',
+                color: 'text-brand-pink',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Thinking_man.jpg/500px-Thinking_man.jpg',
+                pairs: [
+                    { prn: 'I', eng: "I think it's a great idea.", rus: 'Я думаю, это отличная идея.', hl: 'think' },
+                    { prn: 'She', eng: 'She loves classical music.', rus: 'Она любит классическую музыку.', hl: 'loves', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg/500px-The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg' },
+                    { prn: 'We', eng: 'We know the answer.', rus: 'Мы знаем ответ.', hl: 'know', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/1964_Hammond_Slides_Student_Raising_Hand.jpg/500px-1964_Hammond_Slides_Student_Raising_Hand.jpg' },
+                    { prn: 'I', eng: 'I want a cup of tea.', rus: 'Я хочу чашку чая.', hl: 'want' }
+                ]
+            },
+            steps: {
+                title: 'Примеры: пошаговые инструкции',
+                color: 'text-brand-pink',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Wasserkessel01.jpeg/500px-Wasserkessel01.jpeg',
+                pairs: [
+                    { prn: 'You', eng: 'First, you boil the water.', rus: 'Сначала вы кипятите воду.', hl: 'boil' },
+                    { prn: 'You', eng: 'Then you add the pasta.', rus: 'Потом вы добавляете пасту.', hl: 'add', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/DFC_5023_Stir-fried_spaghetti_with_squid_fresh_basil_and_cherry_tomatoes_-_a_Thai-inspired_seafood_pasta_served_hot.jpg/500px-DFC_5023_Stir-fried_spaghetti_with_squid_fresh_basil_and_cherry_tomatoes_-_a_Thai-inspired_seafood_pasta_served_hot.jpg' },
+                    { prn: 'You', eng: 'Finally, you serve it hot.', rus: 'В конце вы подаёте блюдо горячим.', hl: 'serve', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Liat_Portal_for_Foodie_Disorder_-_Seafood_pasta_with_calamari_and_shrimp_in_tomato_cream_sauce.jpg/500px-Liat_Portal_for_Foodie_Disorder_-_Seafood_pasta_with_calamari_and_shrimp_in_tomato_cream_sauce.jpg' },
+                    { prn: 'You', eng: 'Next, you stir the sauce.', rus: 'Затем вы помешиваете соус.', hl: 'stir' }
+                ]
+            },
+            news: {
+                title: 'Примеры: исторический настоящее (заголовки)',
+                color: 'text-brand-pink',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/UT3%2C_the_Moon_and_Hubble_Space_Telescope_%28img_5148-cc%29.jpg/500px-UT3%2C_the_Moon_and_Hubble_Space_Telescope_%28img_5148-cc%29.jpg',
+                pairs: [
+                    { prn: 'They', eng: 'Scientists discover a new planet.', rus: 'Учёные открывают новую планету.', hl: 'discover' },
+                    { prn: 'They', eng: 'The team wins the championship.', rus: 'Команда выигрывает чемпионат.', hl: 'wins', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Namibia%27s_women%27s_team_celebrates.jpg/500px-Namibia%27s_women%27s_team_celebrates.jpg' },
+                    { prn: 'He', eng: 'The president meets world leaders.', rus: 'Президент встречается с мировыми лидерами.', hl: 'meets', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/World_leaders_meeting_at_the_2015_G20_Summit.JPG/500px-World_leaders_meeting_at_the_2015_G20_Summit.JPG' },
+                    { prn: 'They', eng: 'The band releases a new album.', rus: 'Группа выпускает новый альбом.', hl: 'releases' }
+                ]
+            }
+        };
+
+        const usageLevelColor = {
+            easy: 'text-brand-emerald',
+            medium: 'text-brand-cyan',
+            hard: 'text-brand-pink'
+        };
+        const usageLevelActiveClass = {
+            easy: 'is-active-emerald',
+            medium: 'is-active-cyan',
+            hard: 'is-active-pink'
+        };
+
+        window.selectUsageTopic = function (key, level) {
+            level = level || window.currentUsageLevel || 'easy';
+            document.querySelectorAll('#usage-level-content-' + level + ' .formula-card').forEach((el) => {
+                el.classList.remove('is-active-emerald', 'is-active-cyan', 'is-active-pink');
+            });
+            const tile = document.getElementById('usage-tile-' + key);
+            if (tile) tile.classList.add(usageLevelActiveClass[level]);
+
+            const data = usageTopicsData[key];
+            renderUsageCards(data.color || usageLevelColor[level], data);
+        };
+
+        function renderUsageCards(colorClass, data) {
+            const container = document.getElementById('usage-examples');
+            container.innerHTML = `
+                <p class="text-xs font-bold uppercase tracking-wider ${colorClass} mb-4">${data.title}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${data.pairs.map((p) => {
+                        const safeText = p.eng.replace(/'/g, "\\'");
+                        const displayEng = highlightEnding(p.eng, p);
+                        return `
+                        <div class="group glass-card rounded-2xl overflow-hidden relative h-[220px] flex flex-col justify-end p-5 border border-gray-800">
+                            <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.92) 25%, rgba(8, 9, 13, 0.4) 65%, rgba(0, 0, 0, 0.1) 100%), url('${p.img || data.img}')"></div>
+                            <div class="relative z-10">
+                                <span class="text-[10px] font-bold tracking-widest ${colorClass} bg-white/10 border border-white/15 px-2 py-1 rounded uppercase">${p.prn}</span>
+                                <h4 class="text-base font-bold text-white mt-2">${displayEng}</h4>
+                                <p class="text-xs text-gray-300 mt-1">${p.rus}</p>
+                                ${voiceButtonsHtml(safeText)}
+                            </div>
+                        </div>
+                    `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        const usageLevelDefaultTopic = { easy: 'states', medium: 'timetables', hard: 'stative' };
+        const usageLevelBtnActive = {
+            easy: 'px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-brand-emerald/15 border-brand-emerald/50 text-brand-emerald',
+            medium: 'px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-brand-cyan/15 border-brand-cyan/50 text-brand-cyan',
+            hard: 'px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-brand-pink/15 border-brand-pink/50 text-brand-pink'
+        };
+        const usageLevelBtnInactive = 'px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition bg-gray-900 border-gray-800 text-gray-400';
+
+        window.currentUsageLevel = 'easy';
+
+        window.selectUsageLevel = function (level) {
+            window.currentUsageLevel = level;
+
+            ['easy', 'medium', 'hard'].forEach((key) => {
+                const content = document.getElementById('usage-level-content-' + key);
+                if (content) content.classList.toggle('hidden', key !== level);
+                const btn = document.getElementById('usage-level-' + key);
+                if (btn) btn.className = key === level ? usageLevelBtnActive[key] : usageLevelBtnInactive;
+            });
+
+            selectUsageTopic(usageLevelDefaultTopic[level], level);
+        };
+
         const spellingExamplesData = {
             'y-cons': {
                 activeClass: 'is-active-cyan',
@@ -1607,6 +1801,7 @@
             renderQuestion();
             renderBentoExamples('affirmative');
             selectFormulaCard('affirmative');
+            selectUsageLevel('easy');
         }
     </script>
 </body>
