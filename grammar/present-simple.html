@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,15 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>!!</text></svg>">
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -45,16 +54,20 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #08090d;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #1f2937;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #4f46e5;
         }
+
         /* Custom Glassmorphism styles */
         .glass-card {
             background: rgba(17, 19, 26, 0.65);
@@ -63,39 +76,100 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* Кликабельные bento-карточки формул: активная рамка через box-shadow (border занят glass-card) */
+        .formula-card {
+            box-shadow: none;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        .formula-card.is-active-emerald {
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.6), 0 0 24px rgba(16, 185, 129, 0.15);
+        }
+
+        .formula-card.is-active-pink {
+            box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.6), 0 0 24px rgba(236, 72, 153, 0.15);
+        }
+
+        .formula-card.is-active-cyan {
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.6), 0 0 24px rgba(6, 182, 212, 0.15);
+        }
+
+        /* Кликабельные плитки орфографии -s/-es */
+        .spelling-tile {
+            box-shadow: none;
+        }
+
+        .spelling-tile.is-active-pink {
+            border-color: rgba(236, 72, 153, 0.6) !important;
+            box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.4);
+        }
+
+        .spelling-tile.is-active-cyan {
+            border-color: rgba(6, 182, 212, 0.6) !important;
+            box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.4);
+        }
+
+        .spelling-tile.is-active-emerald {
+            border-color: rgba(16, 185, 129, 0.6) !important;
+            box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.4);
+        }
+
+        .spelling-tile.is-active-accent {
+            border-color: rgba(99, 102, 241, 0.6) !important;
+            box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.4);
+        }
+        .letter-chip.is-active-letter {
+            background: rgba(236, 72, 153, 0.15) !important;
+            border-color: rgba(236, 72, 153, 0.6) !important;
+            color: #fff !important;
+        }
+
         .glass-card:hover {
             border-color: rgba(99, 102, 241, 0.3);
             transform: translateY(-2px);
         }
+
         /* Active Tab indicator animation */
         .tab-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .text-glow {
             text-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
         }
     </style>
 </head>
-<body class="bg-brand-bg text-gray-100 min-h-screen antialiased flex flex-col justify-between overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+<body
+    class="bg-brand-bg text-gray-100 min-h-screen antialiased flex flex-col justify-between overflow-x-hidden selection:bg-brand-accent selection:text-white">
 
     <!-- Gradient background decoration -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-brand-accentGlow via-transparent to-transparent blur-3xl pointer-events-none -z-10"></div>
+    <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-brand-accentGlow via-transparent to-transparent blur-3xl pointer-events-none -z-10">
+    </div>
 
     <header class="border-b border-gray-800/60 sticky top-0 z-50 backdrop-blur-md bg-brand-bg/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center shadow-neon-blue">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center shadow-neon-blue">
                     <!-- SVG Logo -->
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                 </div>
                 <div>
-                    <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">PRESENT <span class="text-brand-accent">SIMPLE</span></span>
-                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Interactive Learn Hub 2026</p>
+                    <span
+                        class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">PRESENT
+                        <span class="text-brand-accent">SIMPLE</span></span>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Interactive Learn Hub
+                        2026</p>
                 </div>
             </div>
-            
+
             <!-- Quick badge info -->
             <div class="hidden md:flex items-center gap-4 text-xs font-medium text-gray-400">
                 <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800">
@@ -113,36 +187,48 @@
         <!-- Hero Title Block -->
         <div class="mb-10 text-center md:text-left">
             <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
-                Простое настоящее <span class="bg-gradient-to-r from-brand-accent via-brand-pink to-brand-cyan bg-clip-text text-transparent">время глагола</span>
+                Простое настоящее <span
+                    class="bg-gradient-to-r from-brand-accent via-brand-pink to-brand-cyan bg-clip-text text-transparent">время
+                    глагола</span>
             </h1>
             <p class="text-gray-400 max-w-2xl text-base md:text-lg">
-                Интерактивный Bento-дашборд для изучения Present Simple. Переключайте вкладки, изучайте интерактивные карточки-примеры и закрепите знания на практике.
+                Интерактивный Bento-дашборд для изучения Present Simple. Переключайте вкладки, изучайте интерактивные
+                карточки-примеры и закрепите знания на практике.
             </p>
         </div>
 
         <!-- Custom Tab Navigation Switcher -->
-        <div class="glass-card p-1.5 rounded-2xl mb-10 flex flex-wrap gap-1 max-w-4xl mx-auto md:mx-0 shadow-bento-glow">
-            <button onclick="switchTab('education')" id="tab-btn-education" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue">
+        <div
+            class="glass-card p-1.5 rounded-2xl mb-10 flex flex-wrap gap-1 max-w-4xl mx-auto md:mx-0 shadow-bento-glow">
+            <button onclick="switchTab('education')" id="tab-btn-education"
+                class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
                 <span>Образование</span>
             </button>
-            <button onclick="switchTab('usage')" id="tab-btn-usage" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+            <button onclick="switchTab('usage')" id="tab-btn-usage"
+                class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                 </svg>
                 <span>Употребление</span>
             </button>
-            <button onclick="switchTab('markers')" id="tab-btn-markers" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+            <button onclick="switchTab('markers')" id="tab-btn-markers"
+                class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span>Маркеры времени</span>
             </button>
-            <button onclick="switchTab('practice')" id="tab-btn-practice" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+            <button onclick="switchTab('practice')" id="tab-btn-practice"
+                class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span>Практика</span>
             </button>
@@ -153,164 +239,246 @@
             <!-- Bento Formula Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Affirmative Rule -->
-                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-emerald/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-emerald/20 transition-all duration-300"></div>
+                <div id="formula-card-affirmative" onclick="selectFormulaCard('affirmative')"
+                    class="formula-card is-active-emerald glass-card rounded-3xl p-6 relative overflow-hidden group cursor-pointer">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-brand-emerald/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-emerald/20 transition-all duration-300">
+                    </div>
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald text-xl font-bold">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald text-xl font-bold">
                             +
                         </div>
                         <h3 class="text-xl font-bold">Утверждение</h3>
                     </div>
-                    <p class="text-sm text-gray-400 mb-6">Строится очень просто: мы берем глагол в начальной форме (без частицы <code class="text-brand-emerald bg-brand-emerald/10 px-1 py-0.5 rounded font-mono font-bold">to</code>). Но будьте бдительны с местоимениями третьего лица.</p>
-                    
+                    <p class="text-sm text-gray-400 mb-6">Строится очень просто: мы берем глагол в начальной форме (без
+                        частицы <code
+                            class="text-brand-emerald bg-brand-emerald/10 px-1 py-0.5 rounded font-mono font-bold">to</code>).
+                        Но будьте бдительны с местоимениями третьего лица.</p>
+
                     <div class="space-y-3.5">
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
-                            <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
-                            <p class="text-lg font-mono mt-0.5">V <span class="text-gray-500 font-sans text-sm ml-2">(глагол без изменений)</span></p>
-                            <p class="text-sm text-gray-300 italic mt-1">"I <span class="text-brand-emerald underline font-bold">work</span> here."</p>
+                            <span class="text-xs text-brand-accent uppercase font-bold">I, We, You, They</span>
+                            <p class="text-lg font-mono mt-0.5">$V_1$</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"I <span
+                                    class="text-brand-emerald underline font-bold">work</span> here."</p>
                         </div>
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
-                            <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
-                            <p class="text-lg font-mono mt-0.5">V + <span class="text-brand-pink font-bold">-s / -es</span></p>
-                            <p class="text-sm text-gray-300 italic mt-1">"She <span class="text-brand-pink underline font-bold">works</span> here."</p>
+                            <span class="text-xs text-brand-accent uppercase font-bold">He, She, It</span>
+                            <p class="text-lg font-mono mt-0.5">$V_1$ + <span class="text-brand-emerald font-bold">-s /
+                                    -es</span></p>
+                            <p class="text-sm text-gray-300 italic mt-1">"She work<span
+                                    class="text-brand-emerald underline font-bold">s</span> here."</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Negative Rule -->
-                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-pink/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-pink/20 transition-all duration-300"></div>
+                <div id="formula-card-negative" onclick="selectFormulaCard('negative')"
+                    class="formula-card glass-card rounded-3xl p-6 relative overflow-hidden group cursor-pointer">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-brand-pink/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-pink/20 transition-all duration-300">
+                    </div>
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink text-xl font-bold">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink text-xl font-bold">
                             −
                         </div>
                         <h3 class="text-xl font-bold">Отрицание</h3>
                     </div>
-                    <p class="text-sm text-gray-400 mb-6">Появляется сильный вспомогательный глагол <span class="text-brand-pink font-semibold">do / does</span> вместе с отрицательной частицей <span class="text-brand-pink font-semibold">not</span>. Основной глагол теряет окончание <span class="font-bold">-s</span>!</p>
+                    <p class="text-sm text-gray-400 mb-6">Появляется сильный вспомогательный глагол <span
+                            class="text-brand-pink font-semibold">do / does</span> вместе с отрицательной частицей <span
+                            class="text-brand-pink font-semibold">not</span>. Основной глагол теряет окончание <span
+                            class="font-bold">-s</span>!</p>
 
                     <div class="space-y-3.5">
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
                             <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
-                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">don't</span> + V</p>
-                            <p class="text-sm text-gray-300 italic mt-1">"They <span class="text-brand-pink font-bold">don't</span> speak French."</p>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">don't</span> + V
+                            </p>
+                            <p class="text-sm text-gray-300 italic mt-1">"They <span
+                                    class="text-brand-pink font-bold">don't</span> speak French."</p>
                         </div>
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
                             <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
-                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">doesn't</span> + V</p>
-                            <p class="text-sm text-gray-300 italic mt-1">"He <span class="text-brand-pink font-bold">doesn't</span> speak German."</p>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">doesn't</span> +
+                                V</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"He <span
+                                    class="text-brand-pink font-bold">doesn't</span> speak German."</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Interrogative Rule -->
-                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-cyan/20 transition-all duration-300"></div>
+                <div id="formula-card-question" onclick="selectFormulaCard('question')"
+                    class="formula-card glass-card rounded-3xl p-6 relative overflow-hidden group cursor-pointer">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-cyan/20 transition-all duration-300">
+                    </div>
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-xl font-bold">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-xl font-bold">
                             ?
                         </div>
                         <h3 class="text-xl font-bold">Вопрос</h3>
                     </div>
-                    <p class="text-sm text-gray-400 mb-6">Выносим вспомогательный глагол <span class="text-brand-cyan font-semibold">Do / Does</span> на самое первое место в предложении. Наш смысловой глагол также остаётся чистым.</p>
+                    <p class="text-sm text-gray-400 mb-6">Выносим вспомогательный глагол <span
+                            class="text-brand-cyan font-semibold">Do / Does</span> на самое первое место в предложении.
+                        Наш смысловой глагол также остаётся чистым.</p>
 
                     <div class="space-y-3.5">
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
                             <span class="text-xs text-brand-emerald uppercase font-bold">I, We, You, They</span>
-                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Do</span> ... + V?</p>
-                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Do</span> you play tennis?"</p>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Do</span> ... +
+                                V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span
+                                    class="text-brand-cyan font-bold">Do</span> you play tennis?"</p>
                         </div>
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
                             <span class="text-xs text-brand-pink uppercase font-bold">He, She, It</span>
-                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Does</span> ... + V?</p>
-                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Does</span> she play tennis?"</p>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Does</span> ...
+                                + V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span
+                                    class="text-brand-cyan font-bold">Does</span> she play tennis?"</p>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
-            <!-- Rules of adding S / ES Bento Card -->
+            <!-- Rules of adding S / ES Bento Card: шапка (бейдж/заголовок/описание) переиспользуется как общая "важная деталь" -->
             <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-                
+                <div
+                    class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40">
+                </div>
+
                 <div class="flex flex-col lg:flex-row gap-8 items-start relative z-10">
                     <div class="lg:w-1/3">
-                        <span class="text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full">Важная деталь</span>
-                        <h3 class="text-2xl font-extrabold mt-4 mb-3">Правила добавления окончаний <span class="text-brand-pink">-s / -es</span></h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            Если подлежащее выражено местоимением 3-го лица единственного числа (<span class="text-white font-semibold">He, She, It</span>), к глаголу в утверждении добавляется окончание. Посмотрите, как меняется написание в зависимости от окончания глагола.
-                        </p>
+                        <span id="spelling-detail-badge"
+                            class="text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full">Важная
+                            деталь</span>
+                        <h3 id="spelling-detail-title" class="text-2xl font-extrabold mt-4 mb-3">Правила добавления
+                            окончаний <span class="text-brand-pink">-s / -es</span></h3>
+                        <div id="spelling-detail-desc" class="text-gray-400 text-sm leading-relaxed">
+                            Если подлежащее выражено местоимением 3-го лица единственного числа (<span
+                                class="text-white font-semibold">He, She, It</span>), к глаголу в утверждении
+                            добавляется окончание. Посмотрите, как меняется написание в зависимости от окончания
+                            глагола.
+                        </div>
                     </div>
 
                     <div class="lg:w-2/3 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                        <div id="spelling-tile-s-es"
+                            class="spelling-tile is-active-pink p-4 bg-gray-900/40 rounded-2xl border border-gray-800 transition-all duration-300">
                             <div class="flex items-center gap-2 mb-2">
-                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <span class="w-2 h-2 rounded-full bg-brand-pink"></span>
                                 <h4 class="font-bold text-sm text-gray-200">Оканчивается на s, ss, sh, ch, x, o</h4>
                             </div>
-                            <p class="text-xs text-gray-400 mb-2">Прибавляем окончание <span class="text-brand-pink font-mono font-bold">-es</span> для сохранения плавности звучания.</p>
-                            <div class="flex gap-4 text-xs font-mono">
-                                <div><span class="text-gray-500">pass &rarr;</span> <span class="text-brand-pink font-semibold">passes</span></div>
-                                <div><span class="text-gray-500">wash &rarr;</span> <span class="text-brand-pink font-semibold">washes</span></div>
-                                <div><span class="text-gray-500">go &rarr;</span> <span class="text-brand-pink font-semibold">goes</span></div>
+                            <p class="text-xs text-gray-400 mb-3">Прибавляем окончание <span
+                                    class="text-brand-pink font-mono font-bold">-es</span> для сохранения плавности
+                                звучания. Нажмите на букву, чтобы увидеть 4 примера:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="selectSpellingLetter('s')" id="letter-chip-s" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">s</button>
+                                <button onclick="selectSpellingLetter('ss')" id="letter-chip-ss" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">ss</button>
+                                <button onclick="selectSpellingLetter('sh')" id="letter-chip-sh" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">sh</button>
+                                <button onclick="selectSpellingLetter('ch')" id="letter-chip-ch" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">ch</button>
+                                <button onclick="selectSpellingLetter('x')" id="letter-chip-x" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">x</button>
+                                <button onclick="selectSpellingLetter('o')" id="letter-chip-o" class="letter-chip px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-xs font-mono font-bold text-gray-300 hover:text-white hover:border-brand-pink transition-all cursor-pointer">o</button>
                             </div>
                         </div>
 
-                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                        <div id="spelling-tile-y-cons" onclick="selectSpellingRule('y-cons')"
+                            class="spelling-tile p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300 cursor-pointer">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
-                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей согласной</h4>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей
+                                    согласной</h4>
                             </div>
-                            <p class="text-xs text-gray-400 mb-2">Буква <span class="text-white font-mono font-bold">y</span> заменяется на <span class="text-brand-pink font-mono font-bold">i</span> и добавляется <span class="text-brand-pink font-mono font-bold">-es</span>.</p>
+                            <p class="text-xs text-gray-400 mb-2">Буква <span
+                                    class="text-white font-mono font-bold">y</span> заменяется на <span
+                                    class="text-brand-pink font-mono font-bold">i</span> и добавляется <span
+                                    class="text-brand-pink font-mono font-bold">-es</span>.</p>
                             <div class="flex gap-4 text-xs font-mono">
-                                <div><span class="text-gray-500">try &rarr;</span> <span class="text-brand-pink font-semibold">tries</span></div>
-                                <div><span class="text-gray-500">cry &rarr;</span> <span class="text-brand-pink font-semibold">cries</span></div>
-                                <div><span class="text-gray-500">study &rarr;</span> <span class="text-brand-pink font-semibold">studies</span></div>
+                                <div><span class="text-gray-500">try &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">tries</span></div>
+                                <div><span class="text-gray-500">cry &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">cries</span></div>
+                                <div><span class="text-gray-500">study &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">studies</span></div>
                             </div>
+                            <p class="text-[10px] text-gray-500 mt-2 flex items-center gap-1">Нажмите, чтобы увидеть
+                                примеры <span aria-hidden="true">→</span></p>
                         </div>
 
-                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                        <div id="spelling-tile-y-vowel" onclick="selectSpellingRule('y-vowel')"
+                            class="spelling-tile p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300 cursor-pointer">
                             <div class="flex items-center gap-2 mb-2">
-                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
-                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей гласной</h4>
+                                <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей гласной
+                                </h4>
                             </div>
-                            <p class="text-xs text-gray-400 mb-2">Если перед <span class="text-white font-mono font-bold">y</span> стоит гласная, то буква <span class="text-white font-mono font-bold">y</span> остается, просто добавляем <span class="text-brand-pink font-mono font-bold">-s</span>.</p>
+                            <p class="text-xs text-gray-400 mb-2">Если перед <span
+                                    class="text-white font-mono font-bold">y</span> стоит гласная, то буква <span
+                                    class="text-white font-mono font-bold">y</span> остается, просто добавляем <span
+                                    class="text-brand-pink font-mono font-bold">-s</span>.</p>
                             <div class="flex gap-4 text-xs font-mono">
-                                <div><span class="text-gray-500">play &rarr;</span> <span class="text-brand-pink font-semibold">plays</span></div>
-                                <div><span class="text-gray-500">stay &rarr;</span> <span class="text-brand-pink font-semibold">stays</span></div>
-                                <div><span class="text-gray-500">buy &rarr;</span> <span class="text-brand-pink font-semibold">buys</span></div>
+                                <div><span class="text-gray-500">play &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">plays</span></div>
+                                <div><span class="text-gray-500">stay &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">stays</span></div>
+                                <div><span class="text-gray-500">buy &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">buys</span></div>
                             </div>
+                            <p class="text-[10px] text-gray-500 mt-2 flex items-center gap-1">Нажмите, чтобы увидеть
+                                примеры <span aria-hidden="true">→</span></p>
                         </div>
 
-                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                        <div id="spelling-tile-other" onclick="selectSpellingRule('other')"
+                            class="spelling-tile p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300 cursor-pointer">
                             <div class="flex items-center gap-2 mb-2">
-                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
                                 <h4 class="font-bold text-sm text-gray-200">Остальные глаголы</h4>
                             </div>
-                            <p class="text-xs text-gray-400 mb-2">В любых обычных случаях просто прибавляем стандартную литеру <span class="text-brand-pink font-mono font-bold">-s</span>.</p>
+                            <p class="text-xs text-gray-400 mb-2">В любых обычных случаях просто прибавляем стандартную
+                                литеру <span class="text-brand-pink font-mono font-bold">-s</span>.</p>
                             <div class="flex gap-4 text-xs font-mono">
-                                <div><span class="text-gray-500">read &rarr;</span> <span class="text-brand-pink font-semibold">reads</span></div>
-                                <div><span class="text-gray-500">swim &rarr;</span> <span class="text-brand-pink font-semibold">swims</span></div>
-                                <div><span class="text-gray-500">like &rarr;</span> <span class="text-brand-pink font-semibold">likes</span></div>
+                                <div><span class="text-gray-500">read &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">reads</span></div>
+                                <div><span class="text-gray-500">swim &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">swims</span></div>
+                                <div><span class="text-gray-500">like &rarr;</span> <span
+                                        class="text-brand-pink font-semibold">likes</span></div>
                             </div>
+                            <p class="text-[10px] text-gray-500 mt-2 flex items-center gap-1">Нажмите, чтобы увидеть
+                                примеры <span aria-hidden="true">→</span></p>
                         </div>
                     </div>
                 </div>
+
+                <div id="spelling-examples" class="relative z-10 mt-6 pt-6 border-t border-gray-800"></div>
             </div>
 
             <!-- Interactive Bento Examples with Unsplash images -->
             <div>
                 <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
                     <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">Практическая демонстрация</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">Практическая
+                            демонстрация</span>
                         <h3 class="text-2xl font-extrabold mt-2">Примеры предложений в Bento-плитках</h3>
                     </div>
-                    <span class="text-xs text-gray-400 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-lg">Кликните по карточке, чтобы перевести</span>
+                    <span
+                        class="text-xs text-gray-400 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-lg">Кликните
+                        по карточке, чтобы перевести</span>
                 </div>
 
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <button onclick="renderBentoExamples('affirmative')" id="bento-filter-affirmative" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
-                    <button onclick="renderBentoExamples('negative')" id="bento-filter-negative" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
-                    <button onclick="renderBentoExamples('question')" id="bento-filter-question" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                    <button onclick="renderBentoExamples('affirmative')" id="bento-filter-affirmative"
+                        class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                    <button onclick="renderBentoExamples('negative')" id="bento-filter-negative"
+                        class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                    <button onclick="renderBentoExamples('question')" id="bento-filter-question"
+                        class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="bento-examples-grid">
@@ -323,88 +491,137 @@
         <div id="tab-usage" class="tab-content hidden space-y-10 animate-fade-in">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Use Case 1: Repeated actions -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg')"></div>
+                <div
+                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg/500px-Hotel_Alarm_Clock_-_9_00_a.m._%2845674883422%29.jpg')">
+                    </div>
                     <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-accentGlow border border-brand-accent/30 flex items-center justify-center text-brand-accent mb-6">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-brand-accentGlow border border-brand-accent/30 flex items-center justify-center text-brand-accent mb-6">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18" />
                             </svg>
                         </div>
                         <h4 class="text-2xl font-bold mb-3">Регулярные, повторяющиеся действия</h4>
                         <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Когда мы говорим о привычках, ежедневных ритуалах или хобби, которые повторяются с определенной периодичностью.
+                            Когда мы говорим о привычках, ежедневных ритуалах или хобби, которые повторяются с
+                            определенной периодичностью.
                         </p>
                     </div>
                     <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-accent font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-xs text-brand-accent font-bold uppercase tracking-wider mb-1">Пример предложения
+                        </p>
                         <p class="text-sm font-semibold text-white">"I wake up at 7 AM every day."</p>
                         <p class="text-xs text-gray-400 mt-1">Я просыпаюсь в 7 утра каждый день.</p>
                         <div class="flex items-center gap-1.5 mt-2">
-                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-GB', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/></svg><span>BrE</span></button>
-                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-US', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#B22234"/><g fill="#fff"><rect y="2.3" width="60" height="2.3"/><rect y="6.9" width="60" height="2.3"/><rect y="11.5" width="60" height="2.3"/><rect y="16.1" width="60" height="2.3"/><rect y="20.7" width="60" height="2.3"/><rect y="25.3" width="60" height="2.3"/></g><rect width="24" height="16.1" fill="#3C3B6E"/></svg><span>AmE</span></button>
+                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-GB', this, event)"
+                                class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg
+                                    viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0">
+                                    <rect width="60" height="30" fill="#012169" />
+                                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
+                                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" />
+                                    <path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10" />
+                                    <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6" />
+                                </svg><span>BrE</span></button>
+                            <button onclick="window.speakExample('I wake up at 7 AM every day.', 'en-US', this, event)"
+                                class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg
+                                    viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0">
+                                    <rect width="60" height="30" fill="#B22234" />
+                                    <g fill="#fff">
+                                        <rect y="2.3" width="60" height="2.3" />
+                                        <rect y="6.9" width="60" height="2.3" />
+                                        <rect y="11.5" width="60" height="2.3" />
+                                        <rect y="16.1" width="60" height="2.3" />
+                                        <rect y="20.7" width="60" height="2.3" />
+                                        <rect y="25.3" width="60" height="2.3" />
+                                    </g>
+                                    <rect width="24" height="16.1" fill="#3C3B6E" />
+                                </svg><span>AmE</span></button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Use Case 2: General Truths -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2008-07-05_Water_boiling_in_cooking_pot.jpg/500px-2008-07-05_Water_boiling_in_cooking_pot.jpg')"></div>
+                <div
+                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/2008-07-05_Water_boiling_in_cooking_pot.jpg/500px-2008-07-05_Water_boiling_in_cooking_pot.jpg')">
+                    </div>
                     <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald mb-6">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald mb-6">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                             </svg>
                         </div>
                         <h4 class="text-2xl font-bold mb-3">Общеизвестные факты и законы природы</h4>
                         <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Факты, которые бесспорно правдивы, научные законы, истины, а также устоявшиеся на долгое время утверждения.
+                            Факты, которые бесспорно правдивы, научные законы, истины, а также устоявшиеся на долгое
+                            время утверждения.
                         </p>
                     </div>
                     <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-emerald font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-xs text-brand-emerald font-bold uppercase tracking-wider mb-1">Пример предложения
+                        </p>
                         <p class="text-sm font-semibold text-white">"Water boils at 100 degrees Celsius."</p>
                         <p class="text-xs text-gray-400 mt-1">Вода закипает при 100 градусах Цельсия.</p>
                     </div>
                 </div>
 
                 <!-- Use Case 3: Timetables -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Platform_10_in_Pasila_train_station_in_Helsinki.jpg/500px-Platform_10_in_Pasila_train_station_in_Helsinki.jpg')"></div>
+                <div
+                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Platform_10_in_Pasila_train_station_in_Helsinki.jpg/500px-Platform_10_in_Pasila_train_station_in_Helsinki.jpg')">
+                    </div>
                     <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mb-6">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mb-6">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
                         <h4 class="text-2xl font-bold mb-3">Расписания и графики</h4>
                         <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Когда мы говорим о транспорте, сеансах кино, уроках в школе или начале конференций. Действие запланировано извне.
+                            Когда мы говорим о транспорте, сеансах кино, уроках в школе или начале конференций. Действие
+                            запланировано извне.
                         </p>
                     </div>
                     <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-cyan font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-xs text-brand-cyan font-bold uppercase tracking-wider mb-1">Пример предложения
+                        </p>
                         <p class="text-sm font-semibold text-white">"The train leaves at 8:30 PM tonight."</p>
                         <p class="text-xs text-gray-400 mt-1">Поезд отправляется сегодня в 20:30.</p>
                     </div>
                 </div>
 
                 <!-- Use Case 4: States / Feelings -->
-                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
-                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg/500px-The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg')"></div>
+                <div
+                    class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105"
+                        style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg/500px-The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg')">
+                    </div>
                     <div class="relative z-10">
-                        <div class="w-12 h-12 rounded-2xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink mb-6">
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink mb-6">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
                         </div>
                         <h4 class="text-2xl font-bold mb-3">Состояния, чувства и предпочтения</h4>
                         <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Используется с глаголами состояния (Stative Verbs), которые не могут употребляться в длительном времени (Continuous).
+                            Используется с глаголами состояния (Stative Verbs), которые не могут употребляться в
+                            длительном времени (Continuous).
                         </p>
                     </div>
                     <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
-                        <p class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-1">Пример предложения
+                        </p>
                         <p class="text-sm font-semibold text-white">"I love listening to classical music."</p>
                         <p class="text-xs text-gray-400 mt-1">Я люблю слушать классическую музыку.</p>
                     </div>
@@ -416,18 +633,25 @@
         <div id="tab-markers" class="tab-content hidden space-y-10 animate-fade-in">
             <!-- Time Markers Bento layout -->
             <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-                
+                <div
+                    class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40">
+                </div>
+
                 <div class="relative z-10">
-                    <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Сигнальные слова</span>
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Сигнальные
+                        слова</span>
                     <h3 class="text-2xl font-extrabold mt-4 mb-3">Маркеры времени (Adverbs of Frequency)</h3>
                     <p class="text-gray-400 text-sm max-w-2xl mb-8">
-                        Слова-маркеры помогают понять, что перед вами именно Present Simple. В зависимости от частоты действия, они делятся по процентному соотношению. Нажмите на любой маркер, чтобы увидеть детали его позиции в предложении.
+                        Слова-маркеры помогают понять, что перед вами именно Present Simple. В зависимости от частоты
+                        действия, они делятся по процентному соотношению. Нажмите на любой маркер, чтобы увидеть детали
+                        его позиции в предложении.
                     </p>
 
                     <!-- Interactive frequency slider-blocks -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
-                        <div onclick="showMarkerDetail('always', '100%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('always', '100%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-brand-emerald font-bold">100%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
@@ -436,7 +660,8 @@
                             <p class="text-xs text-gray-400 mt-1">Всегда</p>
                         </div>
 
-                        <div onclick="showMarkerDetail('usually', '90%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('usually', '90%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-brand-cyan font-bold">90%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan"></span>
@@ -445,7 +670,8 @@
                             <p class="text-xs text-gray-400 mt-1">Обычно</p>
                         </div>
 
-                        <div onclick="showMarkerDetail('often', '70%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('often', '70%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-brand-accent font-bold">70%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
@@ -454,7 +680,8 @@
                             <p class="text-xs text-gray-400 mt-1">Часто</p>
                         </div>
 
-                        <div onclick="showMarkerDetail('sometimes', '50%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('sometimes', '50%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-brand-pink font-bold">50%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-brand-pink"></span>
@@ -463,7 +690,8 @@
                             <p class="text-xs text-gray-400 mt-1">Иногда</p>
                         </div>
 
-                        <div onclick="showMarkerDetail('seldom', '10%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('seldom', '10%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-yellow-500 font-bold">10%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
@@ -472,7 +700,8 @@
                             <p class="text-xs text-gray-400 mt-1">Редко</p>
                         </div>
 
-                        <div onclick="showMarkerDetail('never', '0%')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                        <div onclick="showMarkerDetail('never', '0%')"
+                            class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs text-red-500 font-bold">0%</span>
                                 <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
@@ -483,16 +712,21 @@
                     </div>
 
                     <!-- Dynamic detail card output -->
-                    <div id="marker-detail-box" class="mt-8 p-6 bg-gray-950/80 rounded-2xl border border-gray-800 transition-all duration-300">
+                    <div id="marker-detail-box"
+                        class="mt-8 p-6 bg-gray-950/80 rounded-2xl border border-gray-800 transition-all duration-300">
                         <div class="flex items-center gap-3 mb-2">
-                            <span class="text-xs font-mono px-2 py-1 bg-brand-accent/20 text-brand-accent rounded" id="detail-percentage">100%</span>
+                            <span class="text-xs font-mono px-2 py-1 bg-brand-accent/20 text-brand-accent rounded"
+                                id="detail-percentage">100%</span>
                             <h4 class="text-lg font-bold" id="detail-title">Always (Всегда)</h4>
                         </div>
-                        <p class="text-sm text-gray-300 mb-4" id="detail-desc">Указывает на то, что действие происходит постоянно без исключений.</p>
+                        <p class="text-sm text-gray-300 mb-4" id="detail-desc">Указывает на то, что действие происходит
+                            постоянно без исключений.</p>
                         <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
                             <p class="text-xs text-gray-400 uppercase font-bold mb-1">Положение в предложении:</p>
-                            <p class="text-sm text-white" id="detail-rule">Ставится <strong>перед</strong> смысловым глаголом, но <strong>после</strong> глагола to be.</p>
-                            <p class="text-xs text-brand-accent font-mono italic mt-2" id="detail-example">Пример: "I always study at night."</p>
+                            <p class="text-sm text-white" id="detail-rule">Ставится <strong>перед</strong> смысловым
+                                глаголом, но <strong>после</strong> глагола to be.</p>
+                            <p class="text-xs text-brand-accent font-mono italic mt-2" id="detail-example">Пример: "I
+                                always study at night."</p>
                         </div>
                     </div>
                 </div>
@@ -502,21 +736,26 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="glass-card rounded-3xl p-6">
                     <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <svg class="w-5 h-5 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                         Выражения с Every (Каждый)
                     </h4>
-                    <p class="text-sm text-gray-400 mb-6">В отличие от наречий частоты, фразы с "every" обычно ставятся в самом конце предложения.</p>
+                    <p class="text-sm text-gray-400 mb-6">В отличие от наречий частоты, фразы с "every" обычно ставятся
+                        в самом конце предложения.</p>
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                        <div
+                            class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
                             <div>
                                 <span class="font-bold text-sm text-white">Every day / week</span>
                                 <p class="text-xs text-gray-400">Каждый день / неделю</p>
                             </div>
                             <span class="text-xs font-mono text-brand-pink">I read every day.</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                        <div
+                            class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
                             <div>
                                 <span class="font-bold text-sm text-white">Every month / year</span>
                                 <p class="text-xs text-gray-400">Каждый месяц / год</p>
@@ -528,21 +767,26 @@
 
                 <div class="glass-card rounded-3xl p-6">
                     <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-brand-emerald" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg class="w-5 h-5 text-brand-emerald" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         Периодичность (Once / Twice)
                     </h4>
-                    <p class="text-sm text-gray-400 mb-6">Слова, указывающие точное количество раз. Обычно стоят в конце предложения.</p>
+                    <p class="text-sm text-gray-400 mb-6">Слова, указывающие точное количество раз. Обычно стоят в конце
+                        предложения.</p>
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                        <div
+                            class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
                             <div>
                                 <span class="font-bold text-sm text-white">Once a week</span>
                                 <p class="text-xs text-gray-400">Раз в неделю</p>
                             </div>
                             <span class="text-xs font-mono text-brand-emerald">We play tennis once a week.</span>
                         </div>
-                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                        <div
+                            class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
                             <div>
                                 <span class="font-bold text-sm text-white">Twice a day</span>
                                 <p class="text-xs text-gray-400">Дважды в день</p>
@@ -557,12 +801,16 @@
         <!-- TAB 4: PRACTICE (Interactive Quiz) -->
         <div id="tab-practice" class="tab-content hidden space-y-10 animate-fade-in">
             <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
-                
+                <div
+                    class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40">
+                </div>
+
                 <div class="relative z-10">
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accentGlow px-3 py-1.5 rounded-full">Интерактивный тренажер</span>
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accentGlow px-3 py-1.5 rounded-full">Интерактивный
+                                тренажер</span>
                             <h3 class="text-2xl font-extrabold mt-3">Проверьте свои знания</h3>
                         </div>
                         <span id="quiz-progress" class="text-sm font-semibold text-gray-400">Вопрос 1 из 5</span>
@@ -570,14 +818,18 @@
 
                     <!-- Progress bar -->
                     <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden mb-8">
-                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-brand-accent to-brand-pink h-full transition-all duration-300" style="width: 20%;"></div>
+                        <div id="quiz-progress-bar"
+                            class="bg-gradient-to-r from-brand-accent to-brand-pink h-full transition-all duration-300"
+                            style="width: 20%;"></div>
                     </div>
 
                     <!-- Question Block -->
                     <div id="quiz-box" class="space-y-6">
                         <div class="p-5 bg-gray-900/60 rounded-2xl border border-gray-800">
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-2" id="quiz-q-category">Вставьте правильную форму</p>
-                            <h4 class="text-lg md:text-xl font-bold" id="quiz-question">My brother ________ playing tennis on weekends.</h4>
+                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-2" id="quiz-q-category">Вставьте
+                                правильную форму</p>
+                            <h4 class="text-lg md:text-xl font-bold" id="quiz-question">My brother ________ playing
+                                tennis on weekends.</h4>
                         </div>
 
                         <!-- Answer choices -->
@@ -588,17 +840,21 @@
 
                     <!-- Score display (Hidden by default) -->
                     <div id="quiz-score-box" class="hidden text-center py-10 space-y-6">
-                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center mx-auto shadow-neon-blue">
-                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <div
+                            class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center mx-auto shadow-neon-blue">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
                         <div>
                             <h4 class="text-3xl font-extrabold">Тест завершен!</h4>
-                            <p class="text-gray-400 mt-2 text-sm max-w-sm mx-auto">Вы отлично справились. Вы можете пройти тест повторно, чтобы закрепить материал.</p>
+                            <p class="text-gray-400 mt-2 text-sm max-w-sm mx-auto">Вы отлично справились. Вы можете
+                                пройти тест повторно, чтобы закрепить материал.</p>
                         </div>
                         <p class="text-2xl font-bold" id="quiz-final-score">Вы набрали: 5 / 5</p>
-                        <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-brand-accent text-white font-semibold shadow-neon-blue hover:opacity-90 transition-all duration-300">
+                        <button onclick="restartQuiz()"
+                            class="px-6 py-3 rounded-xl bg-brand-accent text-white font-semibold shadow-neon-blue hover:opacity-90 transition-all duration-300">
                             Пройти заново
                         </button>
                     </div>
@@ -613,7 +869,8 @@
     </main>
 
     <footer class="border-t border-gray-800/60 py-8 bg-brand-bg/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
                 <span class="font-bold text-sm tracking-tight text-white">Present Simple Bento Hub</span>
                 <p class="text-xs text-gray-500 mt-1">Интерактивный учебный модуль по грамматике английского языка.</p>
@@ -729,6 +986,311 @@
                 </div>
             `;
         }
+
+        // Данные для общей панели "важная деталь" в разделе "Образование"
+        const formulaDetails = {
+            affirmative: {
+                activeClass: 'is-active-emerald',
+                badge: 'text-brand-emerald bg-brand-emerald/10',
+                titleColor: 'text-brand-emerald',
+                title: 'Утверждение: без сокращений',
+                html: `
+                    <p class="text-brand-emerald/90 text-sm leading-relaxed">
+                        В утверждении почти всегда используется <b class="text-brand-emerald">полная форма</b> — сокращать здесь нечего,
+                        сокращения появляются только в отрицании. Единственное, о чём нужно помнить: у <b class="text-brand-emerald">he / she / it</b>
+                        глагол получает окончание <span class="font-mono text-brand-emerald">-s / -es</span> (правила — на вкладке «Орфография»).
+                    </p>
+                `,
+                examplesTitle: 'Примеры: база (зелёный) и -s/-es (синий)',
+                pairs: [
+                    { prn: 'I', eng: 'I work here.', rus: 'Я работаю здесь.', color: 'text-brand-emerald', hl: 'work', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg' },
+                    { prn: 'She', eng: 'She works here.', rus: 'Она работает здесь.', color: 'text-brand-cyan', hl: 'works', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg' },
+                    { prn: 'We', eng: 'We live in Berlin.', rus: 'Мы живём в Берлине.', color: 'text-brand-emerald', hl: 'live', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Reichstag_building_Berlin_view_from_west_before_sunset.jpg/500px-Reichstag_building_Berlin_view_from_west_before_sunset.jpg' },
+                    { prn: 'He', eng: 'He plays tennis every week.', rus: 'Он играет в теннис каждую неделю.', color: 'text-brand-cyan', hl: 'plays', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg/500px-Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg' }
+                ]
+            },
+            negative: {
+                activeClass: 'is-active-pink',
+                badge: 'text-brand-pink bg-brand-pink/10',
+                titleColor: 'text-brand-pink',
+                title: 'Отрицание: полная форма и сокращения',
+                html: `
+                    <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                        <b class="text-brand-pink">Полная форма</b> — <span class="font-mono">do not / does not</span> — используется в официальной речи
+                        и для эмфазы: <span class="italic">"I do not like it!"</span>
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        <b class="text-brand-pink">Сокращения</b> — <span class="font-mono">don't / doesn't</span> — обычная разговорная норма.
+                        После do/does/don't/doesn't смысловой глагол всегда стоит в базовой форме $V_1$, без окончания -s.
+                    </p>
+                `,
+                examplesTitle: 'Примеры: отрицание с don\'t / doesn\'t',
+                pairs: [
+                    { prn: 'They', eng: "They don't speak French.", rus: 'Они не говорят по-французски.', color: 'text-brand-pink', hl: "don't", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Reichstag_building_Berlin_view_from_west_before_sunset.jpg/500px-Reichstag_building_Berlin_view_from_west_before_sunset.jpg' },
+                    { prn: 'He', eng: "He doesn't speak German.", rus: 'Он не говорит по-немецки.', color: 'text-brand-pink', hl: "doesn't", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Reichstag_building_Berlin_view_from_west_before_sunset.jpg/500px-Reichstag_building_Berlin_view_from_west_before_sunset.jpg' },
+                    { prn: 'I', eng: "I don't like coffee.", rus: 'Я не люблю кофе.', color: 'text-brand-pink', hl: "don't", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg' },
+                    { prn: 'She', eng: "She doesn't work here.", rus: 'Она не работает здесь.', color: 'text-brand-pink', hl: "doesn't", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg' }
+                ]
+            },
+            question: {
+                activeClass: 'is-active-cyan',
+                badge: 'text-brand-cyan bg-brand-cyan/10',
+                titleColor: 'text-brand-cyan',
+                title: 'Вопрос: структура и типы ответов',
+                html: `
+                    <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                        <b class="text-brand-cyan">Как задать вопрос:</b> <span class="font-mono">Do/Does + подлежащее + $V_1$?</span>
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                        <b class="text-brand-cyan">Короткий ответ:</b> <span class="italic">Yes, I do. / No, she doesn't.</span> —
+                        стандартная норма в разговорной речи.
+                        <b class="text-brand-cyan ml-2">Полный ответ:</b> <span class="italic">Yes, I play tennis. / No, she doesn't work here.</span>
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        <b class="text-brand-cyan">Вопрос с отрицанием:</b> <span class="italic">"Don't you like coffee?" / "Doesn't she work here?"</span> —
+                        часто выражает удивление или ожидание согласия с говорящим.
+                    </p>
+                `,
+                examplesTitle: 'Примеры: вопрос с Do / Does',
+                pairs: [
+                    { prn: 'You', eng: 'Do you play tennis?', rus: 'Ты играешь в теннис?', color: 'text-brand-cyan', hl: 'Do', img: 'https://as2.ftcdn.net/v2/jpg/00/62/67/75/1000_F_62677552_ozFYQC2IbhXavw3TVRzrUzkkUrhDL7bz.jpg' },
+                    { prn: 'She', eng: 'Does she play tennis?', rus: 'Она играет в теннис?', color: 'text-brand-cyan', hl: 'Does', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg/500px-Kei_Nishikori_1%2C_Wimbledon_2013_-_Diliff.jpg' },
+                    { prn: 'They', eng: 'Do they live in Berlin?', rus: 'Они живут в Берлине?', color: 'text-brand-cyan', hl: 'Do', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Reichstag_building_Berlin_view_from_west_before_sunset.jpg/500px-Reichstag_building_Berlin_view_from_west_before_sunset.jpg' },
+                    { prn: 'He', eng: 'Does he work here?', rus: 'Он работает здесь?', color: 'text-brand-cyan', hl: 'Does', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Woman_reading_and_working_on_laptop_at_home.jpg/500px-Woman_reading_and_working_on_laptop_at_home.jpg' }
+                ]
+            }
+        };
+
+        window.selectFormulaCard = function (type) {
+            ['affirmative', 'negative', 'question'].forEach((key) => {
+                const card = document.getElementById('formula-card-' + key);
+                if (card) card.classList.remove('is-active-emerald', 'is-active-pink', 'is-active-cyan');
+            });
+            // сбрасываем активные плитки/буквы орфографии — сейчас активна карточка формулы
+            ['s-es', 'y-cons', 'y-vowel', 'other'].forEach((key) => {
+                const tile = document.getElementById('spelling-tile-' + key);
+                if (tile) tile.classList.remove('is-active-pink', 'is-active-cyan', 'is-active-emerald', 'is-active-accent');
+            });
+            document.querySelectorAll('.letter-chip').forEach((chip) => chip.classList.remove('is-active-letter'));
+
+            const data = formulaDetails[type];
+            const activeCard = document.getElementById('formula-card-' + type);
+            if (activeCard) activeCard.classList.add(data.activeClass);
+
+            // Пишем в общую шапку "важная деталь" (та же, что у карточки орфографии ниже)
+            const badge = document.getElementById('spelling-detail-badge');
+            const title = document.getElementById('spelling-detail-title');
+            const desc = document.getElementById('spelling-detail-desc');
+
+            badge.className = `text-xs font-bold uppercase tracking-wider ${data.badge} px-3 py-1.5 rounded-full`;
+            title.className = `text-2xl font-extrabold mt-4 mb-3 ${data.titleColor || ''}`;
+            title.innerHTML = data.title;
+            desc.innerHTML = data.html;
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([desc]);
+            }
+
+            renderSpellingCards(data.badge.split(' ')[0], { title: data.examplesTitle, pairs: data.pairs });
+        };
+
+        // Данные для примеров предложений по правилам орфографии -s/-es
+        const spellingLettersData = {
+            s: {
+                title: 'Примеры: окончание -s → -ses/-sses',
+                pairs: [
+                    { prn: 'He', eng: 'He focuses on his work.', rus: 'Он сосредотачивается на работе.', formula: 'focus → focuses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg/500px-City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg' },
+                    { prn: 'She', eng: 'She discusses the plan.', rus: 'Она обсуждает план.', formula: 'discuss → discusses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg/500px-City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg' },
+                    { prn: 'It', eng: 'The company buses the workers.', rus: 'Компания возит рабочих автобусом.', formula: 'bus → buses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg/500px-City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg' },
+                    { prn: 'He', eng: 'He gases up the car.', rus: 'Он заправляет машину.', formula: 'gas → gases', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg/500px-City_Sightseeing_bus_on_Argyle_Street_%28geograph_7881323%29.jpg' }
+                ]
+            },
+            ss: {
+                title: 'Примеры: окончание -ss → -sses',
+                pairs: [
+                    { prn: 'She', eng: 'She kisses her baby.', rus: 'Она целует малыша.', formula: 'kiss → kisses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mother_kissing_her_child.jpg/500px-Mother_kissing_her_child.jpg' },
+                    { prn: 'He', eng: 'He misses the bus.', rus: 'Он опаздывает на автобус.', formula: 'miss → misses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mother_kissing_her_child.jpg/500px-Mother_kissing_her_child.jpg' },
+                    { prn: 'She', eng: 'The teacher passes the papers.', rus: 'Учитель раздаёт работы.', formula: 'pass → passes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mother_kissing_her_child.jpg/500px-Mother_kissing_her_child.jpg' },
+                    { prn: 'She', eng: 'She dresses quickly.', rus: 'Она быстро одевается.', formula: 'dress → dresses', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Mother_kissing_her_child.jpg/500px-Mother_kissing_her_child.jpg' }
+                ]
+            },
+            sh: {
+                title: 'Примеры: окончание -sh → -shes',
+                pairs: [
+                    { prn: 'He', eng: 'He washes his car.', rus: 'Он моет свою машину.', formula: 'wash → washes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg/500px-Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg' },
+                    { prn: 'She', eng: 'She wishes for good luck.', rus: 'Она желает удачи.', formula: 'wish → wishes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg/500px-Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg' },
+                    { prn: 'He', eng: 'He pushes the door open.', rus: 'Он толкает дверь.', formula: 'push → pushes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg/500px-Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg' },
+                    { prn: 'She', eng: 'She finishes her homework early.', rus: 'Она рано заканчивает домашнее задание.', formula: 'finish → finishes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg/500px-Woman_washing_dishes_in_kitchen_sink_while_holding_glass_in_hand.jpg' }
+                ]
+            },
+            ch: {
+                title: 'Примеры: окончание -ch → -ches',
+                pairs: [
+                    { prn: 'He', eng: 'He watches TV every night.', rus: 'Он смотрит ТВ каждый вечер.', formula: 'watch → watches', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg' },
+                    { prn: 'She', eng: 'She teaches English.', rus: 'Она преподаёт английский.', formula: 'teach → teaches', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg' },
+                    { prn: 'It', eng: 'The dog catches the ball.', rus: 'Собака ловит мяч.', formula: 'catch → catches', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg' },
+                    { prn: 'It', eng: 'This tie matches his shirt.', rus: 'Этот галстук подходит к рубашке.', formula: 'match → matches', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Tengis_Movie_Theater_-_Screen.jpg/500px-Tengis_Movie_Theater_-_Screen.jpg' }
+                ]
+            },
+            x: {
+                title: 'Примеры: окончание -x → -xes',
+                pairs: [
+                    { prn: 'He', eng: 'He fixes the computer.', rus: 'Он чинит компьютер.', formula: 'fix → fixes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Auto_mechanic_2.webm/500px--Auto_mechanic_2.webm.jpg' },
+                    { prn: 'She', eng: 'She mixes the ingredients.', rus: 'Она смешивает ингредиенты.', formula: 'mix → mixes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Auto_mechanic_2.webm/500px--Auto_mechanic_2.webm.jpg' },
+                    { prn: 'He', eng: 'He relaxes on weekends.', rus: 'Он отдыхает по выходным.', formula: 'relax → relaxes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Auto_mechanic_2.webm/500px--Auto_mechanic_2.webm.jpg' },
+                    { prn: 'It', eng: 'The factory boxes the products.', rus: 'Фабрика упаковывает товары в коробки.', formula: 'box → boxes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Auto_mechanic_2.webm/500px--Auto_mechanic_2.webm.jpg' }
+                ]
+            },
+            o: {
+                title: 'Примеры: окончание -o → -oes',
+                pairs: [
+                    { prn: 'He', eng: 'He goes to school.', rus: 'Он ходит в школу.', formula: 'go → goes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' },
+                    { prn: 'She', eng: 'She does her homework.', rus: 'Она делает домашнее задание.', formula: 'do → does', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' },
+                    { prn: 'It', eng: 'His voice echoes in the hall.', rus: 'Его голос эхом разносится по залу.', formula: 'echo → echoes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' },
+                    { prn: 'He', eng: 'The president vetoes the bill.', rus: 'Президент накладывает вето на законопроект.', formula: 'veto → vetoes', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' }
+                ]
+            }
+        };
+
+        window.selectSpellingLetter = function (letter) {
+            document.querySelectorAll('.letter-chip').forEach((chip) => chip.classList.remove('is-active-letter'));
+            const chip = document.getElementById('letter-chip-' + letter);
+            if (chip) chip.classList.add('is-active-letter');
+
+            ['s-es', 'y-cons', 'y-vowel', 'other'].forEach((key) => {
+                const tile = document.getElementById('spelling-tile-' + key);
+                if (tile) tile.classList.remove('is-active-pink', 'is-active-cyan', 'is-active-emerald', 'is-active-accent');
+            });
+            const parentTile = document.getElementById('spelling-tile-s-es');
+            if (parentTile) parentTile.classList.add('is-active-pink');
+
+            const badge = document.getElementById('spelling-detail-badge');
+            const title = document.getElementById('spelling-detail-title');
+            const desc = document.getElementById('spelling-detail-desc');
+            badge.className = defaultSpellingHeader.badge;
+            title.innerHTML = defaultSpellingHeader.title;
+            desc.innerHTML = defaultSpellingHeader.desc;
+
+            renderSpellingCards('text-brand-pink', spellingLettersData[letter]);
+        };
+
+        function highlightEnding(eng, p) {
+            // Слово для подсветки: явное поле hl, либо правая часть "formula" (kiss → kisses)
+            let word = p.hl;
+            if (!word && p.formula) {
+                word = p.formula.split('→')[1].trim();
+            }
+            if (!word) return eng;
+
+            const cap = word.charAt(0).toUpperCase() + word.slice(1);
+            const idx = eng.indexOf(word) !== -1 ? eng.indexOf(word) : eng.indexOf(cap);
+            if (idx === -1) return eng;
+
+            const found = eng.slice(idx, idx + word.length);
+            return eng.slice(0, idx) + `<span class="underline font-extrabold">${found}</span>` + eng.slice(idx + word.length);
+        }
+
+        function renderSpellingCards(colorClass, data) {
+            const container = document.getElementById('spelling-examples');
+            container.innerHTML = `
+                <p class="text-xs font-bold uppercase tracking-wider ${colorClass} mb-4">${data.title}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${data.pairs.map((p) => {
+                        const safeText = p.eng.replace(/'/g, "\\'");
+                        const cardColor = p.color || colorClass;
+                        const displayEng = highlightEnding(p.eng, p);
+                        return `
+                        <div class="group glass-card rounded-2xl overflow-hidden relative h-[220px] flex flex-col justify-end p-5 border border-gray-800">
+                            <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.92) 25%, rgba(8, 9, 13, 0.4) 65%, rgba(0, 0, 0, 0.1) 100%), url('${p.img}')"></div>
+                            <div class="relative z-10">
+                                <span class="text-[10px] font-bold tracking-widest ${cardColor} bg-white/10 border border-white/15 px-2 py-1 rounded uppercase">${p.prn}</span>
+                                <h4 class="text-base font-bold text-white mt-2 ${cardColor}">${displayEng}</h4>
+                                <p class="text-xs text-gray-300 mt-1">${p.rus}</p>
+                                ${voiceButtonsHtml(safeText)}
+                            </div>
+                        </div>
+                    `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        const spellingExamplesData = {
+            'y-cons': {
+                activeClass: 'is-active-cyan',
+                color: 'text-brand-cyan',
+                title: 'Примеры: согласная + y → -ies',
+                pairs: [
+                    { prn: 'I', eng: 'I study English.', rus: 'Я изучаю английский.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' },
+                    { prn: 'She', eng: 'She studies English.', rus: 'Она изучает английский.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' }
+                ]
+            },
+            'y-vowel': {
+                activeClass: 'is-active-emerald',
+                color: 'text-brand-emerald',
+                title: 'Примеры: гласная + y → -s',
+                pairs: [
+                    { prn: 'I', eng: 'I play football.', rus: 'Я играю в футбол.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/DFC_5328_Referee_signals_as_a_player_stands_over_the_ball_during_a_nighttime_amateur_football_match_at_Klet_Kaeo_Sattahip.jpg/500px-DFC_5328_Referee_signals_as_a_player_stands_over_the_ball_during_a_nighttime_amateur_football_match_at_Klet_Kaeo_Sattahip.jpg' },
+                    { prn: 'He', eng: 'He plays football.', rus: 'Он играет в футбол.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/DFC_5328_Referee_signals_as_a_player_stands_over_the_ball_during_a_nighttime_amateur_football_match_at_Klet_Kaeo_Sattahip.jpg/500px-DFC_5328_Referee_signals_as_a_player_stands_over_the_ball_during_a_nighttime_amateur_football_match_at_Klet_Kaeo_Sattahip.jpg' }
+                ]
+            },
+            other: {
+                activeClass: 'is-active-accent',
+                color: 'text-brand-accent',
+                title: 'Примеры: остальные глаголы → -s',
+                pairs: [
+                    { prn: 'I', eng: 'I read books.', rus: 'Я читаю книги.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Senior_person_reading_a_book_indoors_closeup.jpg/500px-Senior_person_reading_a_book_indoors_closeup.jpg' },
+                    { prn: 'She', eng: 'She reads books.', rus: 'Она читает книги.', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Senior_person_reading_a_book_indoors_closeup.jpg/500px-Senior_person_reading_a_book_indoors_closeup.jpg' }
+                ]
+            }
+        };
+
+        const defaultSpellingHeader = {
+            badge: 'text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full',
+            title: 'Правила добавления окончаний <span class="text-brand-pink">-s / -es</span>',
+            desc: 'Если подлежащее выражено местоимением 3-го лица единственного числа (<span class="text-white font-semibold">He, She, It</span>), к глаголу в утверждении добавляется окончание. Посмотрите, как меняется написание в зависимости от окончания глагола.'
+        };
+
+        window.selectSpellingRule = function (type) {
+            ['s-es', 'y-cons', 'y-vowel', 'other'].forEach((key) => {
+                const tile = document.getElementById('spelling-tile-' + key);
+                if (tile) tile.classList.remove('is-active-pink', 'is-active-cyan', 'is-active-emerald', 'is-active-accent');
+            });
+
+            const data = spellingExamplesData[type];
+            const tileEl = document.getElementById('spelling-tile-' + type);
+            if (tileEl) tileEl.classList.add(data.activeClass);
+
+            // Возвращаем шапку "важная деталь" в режим орфографии (если до этого была открыта карточка формулы)
+            const badge = document.getElementById('spelling-detail-badge');
+            const title = document.getElementById('spelling-detail-title');
+            const desc = document.getElementById('spelling-detail-desc');
+            badge.className = defaultSpellingHeader.badge;
+            title.innerHTML = defaultSpellingHeader.title;
+            desc.innerHTML = defaultSpellingHeader.desc;
+
+            const container = document.getElementById('spelling-examples');
+            container.innerHTML = `
+                <p class="text-xs font-bold uppercase tracking-wider ${data.color} mb-4">${data.title}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    ${data.pairs.map((p, idx) => {
+                const cardId = `spelling-card-${type}-${idx}`;
+                const safeText = p.eng.replace(/'/g, "\\'");
+                return `
+                        <div class="group glass-card rounded-2xl overflow-hidden relative h-[220px] flex flex-col justify-end p-5 border border-gray-800">
+                            <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.92) 25%, rgba(8, 9, 13, 0.4) 65%, rgba(0, 0, 0, 0.1) 100%), url('${p.img}')"></div>
+                            <div class="relative z-10">
+                                <span class="text-[10px] font-bold tracking-widest ${data.color} bg-white/10 border border-white/15 px-2 py-1 rounded uppercase">${p.prn}</span>
+                                <h4 class="text-lg font-bold text-white mt-2">${p.eng}</h4>
+                                <p class="text-xs text-gray-300 mt-1">${p.rus}</p>
+                                ${voiceButtonsHtml(safeText)}
+                            </div>
+                        </div>
+                    `;
+            }).join('')}
+                </div>
+            `;
+        };
 
         // Tab switching logic
         function switchTab(tabId) {
@@ -959,9 +1521,9 @@
             const qBox = document.getElementById('quiz-box');
             const scoreBox = document.getElementById('quiz-score-box');
             const feedback = document.getElementById('quiz-feedback');
-            
+
             feedback.classList.add('hidden');
-            
+
             if (currentQuestionIndex >= quizQuestions.length) {
                 // Show final score
                 qBox.classList.add('hidden');
@@ -979,7 +1541,7 @@
             document.getElementById('quiz-q-category').innerText = qData.category;
             document.getElementById('quiz-question').innerText = qData.question;
             document.getElementById('quiz-progress').innerText = `Вопрос ${currentQuestionIndex + 1} из ${quizQuestions.length}`;
-            
+
             // Progress Bar
             const percent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
             document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
@@ -987,7 +1549,7 @@
             // Options
             const optContainer = document.getElementById('quiz-options');
             optContainer.innerHTML = '';
-            
+
             qData.options.forEach((opt, idx) => {
                 const button = document.createElement('button');
                 button.className = "p-4 bg-gray-900/40 rounded-2xl border border-gray-800 text-left font-medium hover:border-brand-accent hover:bg-gray-800/20 transition-all duration-300 w-full";
@@ -1041,10 +1603,12 @@
         }
 
         // Initialize App on load
-        window.onload = function() {
+        window.onload = function () {
             renderQuestion();
             renderBentoExamples('affirmative');
+            selectFormulaCard('affirmative');
         }
     </script>
 </body>
+
 </html>

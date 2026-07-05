@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Past Simple - Bento Interactive Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#08090d',
+                            card: 'rgba(17, 19, 26, 0.75)',
+                            accent: '#6366f1',
+                            accentGlow: 'rgba(99, 102, 241, 0.15)',
+                            pink: '#ec4899',
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 20px rgba(99, 102, 241, 0.25)',
+                        'neon-pink': '0 0 20px rgba(236, 72, 153, 0.25)',
+                        'neon-cyan': '0 0 20px rgba(6, 114, 212, 0.25)',
+                        'bento-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #08090d; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+        .glass-card {
+            background: rgba(17, 19, 26, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+        }
+        .tab-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .text-glow { text-shadow: 0 0 12px rgba(99, 102, 241, 0.4); }
+        @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fade-in 0.4s ease-out; }
+    </style>
+</head>
+<body class="bg-brand-bg text-gray-100 min-h-screen antialiased flex flex-col justify-between overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-brand-accentGlow via-transparent to-transparent blur-3xl pointer-events-none -z-10"></div>
+
+    <header class="border-b border-gray-800/60 sticky top-0 z-50 backdrop-blur-md bg-brand-bg/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center shadow-neon-blue">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-gray-400 bg-clip-text text-transparent">PAST <span class="text-brand-accent">SIMPLE</span></span>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Interactive Learn Hub 2026</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-4 text-xs font-medium text-gray-400">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800">
+                    <span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+                    <span>Адаптивный Интенсив</span>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800">
+                    <span>Уровень: A1 - B1</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+                Простое прошедшее <span class="bg-gradient-to-r from-brand-accent via-brand-pink to-brand-cyan bg-clip-text text-transparent">время глагола</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl text-base md:text-lg">
+                Интерактивный Bento-дашборд для изучения Past Simple. Переключайте вкладки, изучайте интерактивные карточки-примеры и закрепите знания на практике.
+            </p>
+        </div>
+
+        <div class="glass-card p-1.5 rounded-2xl mb-10 flex flex-wrap gap-1 max-w-4xl mx-auto md:mx-0 shadow-bento-glow">
+            <button onclick="switchTab('education')" id="tab-btn-education" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span>Образование</span>
+            </button>
+            <button onclick="switchTab('usage')" id="tab-btn-usage" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span>Употребление</span>
+            </button>
+            <button onclick="switchTab('markers')" id="tab-btn-markers" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Маркеры времени</span>
+            </button>
+            <button onclick="switchTab('practice')" id="tab-btn-practice" class="flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Практика</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: EDUCATION -->
+        <div id="tab-education" class="tab-content block space-y-10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Affirmative -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-emerald/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-emerald/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald text-xl font-bold">+</div>
+                        <h3 class="text-xl font-bold">Утверждение</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Все местоимения равны! Глагол принимает форму прошедшего времени: <code class="text-brand-emerald bg-brand-emerald/10 px-1 py-0.5 rounded font-mono font-bold">V2</code> (2-я форма) для неправильных глаголов или <code class="text-brand-emerald bg-brand-emerald/10 px-1 py-0.5 rounded font-mono font-bold">V + -ed</code> для правильных.</p>
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">I, He, She, It, We, You, They</span>
+                            <p class="text-lg font-mono mt-0.5">V2 / V-ed <span class="text-gray-500 font-sans text-sm ml-2">(прошедшая форма)</span></p>
+                            <p class="text-sm text-gray-300 italic mt-1">"I <span class="text-brand-emerald underline font-bold">worked</span> yesterday."</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-pink uppercase font-bold">Неправильные глаголы</span>
+                            <p class="text-lg font-mono mt-0.5">V2 <span class="text-gray-500 font-sans text-sm ml-2">(2-я форма из таблицы)</span></p>
+                            <p class="text-sm text-gray-300 italic mt-1">"She <span class="text-brand-pink underline font-bold">went</span> to school."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Negative -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-pink/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-pink/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink text-xl font-bold">−</div>
+                        <h3 class="text-xl font-bold">Отрицание</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Для всех лиц используется один мощный помощник — <span class="text-brand-pink font-semibold">did not (didn't)</span>. Смысловой глагол возвращается в начальную форму!</p>
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">Все местоимения</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-pink font-bold">didn't</span> + V</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"I <span class="text-brand-pink font-bold">didn't</span> go to the park."</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-pink uppercase font-bold">Важно!</span>
+                            <p class="text-sm text-gray-400 mt-1">Глагол <span class="text-white font-bold">не</span> меняется — <span class="text-brand-pink font-semibold">didn't</span> уже «забрал» прошедшее время на себя.</p>
+                            <p class="text-sm text-gray-300 italic mt-1">❌ "He didn't <span class="line-through text-red-400">went</span>" → ✅ "He didn't <span class="text-brand-emerald font-bold">go</span>."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question -->
+                <div class="glass-card rounded-3xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-brand-cyan/20 transition-all duration-300"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-xl font-bold">?</div>
+                        <h3 class="text-xl font-bold">Вопрос</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Выносим вспомогательный глагол <span class="text-brand-cyan font-semibold">Did</span> на первое место. Смысловой глагол остаётся в начальной форме (без изменений).</p>
+                    <div class="space-y-3.5">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-emerald uppercase font-bold">Все местоимения</span>
+                            <p class="text-lg font-mono mt-0.5"><span class="text-brand-cyan font-bold">Did</span> + subject + V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Did</span> you see that film?"</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <span class="text-xs text-brand-cyan uppercase font-bold">С вопросительным словом</span>
+                            <p class="text-lg font-mono mt-0.5">Wh-word + <span class="text-brand-cyan font-bold">did</span> + subj + V?</p>
+                            <p class="text-sm text-gray-300 italic mt-1">"<span class="text-brand-cyan font-bold">Where</span> did you go?"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules: Regular verbs -ed -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                <div class="flex flex-col lg:flex-row gap-8 items-start relative z-10">
+                    <div class="lg:w-1/3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-pink bg-brand-pink/10 px-3 py-1.5 rounded-full">Важная деталь</span>
+                        <h3 class="text-2xl font-extrabold mt-4 mb-3">Правила добавления окончаний <span class="text-brand-pink">-ed</span></h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            Правильные глаголы (Regular Verbs) образуют прошедшее время по определённым правилам. Посмотрите, как меняется написание в зависимости от окончания глагола.
+                        </p>
+                    </div>
+                    <div class="lg:w-2/3 w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Большинство глаголов</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Просто прибавляем стандартное окончание <span class="text-brand-pink font-mono font-bold">-ed</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">work &rarr;</span> <span class="text-brand-pink font-semibold">worked</span></div>
+                                <div><span class="text-gray-500">play &rarr;</span> <span class="text-brand-pink font-semibold">played</span></div>
+                                <div><span class="text-gray-500">watch &rarr;</span> <span class="text-brand-pink font-semibold">watched</span></div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -e</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Добавляем только <span class="text-brand-pink font-mono font-bold">-d</span>, чтобы не дублировать e.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">live &rarr;</span> <span class="text-brand-pink font-semibold">lived</span></div>
+                                <div><span class="text-gray-500">like &rarr;</span> <span class="text-brand-pink font-semibold">liked</span></div>
+                                <div><span class="text-gray-500">dance &rarr;</span> <span class="text-brand-pink font-semibold">danced</span></div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Краткий гласный + согласная</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Удваиваем конечную согласную и добавляем <span class="text-brand-pink font-mono font-bold">-ed</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">stop &rarr;</span> <span class="text-brand-pink font-semibold">stopped</span></div>
+                                <div><span class="text-gray-500">plan &rarr;</span> <span class="text-brand-pink font-semibold">planned</span></div>
+                                <div><span class="text-gray-500">drop &rarr;</span> <span class="text-brand-pink font-semibold">dropped</span></div>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-900/40 rounded-2xl border border-gray-800 hover:border-brand-accent/50 transition-all duration-300">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
+                                <h4 class="font-bold text-sm text-gray-200">Оканчивается на -y с предшествующей согласной</h4>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">Буква <span class="text-white font-mono font-bold">y</span> заменяется на <span class="text-brand-pink font-mono font-bold">i</span> и добавляется <span class="text-brand-pink font-mono font-bold">-ed</span>.</p>
+                            <div class="flex gap-4 text-xs font-mono">
+                                <div><span class="text-gray-500">study &rarr;</span> <span class="text-brand-pink font-semibold">studied</span></div>
+                                <div><span class="text-gray-500">cry &rarr;</span> <span class="text-brand-pink font-semibold">cried</span></div>
+                                <div><span class="text-gray-500">try &rarr;</span> <span class="text-brand-pink font-semibold">tried</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Irregular verbs note -->
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-pink/10 rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Запомните</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold mb-3">Неправильные глаголы (Irregular Verbs)</h3>
+                    <p class="text-gray-400 text-sm max-w-3xl mb-6">
+                        Неправильные глаголы не подчиняются общим правилам. Их вторая форма (V2) memorized — её нужно просто выучить. Вот несколько самых частотных:
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">go →</p>
+                            <p class="text-lg font-bold text-brand-pink">went</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">see →</p>
+                            <p class="text-lg font-bold text-brand-pink">saw</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">take →</p>
+                            <p class="text-lg font-bold text-brand-pink">took</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">come →</p>
+                            <p class="text-lg font-bold text-brand-pink">came</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">eat →</p>
+                            <p class="text-lg font-bold text-brand-pink">ate</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">buy →</p>
+                            <p class="text-lg font-bold text-brand-pink">bought</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">write →</p>
+                            <p class="text-lg font-bold text-brand-pink">wrote</p>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800 text-center">
+                            <p class="text-xs text-gray-500">be →</p>
+                            <p class="text-lg font-bold text-brand-pink">was / were</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Bento Examples -->
+            <div>
+                <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">Практическая демонстрация</span>
+                        <h3 class="text-2xl font-extrabold mt-2">Примеры предложений в Bento-плитках</h3>
+                    </div>
+                    <span class="text-xs text-gray-400 bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-lg">Кликните по карточке, чтобы перевести</span>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button onclick="renderBentoExamples('affirmative')" id="bento-filter-affirmative" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                    <button onclick="renderBentoExamples('negative')" id="bento-filter-negative" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                    <button onclick="renderBentoExamples('question')" id="bento-filter-question" class="px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition"></button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="bento-examples-grid"></div>
+            </div>
+        </div>
+
+        <!-- TAB 2: USAGE -->
+        <div id="tab-usage" class="tab-content hidden space-y-10 animate-fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Photo_of_a_completed_marathon.jpg/500px-Photo_of_a_completed_marathon.jpg')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-accentGlow border border-brand-accent/30 flex items-center justify-center text-brand-accent mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Завершённое действие в прошлом</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Действие произошло и закончилось в определённый момент в прошлом. Мы знаем, когда именно это случилось.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-accent font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"I visited Paris last summer."</p>
+                        <p class="text-xs text-gray-400 mt-1">Я посетил Париж прошлым летом.</p>
+                        <div class="flex items-center gap-1.5 mt-2">
+                            <button onclick="window.speakExample('I visited Paris last summer.', 'en-GB', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/></svg><span>BrE</span></button>
+                            <button onclick="window.speakExample('I visited Paris last summer.', 'en-US', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200"><svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#B22234"/><g fill="#fff"><rect y="2.3" width="60" height="2.3"/><rect y="6.9" width="60" height="2.3"/><rect y="11.5" width="60" height="2.3"/><rect y="16.1" width="60" height="2.3"/><rect y="20.7" width="60" height="2.3"/><rect y="25.3" width="60" height="2.3"/></g><rect width="24" height="16.1" fill="#3C3B6E"/></svg><span>AmE</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Muybridge_race_gallop_anim.gif/500px-Muybridge_race_gallop_anim.gif')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-emerald/15 border border-brand-emerald/30 flex items-center justify-center text-brand-emerald mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Цепочка действий в прошлом</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Несколько действий, которые произошли одно за другим в определённой последовательности (часто в рассказах и историях).
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-emerald font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"He woke up, brushed his teeth, and left the house."</p>
+                        <p class="text-xs text-gray-400 mt-1">Он проснулся, почистил зубы и вышел из дома.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Old_photograph_of_a_family.jpg/500px-Old_photograph_of_a_family.jpg')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-cyan/15 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Прошлые привычки и факты</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Действия, которые регулярно происходили в прошлом, но больше не повторяются. Факты, которые были верны в прошлом.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-cyan font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"She played the piano when she was a child."</p>
+                        <p class="text-xs text-gray-400 mt-1">Она играла на пианино, когда была ребёнком.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group min-h-[300px]">
+                    <div class="absolute inset-0 z-0 bg-cover bg-center opacity-10 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Pair_of_ancient_Roman_glass_beads.jpg/500px-Pair_of_ancient_Roman_glass_beads.jpg')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-brand-pink/15 border border-brand-pink/30 flex items-center justify-center text-brand-pink mb-6">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Длительность в прошлом</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Действие, которое длилось определённый период в прошлом и уже завершилось. Часто с глаголами состояния (live, work, be).
+                        </p>
+                    </div>
+                    <div class="p-4 bg-gray-950/60 rounded-2xl border border-gray-800 relative z-10">
+                        <p class="text-xs text-brand-pink font-bold uppercase tracking-wider mb-1">Пример предложения</p>
+                        <p class="text-sm font-semibold text-white">"They lived in London for five years."</p>
+                        <p class="text-xs text-gray-400 mt-1">Они жили в Лондоне пять лет.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MARKERS -->
+        <div id="tab-markers" class="tab-content hidden space-y-10 animate-fade-in">
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                <div class="relative z-10">
+                    <span class="text-xs font-bold uppercase tracking-wider text-brand-cyan bg-brand-cyan/10 px-3 py-1.5 rounded-full">Сигнальные слова</span>
+                    <h3 class="text-2xl font-extrabold mt-4 mb-3">Маркеры времени Past Simple</h3>
+                    <p class="text-gray-400 text-sm max-w-2xl mb-8">
+                        Слова-маркеры подсказывают, что действие произошло в прошлом. Нажмите на любой маркер, чтобы увидеть примеры его использования.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+                        <div onclick="showMarkerDetail('yesterday', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-emerald font-bold">Вчера</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Yesterday</h4>
+                            <p class="text-xs text-gray-400 mt-1">Вчера</p>
+                        </div>
+                        <div onclick="showMarkerDetail('last', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-cyan font-bold">Прошлый</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Last ...</h4>
+                            <p class="text-xs text-gray-400 mt-1">Прошлый (week/month/year)</p>
+                        </div>
+                        <div onclick="showMarkerDetail('ago', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-accent font-bold">Назад</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">... ago</h4>
+                            <p class="text-xs text-gray-400 mt-1">... назад</p>
+                        </div>
+                        <div onclick="showMarkerDetail('in', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-brand-pink font-bold">В (году)</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-pink"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">In 2010</h4>
+                            <p class="text-xs text-gray-400 mt-1">В конкретном году</p>
+                        </div>
+                        <div onclick="showMarkerDetail('when', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-yellow-500 font-bold">Когда</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">When ...</h4>
+                            <p class="text-xs text-gray-400 mt-1">Когда (я был молод)</p>
+                        </div>
+                        <div onclick="showMarkerDetail('just', '')" class="cursor-pointer p-5 bg-gray-900/50 rounded-2xl border border-gray-800 hover:border-brand-accent hover:bg-brand-accentGlow transition-all duration-300">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs text-red-500 font-bold">Только что</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Just now</h4>
+                            <p class="text-xs text-gray-400 mt-1">Только что</p>
+                        </div>
+                    </div>
+
+                    <div id="marker-detail-box" class="mt-8 p-6 bg-gray-950/80 rounded-2xl border border-gray-800 transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-mono px-2 py-1 bg-brand-accent/20 text-brand-accent rounded" id="detail-percentage">Вчера</span>
+                            <h4 class="text-lg font-bold" id="detail-title">Yesterday (Вчера)</h4>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4" id="detail-desc">Самый универсальный маркер Past Simple. Указывает на день, предшествующий моменту речи.</p>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                            <p class="text-xs text-gray-400 uppercase font-bold mb-1">Положение в предложении:</p>
+                            <p class="text-sm text-white" id="detail-rule">Обычно ставится в <strong>конце</strong> предложения, но может стоять и в начале для акцента.</p>
+                            <p class="text-xs text-brand-accent font-mono italic mt-2" id="detail-example">Пример: "I saw him yesterday." (Я видел его вчера.)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card rounded-3xl p-6">
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Конструкции с Last (Прошлый)
+                    </h4>
+                    <p class="text-sm text-gray-400 mb-6">Слово "last" ставится перед единицей времени и указывает на предыдущий период.</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Last night</span>
+                                <p class="text-xs text-gray-400">Прошлой ночью</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-pink">I read a book last night.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Last week / month / year</span>
+                                <p class="text-xs text-gray-400">На прошлой неделе / месяце / году</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-pink">We travelled last summer.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Last Monday / Friday</span>
+                                <p class="text-xs text-gray-400">В прошлый понедельник / пятницу</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-pink">She called me last Friday.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6">
+                    <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brand-emerald" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Конструкции с Ago (Назад)
+                    </h4>
+                    <p class="text-sm text-gray-400 mb-6">"Ago" ставится <strong>после</strong> единицы времени и отсчитывает время назад от настоящего момента.</p>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Two days ago</span>
+                                <p class="text-xs text-gray-400">Два дня назад</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-emerald">He arrived two days ago.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">Five minutes ago</span>
+                                <p class="text-xs text-gray-400">Пять минут назад</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-emerald">She left five minutes ago.</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-950/40 rounded-xl border border-gray-800/80">
+                            <div>
+                                <span class="font-bold text-sm text-white">A long time ago</span>
+                                <p class="text-xs text-gray-400">Давным-давно</p>
+                            </div>
+                            <span class="text-xs font-mono text-brand-emerald">Dinosaurs lived a long time ago.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: PRACTICE -->
+        <div id="tab-practice" class="tab-content hidden space-y-10 animate-fade-in">
+            <div class="glass-card rounded-3xl p-8 max-w-3xl mx-auto relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-accentGlow rounded-full blur-3xl pointer-events-none -mr-40 -mt-40"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accentGlow px-3 py-1.5 rounded-full">Интерактивный тренажер</span>
+                            <h3 class="text-2xl font-extrabold mt-3">Проверьте свои знания</h3>
+                        </div>
+                        <span id="quiz-progress" class="text-sm font-semibold text-gray-400">Вопрос 1 из 5</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden mb-8">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-brand-accent to-brand-pink h-full transition-all duration-300" style="width: 20%;"></div>
+                    </div>
+                    <div id="quiz-box" class="space-y-6">
+                        <div class="p-5 bg-gray-900/60 rounded-2xl border border-gray-800">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-2" id="quiz-q-category">Вставьте правильную форму</p>
+                            <h4 class="text-lg md:text-xl font-bold" id="quiz-question">She ________ to the cinema yesterday.</h4>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quiz-options"></div>
+                    </div>
+                    <div id="quiz-score-box" class="hidden text-center py-10 space-y-6">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-brand-accent to-brand-pink flex items-center justify-center mx-auto shadow-neon-blue">
+                            <svg class="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-3xl font-extrabold">Тест завершён!</h4>
+                            <p class="text-gray-400 mt-2 text-sm max-w-sm mx-auto">Вы отлично справились. Вы можете пройти тест повторно, чтобы закрепить материал.</p>
+                        </div>
+                        <p class="text-2xl font-bold" id="quiz-final-score">Вы набрали: 5 / 5</p>
+                        <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-brand-accent text-white font-semibold shadow-neon-blue hover:opacity-90 transition-all duration-300">Пройти заново</button>
+                    </div>
+                    <div id="quiz-feedback" class="hidden mt-6 p-4 rounded-xl border transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800/60 py-8 bg-brand-bg/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <span class="font-bold text-sm tracking-tight text-white">Past Simple Bento Hub</span>
+                <p class="text-xs text-gray-500 mt-1">Интерактивный учебный модуль по грамматике английского языка.</p>
+            </div>
+            <p class="text-xs text-gray-500">&copy; 2026 Interactive English. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const FLAG_GB = '<svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M30,0 V30 M0,15 H60" stroke="#fff" stroke-width="10"/><path d="M30,0 V30 M0,15 H60" stroke="#C8102E" stroke-width="6"/></svg>';
+        const FLAG_US = '<svg viewBox="0 0 60 30" class="w-4 h-3 rounded-sm flex-shrink-0"><rect width="60" height="30" fill="#B22234"/><g fill="#fff"><rect y="2.3" width="60" height="2.3"/><rect y="6.9" width="60" height="2.3"/><rect y="11.5" width="60" height="2.3"/><rect y="16.1" width="60" height="2.3"/><rect y="20.7" width="60" height="2.3"/><rect y="25.3" width="60" height="2.3"/></g><rect width="24" height="16.1" fill="#3C3B6E"/></svg>';
+
+        const FEMALE_VOICE_HINTS = ['female', 'zira', 'susan', 'samantha', 'victoria', 'kate', 'serena', 'hazel', 'moira', 'tessa', 'fiona', 'karen', 'anna', 'google uk english female', 'google us english', 'libby', 'sonia', 'aria'];
+
+        let activeVoiceAudio = null;
+        let activeVoiceBtn = null;
+        let activeVoiceOriginalHTML = '';
+
+        function getVoicesAsync() {
+            return new Promise((resolve) => {
+                const existing = window.speechSynthesis.getVoices();
+                if (existing.length) { resolve(existing); return; }
+                const onVoices = () => {
+                    window.speechSynthesis.removeEventListener('voiceschanged', onVoices);
+                    resolve(window.speechSynthesis.getVoices());
+                };
+                window.speechSynthesis.addEventListener('voiceschanged', onVoices);
+                setTimeout(() => resolve(window.speechSynthesis.getVoices()), 400);
+            });
+        }
+
+        function pickFemaleVoice(voices, langCode) {
+            const langPrefix = langCode.split('-')[0].toLowerCase();
+            const sameLang = voices.filter(v => v.lang.toLowerCase() === langCode.toLowerCase());
+            const samePrefix = voices.filter(v => v.lang.toLowerCase().startsWith(langPrefix));
+            const pool = sameLang.length ? sameLang : (samePrefix.length ? samePrefix : voices);
+            if (!pool.length) return null;
+            const isFemale = v => FEMALE_VOICE_HINTS.some(hint => v.name.toLowerCase().includes(hint));
+            const isHighQuality = v => /natural|online|neural/i.test(v.name);
+            return pool.find(v => isFemale(v) && isHighQuality(v)) || pool.find(isFemale) || pool.find(isHighQuality) || pool[0];
+        }
+
+        function resetVoiceButton() {
+            if (activeVoiceBtn) {
+                activeVoiceBtn.innerHTML = activeVoiceOriginalHTML;
+                activeVoiceBtn.classList.remove('bg-brand-accent', 'text-white');
+            }
+            activeVoiceAudio = null;
+            activeVoiceBtn = null;
+            activeVoiceOriginalHTML = '';
+        }
+
+        async function speakWithBrowserVoice(text, langCode, btn) {
+            if (!('speechSynthesis' in window)) { resetVoiceButton(); return; }
+            const voices = await getVoicesAsync();
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.95;
+            utterance.lang = langCode;
+            const voice = pickFemaleVoice(voices, langCode);
+            if (voice) utterance.voice = voice;
+            utterance.onstart = () => { btn.classList.add('bg-brand-accent', 'text-white'); };
+            utterance.onend = () => resetVoiceButton();
+            utterance.onerror = () => resetVoiceButton();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        window.speakExample = function (text, langCode, btn, event) {
+            if (event) event.stopPropagation();
+            if ((activeVoiceAudio || window.speechSynthesis.speaking) && activeVoiceBtn === btn) {
+                if (activeVoiceAudio) activeVoiceAudio.pause();
+                window.speechSynthesis.cancel();
+                resetVoiceButton();
+                return;
+            }
+            if (activeVoiceBtn) resetVoiceButton();
+            activeVoiceBtn = btn;
+            activeVoiceOriginalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></span>';
+            const cleanText = encodeURIComponent(text);
+            const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${cleanText}`;
+            const audio = new Audio(ttsUrl);
+            activeVoiceAudio = audio;
+            audio.onplay = () => { btn.classList.add('bg-brand-accent', 'text-white'); };
+            audio.onended = () => resetVoiceButton();
+            audio.onerror = () => { activeVoiceAudio = null; speakWithBrowserVoice(text, langCode, btn); };
+            audio.play().catch(() => audio.onerror());
+        };
+
+        function voiceButtonsHtml(text) {
+            const safeText = text.replace(/'/g, "\\'");
+            return `
+                <div class="flex items-center gap-1.5 mt-2" onclick="event.stopPropagation()">
+                    <button onclick="window.speakExample('${safeText}', 'en-GB', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-white/10 border border-white/15 text-white/80 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200" title="BrE">
+                        ${FLAG_GB}<span>BrE</span>
+                    </button>
+                    <button onclick="window.speakExample('${safeText}', 'en-US', this, event)" class="px-2 py-1 text-[10px] font-extrabold rounded-lg bg-white/10 border border-white/15 text-white/80 hover:text-white hover:border-brand-accent flex items-center gap-1.5 transition-all duration-200" title="AmE">
+                        ${FLAG_US}<span>AmE</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            const buttons = document.querySelectorAll('button[id^="tab-btn-"]');
+            buttons.forEach(button => {
+                button.className = "flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition text-gray-400 hover:text-white hover:bg-gray-800/40";
+            });
+            const activeContent = document.getElementById('tab-' + tabId);
+            if (activeContent) activeContent.classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            if (activeBtn) activeBtn.className = "flex-1 min-w-[150px] py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2.5 tab-transition bg-brand-accent text-white shadow-neon-blue";
+        }
+
+        function toggleCardTranslate(cardId) {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+            const eng = card.querySelector('.card-eng');
+            const rus = card.querySelector('.card-rus');
+            if (eng.classList.contains('block')) {
+                eng.classList.replace('block', 'hidden');
+                rus.classList.replace('hidden', 'block');
+            } else {
+                eng.classList.replace('hidden', 'block');
+                rus.classList.replace('block', 'hidden');
+            }
+        }
+
+        const bentoExamplesData = {
+            affirmative: [
+                { prn: 'I', eng: 'I worked yesterday.', rus: 'Я работал вчера.', formula: 'I + Worked', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Office_desk_with_computer.jpg/500px-Office_desk_with_computer.jpg' },
+                { prn: 'You', eng: 'You saw the movie.', rus: 'Ты смотрел этот фильм.', formula: 'You + Saw', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Cinema_projector.jpg/500px-Cinema_projector.jpg' },
+                { prn: 'He', eng: 'He went to school.', rus: 'Он пошёл в школу.', formula: 'He + Went', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/School_building.jpg/500px-School_building.jpg' },
+                { prn: 'She', eng: 'She bought a new dress.', rus: 'Она купила новое платье.', formula: 'She + Bought', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Evening_dress.jpg/500px-Evening_dress.jpg' },
+                { prn: 'It', eng: 'It rained all day.', rus: 'Шёл дождь весь день.', formula: 'It + Rained', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Rain_Umbrella_01.JPG/500px-Rain_Umbrella_01.JPG' },
+                { prn: 'We', eng: 'We lived in London.', rus: 'Мы жили в Лондоне.', formula: 'We + Lived', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/London_Bridge_Illuminated.jpg/500px-London_Bridge_Illuminated.jpg' },
+                { prn: 'They', eng: 'They played football.', rus: 'Они играли в футбол.', formula: 'They + Played', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/football_at_stadium.jpg/500px-football_at_stadium.jpg' },
+                { prn: 'You', eng: 'You studied English.', rus: 'Вы изучали английский.', formula: 'You + Studied', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' }
+            ],
+            negative: [
+                { prn: 'I', eng: "I didn't see him.", rus: 'Я его не видел.', formula: "Didn't + See", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Person_walking_in_the_dark.jpg/500px-Person_walking_in_the_dark.jpg' },
+                { prn: 'You', eng: "You didn't call me.", rus: 'Ты мне не звонил.', formula: "Didn't + Call", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Smartphone_on_table.jpg/500px-Smartphone_on_table.jpg' },
+                { prn: 'He', eng: "He didn't go to work.", rus: 'Он не пошёл на работу.', formula: "Didn't + Go", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Office_building.jpg/500px-Office_building.jpg' },
+                { prn: 'She', eng: "She didn't like the food.", rus: 'Ей не понравилась еда.', formula: "Didn't + Like", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Plate_of_food.jpg/500px-Plate_of_food.jpg' },
+                { prn: 'It', eng: "It didn't rain yesterday.", rus: 'Вчера не было дождя.', formula: "Didn't + Rain", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Sun_behind_clouds.jpg/500px-Sun_behind_clouds.jpg' },
+                { prn: 'We', eng: "We didn't watch TV.", rus: 'Мы не смотрели телевизор.', formula: "Didn't + Watch", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/EFTA00002142_-_Modern_living_room_with_a_large_flat-screen_TV_on_a_wooden_media_console_set_against_white_walls_and_tiled_flooring.jpg/500px-EFTA00002142_-_Modern_living_room_with_a_large_flat-screen_TV_on_a_wooden_media_console_set_against_white_walls_and_tiled_flooring.jpg' },
+                { prn: 'They', eng: "They didn't arrive on time.", rus: 'Они не прибыли вовремя.', formula: "Didn't + Arrive", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Clock_tower.jpg/500px-Clock_tower.jpg' },
+                { prn: 'You', eng: "You didn't study last night.", rus: 'Ты не занимался вчера вечером.', formula: "Didn't + Study", img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Sias_Library_-_Students_Studying_2017.jpg/500px-Sias_Library_-_Students_Studying_2017.jpg' }
+            ],
+            question: [
+                { prn: 'I', eng: 'Did I lock the door?', rus: 'Я закрыл дверь?', formula: 'Did + Lock', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Old_door_lock.jpg/500px-Old_door_lock.jpg' },
+                { prn: 'You', eng: 'Did you finish the book?', rus: 'Ты закончил книгу?', formula: 'Did + Finish', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Senior_person_reading_a_book_indoors_closeup.jpg/500px-Senior_person_reading_a_book_indoors_closeup.jpg' },
+                { prn: 'He', eng: 'Did he pass the exam?', rus: 'Он сдал экзамен?', formula: 'Did + Pass', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Exam_paper.jpg/500px-Exam_paper.jpg' },
+                { prn: 'She', eng: 'Did she cook dinner?', rus: 'Она приготовила ужин?', formula: 'Did + Cook', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kitchen_scene.jpg/500px-Kitchen_scene.jpg' },
+                { prn: 'It', eng: 'Did it snow last night?', rus: 'Вчера ночью шёл снег?', formula: 'Did + Snow', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Snow_on_tree.jpg/500px-Snow_on_tree.jpg' },
+                { prn: 'We', eng: 'Did we meet before?', rus: 'Мы встречались раньше?', formula: 'Did + Meet', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/People_meeting.jpg/500px-People_meeting.jpg' },
+                { prn: 'They', eng: 'Did they win the game?', rus: 'Они выиграли игру?', formula: 'Did + Win', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Medal_gold.jpg/500px-Medal_gold.jpg' },
+                { prn: 'You', eng: 'Did you enjoy the concert?', rus: 'Тебе понравился концерт?', formula: 'Did + Enjoy', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg/500px-The_U.S._Army_Orchestra_concert_at_Rachel_M._Schlesinger_Concert_Hall_in_Alexandria%2C_Virginia_on_May_16%2C_2025_-_37.jpg' }
+            ]
+        };
+
+        const bentoFilterMeta = {
+            affirmative: { sign: '+', label: 'Утверждение', active: 'bg-brand-emerald/15 text-brand-emerald border-brand-emerald/40', badge: 'text-brand-emerald bg-brand-emerald/10 border-brand-emerald/30' },
+            negative: { sign: '−', label: 'Отрицание', active: 'bg-brand-pink/15 text-brand-pink border-brand-pink/40', badge: 'text-brand-pink bg-brand-pink/10 border-brand-pink/30' },
+            question: { sign: '?', label: 'Вопрос', active: 'bg-brand-cyan/15 text-brand-cyan border-brand-cyan/40', badge: 'text-brand-cyan bg-brand-cyan/10 border-brand-cyan/30' }
+        };
+
+        window.renderBentoExamples = function (type) {
+            Object.keys(bentoFilterMeta).forEach((key) => {
+                const btn = document.getElementById('bento-filter-' + key);
+                if (!btn) return;
+                const meta = bentoFilterMeta[key];
+                btn.innerHTML = `${meta.sign} ${meta.label}`;
+                btn.className = 'px-4 py-2.5 rounded-xl text-sm font-bold border tab-transition ' +
+                    (key === type ? meta.active : 'text-gray-400 border-gray-800 hover:text-white hover:border-gray-700');
+            });
+            const grid = document.getElementById('bento-examples-grid');
+            grid.innerHTML = '';
+            const meta = bentoFilterMeta[type];
+            bentoExamplesData[type].forEach((item, idx) => {
+                const cardId = `bento-card-${type}-${idx}`;
+                const card = document.createElement('div');
+                card.className = 'group cursor-pointer glass-card rounded-3xl overflow-hidden relative h-[360px] flex flex-col justify-end p-6 border border-gray-800 hover:shadow-neon-blue';
+                card.onclick = () => toggleCardTranslate(cardId);
+                card.innerHTML = `
+                    <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: linear-gradient(to top, rgba(8, 9, 13, 0.95) 20%, rgba(8, 9, 13, 0.4) 60%, rgba(0, 0, 0, 0.1) 100%), url('${item.img}')"></div>
+                    <div class="relative z-10 space-y-3">
+                        <span class="text-[10px] font-bold tracking-widest ${meta.badge} border px-2 py-1 rounded uppercase">${item.prn}</span>
+                        <div id="${cardId}" class="min-h-[70px]">
+                            <div class="card-eng block transition-all duration-300">
+                                <h4 class="text-xl font-bold text-white">${item.eng}</h4>
+                            </div>
+                            <div class="card-rus hidden transition-all duration-300 text-white">
+                                <h4 class="text-lg font-bold">${item.rus}</h4>
+                            </div>
+                            ${voiceButtonsHtml(item.eng)}
+                        </div>
+                        <div class="pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                            <span>Past Simple ${meta.sign}</span>
+                            <span class="flex items-center gap-1 font-mono">${item.formula}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        };
+
+        const markerDatabase = {
+            yesterday: {
+                title: 'Yesterday (Вчера)',
+                percentage: 'Вчера',
+                desc: 'Самый универсальный маркер Past Simple. Указывает на день, предшествующий моменту речи.',
+                rule: 'Обычно ставится в <strong>конце</strong> предложения, но может стоять и в начале для смыслового акцента.',
+                example: 'Пример: "I saw him yesterday." (Я видел его вчера.)'
+            },
+            last: {
+                title: 'Last week / month / year (Прошлый)',
+                percentage: 'Прошлый',
+                desc: 'Указывает на предыдущий период времени: неделю, месяц, год, вечер, выходные.',
+                rule: 'Ставится в <strong>конце</strong> предложения. "Last" всегда идёт перед единицей времени.',
+                example: 'Пример: "We travelled to Italy last summer." (Прошлым летом мы ездили в Италию.)'
+            },
+            ago: {
+                title: 'Two days ago (Два дня назад)',
+                percentage: 'Назад',
+                desc: 'Конструкция "число + единица времени + ago" отсчитывает время назад от настоящего момента.',
+                rule: 'Всегда ставится в <strong>конце</strong> предложения. "Ago" стоит строго ПОСЛЕ единицы времени.',
+                example: 'Пример: "She called me ten minutes ago." (Она позвонила мне 10 минут назад.)'
+            },
+            in: {
+                title: 'In 2015 (В 2015 году)',
+                percentage: 'В году',
+                desc: 'Указывает на конкретный год или конкретный момент в прошлом.',
+                rule: 'Ставится в <strong>конце</strong> предложения. Предлог "in" используется с годами, месяцами, веками.',
+                example: 'Пример: "I graduated in 2020." (Я окончил университет в 2020 году.)'
+            },
+            when: {
+                title: 'When I was young (Когда я был молод)',
+                percentage: 'Когда',
+                desc: 'Придаточное предложение с "when" описывает период в прошлом, к которому относится действие.',
+                rule: '"When" стоит в начале или в середине предложения. После "when" глагол тоже в Past Simple.',
+                example: 'Пример: "I played football when I was a child." (Я играл в футбол, когда был ребёнком.)'
+            },
+            just: {
+                title: 'Just now (Только что)',
+                percentage: 'Только что',
+                desc: 'Указывает на действие, которое произошло буквально минуту назад, в самый недавний момент.',
+                rule: 'Ставится в <strong>конце</strong> предложения. Не путать с Present Perfect "just" (который без "now").',
+                example: 'Пример: "I saw her just now." (Я только что её видел.)'
+            }
+        };
+
+        function showMarkerDetail(markerId, pct) {
+            const data = markerDatabase[markerId];
+            if (!data) return;
+            document.getElementById('detail-title').innerText = data.title;
+            document.getElementById('detail-percentage').innerText = data.percentage;
+            document.getElementById('detail-desc').innerText = data.desc;
+            document.getElementById('detail-rule').innerHTML = data.rule;
+            document.getElementById('detail-example').innerText = data.example;
+        }
+
+        const quizQuestions = [
+            {
+                category: 'Правильные глаголы (Regular Verbs)',
+                question: 'She ________ to the cinema yesterday.',
+                options: ['goed', 'went', 'goes', 'going'],
+                correct: 1,
+                explanation: '"Go" — неправильный глагол. Его вторая форма (V2) — "went". "Goed" не существует в английском языке.'
+            },
+            {
+                category: 'Отрицательное предложение',
+                question: 'They ________ like the film.',
+                options: ['doesn\'t', 'don\'t', 'didn\'t', 'not'],
+                correct: 2,
+                explanation: 'Для отрицания в Past Simple используется вспомогательный глагол "didn\'t" (did not) для всех лиц. Смысловой глагол остаётся в начальной форме.'
+            },
+            {
+                category: 'Вопросительная форма',
+                question: '________ you see the match last night?',
+                options: ['Do', 'Does', 'Did', 'Was'],
+                correct: 2,
+                explanation: 'В Past Simple для вопроса используется вспомогательный глагол "Did" для всех лиц. Он «забирает» на себя прошедшее время.'
+            },
+            {
+                category: 'Неправильный глагол (V2)',
+                question: 'I ________ a very interesting book last week.',
+                options: ['readed', 'red', 'read', 'reading'],
+                correct: 2,
+                explanation: 'Глагол "read" — неправильный. Его V2 тоже пишется "read", но произносится как "ред" [red]. Формы "readed" не существует.'
+            },
+            {
+                category: 'Глагол to be в прошедшем времени',
+                question: 'They ________ very happy with the result.',
+                options: ['was', 'did', 'were', 'are'],
+                correct: 2,
+                explanation: 'Глагол "to be" в Past Simple имеет две формы: "was" (I, He, She, It) и "were" (You, We, They). С "They" используется "were".'
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const qBox = document.getElementById('quiz-box');
+            const scoreBox = document.getElementById('quiz-score-box');
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.add('hidden');
+            if (currentQuestionIndex >= quizQuestions.length) {
+                qBox.classList.add('hidden');
+                scoreBox.classList.remove('hidden');
+                document.getElementById('quiz-progress').innerText = 'Завершено';
+                document.getElementById('quiz-final-score').innerText = `Вы набрали: ${score} из ${quizQuestions.length}`;
+                return;
+            }
+            qBox.classList.remove('hidden');
+            scoreBox.classList.add('hidden');
+            const qData = quizQuestions[currentQuestionIndex];
+            document.getElementById('quiz-q-category').innerText = qData.category;
+            document.getElementById('quiz-question').innerText = qData.question;
+            document.getElementById('quiz-progress').innerText = `Вопрос ${currentQuestionIndex + 1} из ${quizQuestions.length}`;
+            const percent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+            const optContainer = document.getElementById('quiz-options');
+            optContainer.innerHTML = '';
+            qData.options.forEach((opt, idx) => {
+                const button = document.createElement('button');
+                button.className = "p-4 bg-gray-900/40 rounded-2xl border border-gray-800 text-left font-medium hover:border-brand-accent hover:bg-gray-800/20 transition-all duration-300 w-full";
+                button.innerHTML = `<span class="text-xs text-gray-500 mr-2 font-mono">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
+                button.onclick = () => selectAnswer(idx);
+                optContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const qData = quizQuestions[currentQuestionIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const optionsButtons = document.getElementById('quiz-options').children;
+            for (let btn of optionsButtons) btn.disabled = true;
+            if (selectedIndex === qData.correct) {
+                score++;
+                feedback.className = "mt-6 p-4 rounded-xl border border-brand-emerald/30 bg-brand-emerald/10 text-brand-emerald block";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold mb-1">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span>Правильно!</span>
+                </div>
+                <p class="text-xs text-gray-300 mt-1">${qData.explanation}</p>`;
+                optionsButtons[selectedIndex].classList.add('border-brand-emerald', 'bg-brand-emerald/10');
+            } else {
+                feedback.className = "mt-6 p-4 rounded-xl border border-brand-pink/30 bg-brand-pink/10 text-brand-pink block";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold mb-1">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    <span>Неправильно</span>
+                </div>
+                <p class="text-xs text-gray-300 mt-1">${qData.explanation}</p>`;
+                optionsButtons[selectedIndex].classList.add('border-brand-pink', 'bg-brand-pink/10');
+                optionsButtons[qData.correct].classList.add('border-brand-emerald', 'bg-brand-emerald/10');
+            }
+            setTimeout(() => {
+                currentQuestionIndex++;
+                renderQuestion();
+            }, 3500);
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            renderQuestion();
+        }
+
+        window.onload = function() {
+            renderQuestion();
+            renderBentoExamples('affirmative');
+        }
+    </script>
+</body>
+</html>
